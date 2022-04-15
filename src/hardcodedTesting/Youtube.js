@@ -51,6 +51,24 @@ function Youtube() {
 
           <SongList setSongIndex={setSongIndex} />
 
+        </div>
+
+        <div className="row">
+          <div className='col mb-5'>
+            <p>Debug : currSongIndex = {currSongIndex}</p>
+            <ReactPlayer ref={playerRef} playing={playpause} muted={mute}
+              onReady={() => console.log('onReady')}
+              onStart={customAutoplay}
+              //onPlay={customAutoplay}
+              volume={vol}
+              height={200}
+              width={300}
+              controls={true}
+              url={songs[currSongIndex]}
+            // url='https://www.youtube.com/watch?v=OkHD4OVjS4E'
+            />
+          </div>
+
           <h3>Custom Controls</h3>
           <div className="row text-center ">
             <div className="col ">
@@ -62,23 +80,6 @@ function Youtube() {
             <div className="col">
               <Button onClick={() => nextSong()}>Next </Button>
             </div>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className='col mb-5'>
-            <p>Debug : currSongIndex = {currSongIndex}</p>
-            <ReactPlayer ref={playerRef} playing={playpause} muted={mute}
-              onReady={() => console.log('onReady')}
-              onStart={customAutoplay}
-              //onPlay={customAutoplay}
-              volume={vol}
-              height={220}
-              width={400}
-              controls={true}
-              url={songs[currSongIndex]}
-            // url='https://www.youtube.com/watch?v=OkHD4OVjS4E'
-            />
           </div>
 
         </div>
