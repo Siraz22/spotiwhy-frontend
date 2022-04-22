@@ -16,8 +16,6 @@ function SongList(props) {
         <Button variant='outline-success' onClick={() => props.playerRef.current.getInternalPlayer().playVideoAt(2)}>Beatles - Here Comes the Sun</Button>
       </div>
 
-
-
     </React.Fragment >
   )
 }
