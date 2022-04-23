@@ -3,42 +3,46 @@ import { Button, Form } from 'react-bootstrap';
 import { useSections, useSongs } from './api/APIAxios'
 import { v4 as uuid } from 'uuid'
 
-function SelectedSectionComponent(props) {
+function NoSectionSelectedComponent() {
 
-  const sectionsContext = useSections();
+  //const sectionsContext = useSections();
   const songsContext = useSongs();
-  const [selectedSection, setSelectedSelection] = useState([])
-  const [sectionSongs, setSectionSongs] = useState([])
+  const [songs, setSongs] = useState([])
   const [songName, setSongName] = useState('')
   const [songURL, setSongURL] = useState('')
+  const [sections, setSections] = useState([])
 
   useEffect(() => {
-    console.log("Use effect running in Selected Component")
 
-    sectionsContext.sectionAPIcalls.getSectionById(props.selectedSection.sectionID)
+    songsContext.songAPIcalls.getSongs()
       .then((res) => {
         console.log(res.data)
-        //console.log(res.data.songs_set)
-        setSelectedSelection(res.data)
-        setSectionSongs(res.data.songs_set)
+        setSongs(res.data)
       })
       .catch(err => console.log(err))
-  }, [props])
+
+  }, [])
 
   function refreshSongList() {
 
-    sectionsContext.sectionAPIcalls.getSectionById(props.selectedSection.sectionID)
+    songsContext.songAPIcalls.getSongs()
       .then((res) => {
         console.log(res.data)
-        //console.log(res.data.songs_set)
-        setSelectedSelection(res.data)
-        setSectionSongs(res.data.songs_set)
+        setSongs(res.data)
       })
       .catch(err => console.log(err))
+
+    //refreshing the section will update the section songs set too
+    // sectionsContext.sectionAPIcalls.getSections()
+    //   .then((res) => {
+    //     console.log(res.data)
+    //     setSections(sections)
+    //   })
+    //   .catch(err => console.log(err))
   }
 
   function renderSongs() {
-    const songsRendered = sectionSongs.map((song) => {
+    const songsRendered = songs.map((song) => {
       return (
         <React.Fragment key={song.songID}>
           <div className="row m-2 ">
@@ -89,7 +93,7 @@ function SelectedSectionComponent(props) {
         <div className="row mb-2">
 
           <div className="col">
-            <h2>Selected Section</h2>
+            <h2>No Section Seleted</h2>
           </div>
           <div className="col">
 
@@ -123,4 +127,4 @@ function SelectedSectionComponent(props) {
   )
 }
 
-export default SelectedSectionComponent
+export default NoSectionSelectedComponent

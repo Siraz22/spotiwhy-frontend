@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Button } from 'react-bootstrap'
-import { useSections, useSongs } from './api/APIAxios'
+import { Button, Form } from 'react-bootstrap'
+import { useSections } from './api/APIAxios'
 import { v4 as uuid } from 'uuid'
+import { Link } from 'react-router-dom'
 
-function SectionComponent() {
+function AvailableSectionComponent(props) {
 
   const sectionsContext = useSections();
   const [sections, setSections] = useState([])
@@ -28,15 +29,15 @@ function SectionComponent() {
   }
 
   function renderSections() {
-    console.log("rendering sections")
-    console.log(sections)
 
     const sectionsRendered = sections.map((section) => {
       return (
         <React.Fragment key={section.sectionID}>
           <div className="row m-2 ">
             <div className="col-8 row">
-              <Button variant='outline-success' >{section.sectionName}</Button>
+              <Link to={`/section/${section.sectionName}`}>
+                <Button onClick={() => props.setSelectedSection({ sectionName: section.sectionName, sectionID: section.sectionID })} variant='outline-success' >{section.sectionName}</Button>
+              </Link>
             </div>
             <div className="col">
               <Button onClick={() => deleteSection(section.sectionID)}>Delete section</Button>
@@ -78,9 +79,28 @@ function SectionComponent() {
   return (
     <React.Fragment>
       <h2>Sections Component</h2>
+
+      <Form className='mb-2'>
+        <div className="row">
+          <div className="col">
+            <Form.Control placeholder='Section Name' onChange={e => setSectionName(e.target.value)} />
+          </div>
+          <div className="col">
+            <Button onClick={() => addSection()}>
+              Add Section
+            </Button>
+          </div>
+        </div>
+      </Form>
+
+      <Link to={`/`}>
+        <Button onClick={() => props.setSelectedSection({ sectionName: 'default', sectionID: '' })} variant='info'>All Songs</Button>
+      </Link>
+
       {renderSections()}
-    </React.Fragment>
+
+    </React.Fragment >
   )
 }
 
-export default SectionComponent
+export default AvailableSectionComponent

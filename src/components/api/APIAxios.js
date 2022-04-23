@@ -54,6 +54,10 @@ function APIAxios({ children }) {
     return await axios.get(baseURL + `/sections`)
   }
 
+  async function getSectionById(id) {
+    return await axios.get(baseURL + `/section/${id}`)
+  }
+
   async function addSection(passedSection) {
     return await axios.post(baseURL + `/addSection`, passedSection)
   }
@@ -76,7 +80,7 @@ function APIAxios({ children }) {
       <SectionsContext.Provider
         value={{
           //sections: sections, setSections: setSections,
-          sectionAPIcalls: { getSections, addSection, deleteSection, updateSection }
+          sectionAPIcalls: { getSections, addSection, deleteSection, updateSection, getSectionById }
         }}
       >
 
