@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Form } from 'react-bootstrap';
-import { useSections, useSongs } from './api/APIAxios'
+import React, { useEffect, useRef, useState } from 'react'
+import { Button, ButtonGroup, Form } from 'react-bootstrap';
+import { SectionsContext, useSections, useSongs } from './api/APIAxios'
 import { v4 as uuid } from 'uuid'
 
 function NoSectionSelectedComponent() {
 
-  //const sectionsContext = useSections();
+  const sectionsContext = useSections();
   const songsContext = useSongs();
   const [songs, setSongs] = useState([])
   const [songName, setSongName] = useState('')
   const [songURL, setSongURL] = useState('')
   const [sections, setSections] = useState([])
+  const [selectedSongsID, setSelectedSongs] = useState([])
+  const [selectedSection, setSelectedSection] = useState('')
 
   useEffect(() => {
-
     songsContext.songAPIcalls.getSongs()
       .then((res) => {
         console.log(res.data)
@@ -21,7 +22,19 @@ function NoSectionSelectedComponent() {
       })
       .catch(err => console.log(err))
 
+    sectionsContext.sectionAPIcalls.getSections()
+      .then((res) => {
+        console.log(res.data)
+        setSections(res.data)
+      })
+      .catch(err => console.log(err))
   }, [])
+
+  useEffect(() => {
+    if (selectedSongsID.length === 0) {
+      setSelectedSection('')
+    }
+  }, [selectedSongsID])
 
   function refreshSongList() {
 
@@ -31,14 +44,17 @@ function NoSectionSelectedComponent() {
         setSongs(res.data)
       })
       .catch(err => console.log(err))
+  }
 
-    //refreshing the section will update the section songs set too
-    // sectionsContext.sectionAPIcalls.getSections()
-    //   .then((res) => {
-    //     console.log(res.data)
-    //     setSections(sections)
-    //   })
-    //   .catch(err => console.log(err))
+  function checkboxChecked(songID, checked) {
+    console.log("checkbox clicked")
+
+    if (checked) {
+      setSelectedSongs([...selectedSongsID, songID])
+    }
+    else if (!checked) {
+      setSelectedSongs(selectedSongsID.filter((entry) => entry !== songID))
+    }
   }
 
   function renderSongs() {
@@ -46,6 +62,9 @@ function NoSectionSelectedComponent() {
       return (
         <React.Fragment key={song.songID}>
           <div className="row m-2 ">
+            <div className="col">
+              <Form.Check type='checkbox' onChange={(event) => checkboxChecked(song.songID, event.target.checked)}></Form.Check>
+            </div>
             <div className="col-10 row">
               <Button variant='outline-success' >{song.songName}</Button>
             </div>
@@ -53,11 +72,40 @@ function NoSectionSelectedComponent() {
               <Button onClick={() => deleteSong(song.songID)}>Delete Song</Button>
             </div>
           </div>
-        </React.Fragment>
+        </React.Fragment >
       )
     })
 
     return songsRendered
+  }
+
+  function renderSections() {
+    const sectionsRendered = sections.map((section) => {
+      return (
+        <React.Fragment key={section.sectionID}>
+          <Form.Check
+            type="radio"
+            name="sectionToAddSongs"
+            onChange={() => setSelectedSection(section.sectionID)}
+            label={section.sectionName}
+          />
+        </React.Fragment >
+      )
+    })
+
+    return sectionsRendered
+  }
+
+  function addSongsToSection() {
+    selectedSongsID.map((songID) => {
+      //console.log(songID)
+
+      songsContext.songAPIcalls.addSongToSection(songID, selectedSection)
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch(err => console.log(err))
+    })
   }
 
   function deleteSong(songIDtoDelete) {
@@ -95,6 +143,7 @@ function NoSectionSelectedComponent() {
           <div className="col">
             <h2>No Section Seleted</h2>
           </div>
+
           <div className="col">
 
             <Form>
@@ -116,12 +165,27 @@ function NoSectionSelectedComponent() {
             </Form>
 
           </div>
+
+          {selectedSongsID.length !== 0 && <div className="">
+            Add songs to which section?
+            <Form>
+              {renderSections()}
+            </Form>
+            <Button onClick={addSongsToSection} variant='secondary'>
+              Add to section
+            </Button>
+          </div>}
+
         </div>
       </div>
 
       <div className="row mb-2">
-        {renderSongs()}
+        <Form>
+          {renderSongs()}
+        </Form>
       </div>
+
+      <Button onClick={() => console.log(selectedSection)}>Debug No Selection</Button>
 
     </React.Fragment >
   )

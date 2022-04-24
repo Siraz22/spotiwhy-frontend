@@ -25,19 +25,24 @@ function Home() {
       <div className="container">
         <div className="row">
           <div className="col">
+
             <Switch>
 
               {/* <Route path="/" exact>
                 <Redirect to="/default" />
               </Route> */}
 
-              <Route path="/" exact>
+              {/* <Route path="/" exact>
                 <NoSectionSelectedComponent />
-              </Route>
-
-              {/* <Route path="/section/:sectionName">
-                <SelectedSectionComponent selectedSection={selectedSection} />
               </Route> */}
+
+              <Route path="/" exact render={
+                (props) => (
+                  <NoSectionSelectedComponent
+                    {...props}
+                  />
+                )
+              } />
 
               <Route path="/section/:selectedSection" render={
                 (props) => (

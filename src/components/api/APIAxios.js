@@ -49,6 +49,10 @@ function APIAxios({ children }) {
     return await axios.put(baseURL + `/deleteSong/${songId}`, passedSong)
   }
 
+  async function addSongToSection(songId, sectionId) {
+    return await axios.post(baseURL + `/addSongToSection/${songId}/${sectionId}`)
+  }
+
   // SECTION API
   async function getSections() {
     return await axios.get(baseURL + `/sections`)
@@ -74,7 +78,7 @@ function APIAxios({ children }) {
     <SongsContext.Provider
       value={{
         //songs: songs, setSongs: setSongs,
-        songAPIcalls: { getSongs, addSong, updateSong, deleteSong }
+        songAPIcalls: { getSongs, addSong, updateSong, deleteSong, addSongToSection }
       }}
     >
       <SectionsContext.Provider
