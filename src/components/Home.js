@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SelectedSectionComponent from './SelectedSectionComponent'
 import AvailableSectionComponent from './AvailableSectionComponent'
 import VideoPlayer from './VideoPlayer'
-import { Button } from 'react-bootstrap'
+import { Button, Col, Row } from 'react-bootstrap'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import NoSectionSelectedComponent from './NoSectionSelectedComponent'
 
@@ -23,8 +23,14 @@ function Home() {
     <React.Fragment>
 
       <div className="container">
-        <div className="row">
-          <div className="col">
+
+        <Row>
+
+          <div className="col-sm-12 col-md-6 order-md-1">
+            <AvailableSectionComponent setSelectedSection={setSelectedSection} />
+          </div>
+
+          <div className="col-sm-12 col-md-12 order-md-0">
 
             <Switch>
 
@@ -56,18 +62,15 @@ function Home() {
             </Switch>
           </div>
 
-        </div>
-        <div className="row">
-          <div className="col">
-            <AvailableSectionComponent setSelectedSection={setSelectedSection} />
-          </div>
-          <div className="col">
+          <div className="col-sm-12 col-md-6 order-md-1">
             <VideoPlayer />
           </div>
-        </div>
+
+        </Row>
+
       </div>
 
-      <Button onClick={debug}>Debug</Button>
+      {/* <Button onClick={debug}>Debug</Button> */}
 
     </React.Fragment >
   )

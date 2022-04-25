@@ -82,7 +82,7 @@ function VideoPlayer() {
           </div>
         </div >
       </div>
-      <Button onClick={() => console.log(songs)}>Debug Player</Button>
+      {/* <Button onClick={() => console.log(songs)}>Debug Player</Button> */}
     </React.Fragment >
   )
 }
