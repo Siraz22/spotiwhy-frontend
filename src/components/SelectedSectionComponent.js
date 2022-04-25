@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap';
 import { useSections, useSongs } from './api/APIAxios'
 import { v4 as uuid } from 'uuid'
+import { useGlobalInstances } from './context/CustomGlobalInstances';
 
 function SelectedSectionComponent(props) {
 
   const sectionsContext = useSections();
   const songsContext = useSongs();
-  const [selectedSection, setSelectedSelection] = useState([])
+
+  const globalContext = useGlobalInstances();
+  useEffect(() => {
+
+  }, [globalContext])
+
+  //const [selectedSection, setSelectedSelection] = useState([])
   const [sectionSongs, setSectionSongs] = useState([])
   const [songName, setSongName] = useState('')
   const [songURL, setSongURL] = useState('')
@@ -19,7 +26,7 @@ function SelectedSectionComponent(props) {
       .then((res) => {
         console.log(res.data)
         //console.log(res.data.songs_set)
-        setSelectedSelection(res.data)
+        //setSelectedSelection(res.data)
         setSectionSongs(res.data.songs_set)
       })
       .catch(err => console.log(err))
@@ -31,19 +38,19 @@ function SelectedSectionComponent(props) {
       .then((res) => {
         console.log(res.data)
         //console.log(res.data.songs_set)
-        setSelectedSelection(res.data)
+        //setSelectedSelection(res.data)
         setSectionSongs(res.data.songs_set)
       })
       .catch(err => console.log(err))
   }
 
   function renderSongs() {
-    const songsRendered = sectionSongs.map((song) => {
+    const songsRendered = sectionSongs.map((song, index) => {
       return (
         <React.Fragment key={song.songID}>
           <div className="row m-2 ">
             <div className="col-10 row">
-              <Button variant='outline-success' >{song.songName}</Button>
+              <Button onClick={() => playSong(index)} variant='outline-success' >{song.songName}</Button>
             </div>
             <div className="col">
               <Button onClick={() => deleteSong(song.songID)}>Delete Song</Button>
@@ -54,6 +61,18 @@ function SelectedSectionComponent(props) {
     })
 
     return songsRendered
+  }
+
+  function playSong(index) {
+
+    //If this song is going to be played, set the songs[] array in VideoPlayer with current section Songs
+    //This is facilitated by global Context which contains currPlayingSongSet
+
+    console.log("Index passed is " + index)
+    globalContext.setCurrPlayingSet(sectionSongs.map((entry) => { return entry.songURL }))
+    console.log(globalContext)
+    console.log(globalContext.playerRef.current.getInternalPlayer())
+    globalContext.playerRef.current.getInternalPlayer().playVideoAt(index)
   }
 
   function deleteSong(songIDtoDelete) {
@@ -83,40 +102,43 @@ function SelectedSectionComponent(props) {
 
   return (
     <React.Fragment>
+      <div style={{
+        border: '2px solid'
+      }}>
+        <div className="container m-2">
 
-      <div className="container m-2">
+          <div className="row mb-2">
 
-        <div className="row mb-2">
+            <div className="col">
+              <h2>Selected Section</h2>
+            </div>
+            <div className="col">
 
-          <div className="col">
-            <h2>Selected Section</h2>
-          </div>
-          <div className="col">
+              <Form>
+                <div className="row">
+                  <div className="col">
 
-            <Form>
-              <div className="row">
-                <div className="col">
+                    <Form.Control placeholder='Song Name' onChange={e => setSongName(e.target.value)} />
+                  </div>
+                  <div className="col">
 
-                  <Form.Control placeholder='Song Name' onChange={e => setSongName(e.target.value)} />
+                    <Form.Control placeholder='Song URL' onChange={e => setSongURL(e.target.value)} />
+                  </div>
+                  <div className="col">
+                    <Button onClick={() => addSong()}>
+                      Add Song
+                    </Button>
+                  </div>
                 </div>
-                <div className="col">
+              </Form>
 
-                  <Form.Control placeholder='Song URL' onChange={e => setSongURL(e.target.value)} />
-                </div>
-                <div className="col">
-                  <Button onClick={() => addSong()}>
-                    Add Song
-                  </Button>
-                </div>
-              </div>
-            </Form>
-
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="row mb-2">
-        {renderSongs()}
+        <div className="row mb-2">
+          {renderSongs()}
+        </div>
       </div>
 
     </React.Fragment >

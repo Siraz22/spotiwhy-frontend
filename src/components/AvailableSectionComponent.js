@@ -78,26 +78,31 @@ function AvailableSectionComponent(props) {
 
   return (
     <React.Fragment>
-      <h2>Sections Component</h2>
+      <div style={{
+        border: '2px solid',
+        order: -1
+      }}>
+        <h2>Available Sections Component</h2>
 
-      <Form className='mb-2'>
-        <div className="row">
-          <div className="col">
-            <Form.Control placeholder='Section Name' onChange={e => setSectionName(e.target.value)} />
+        <Form className='mb-2'>
+          <div className="row">
+            <div className="col">
+              <Form.Control placeholder='Section Name' onChange={e => setSectionName(e.target.value)} />
+            </div>
+            <div className="col">
+              <Button onClick={() => addSection()}>
+                Add Section
+              </Button>
+            </div>
           </div>
-          <div className="col">
-            <Button onClick={() => addSection()}>
-              Add Section
-            </Button>
-          </div>
-        </div>
-      </Form>
+        </Form>
 
-      <Link to={`/`}>
-        <Button onClick={() => props.setSelectedSection({ sectionName: 'default', sectionID: '' })} variant='info'>All Songs</Button>
-      </Link>
+        <Link to={`/`}>
+          <Button onClick={() => props.setSelectedSection({ sectionName: 'default', sectionID: '' })} variant='info'>All Songs</Button>
+        </Link>
 
-      {renderSections()}
+        {renderSections()}
+      </div>
 
     </React.Fragment >
   )

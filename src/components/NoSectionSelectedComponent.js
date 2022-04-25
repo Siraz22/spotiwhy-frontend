@@ -92,7 +92,6 @@ function NoSectionSelectedComponent() {
         </React.Fragment >
       )
     })
-
     return sectionsRendered
   }
 
@@ -136,56 +135,59 @@ function NoSectionSelectedComponent() {
   return (
     <React.Fragment>
 
-      <div className="container m-2">
+      <div style={{
+        border: '2px solid'
+      }}>
+
+        <div className="container m-2">
+
+          <div className="row mb-2">
+
+            <div className="col">
+              <h2>All Songs Section Component</h2>
+            </div>
+
+            <div className="col">
+
+              <Form>
+                <div className="row">
+                  <div className="col">
+
+                    <Form.Control placeholder='Song Name' onChange={e => setSongName(e.target.value)} />
+                  </div>
+                  <div className="col">
+
+                    <Form.Control placeholder='Song URL' onChange={e => setSongURL(e.target.value)} />
+                  </div>
+                  <div className="col">
+                    <Button onClick={() => addSong()}>
+                      Add Song
+                    </Button>
+                  </div>
+                </div>
+              </Form>
+
+            </div>
+
+            {selectedSongsID.length !== 0 && <div className="">
+              Add songs to which section?
+              <Form>
+                {renderSections()}
+              </Form>
+              <Button onClick={addSongsToSection} variant='secondary'>
+                Add to section
+              </Button>
+            </div>}
+
+          </div>
+        </div>
 
         <div className="row mb-2">
-
-          <div className="col">
-            <h2>No Section Seleted</h2>
-          </div>
-
-          <div className="col">
-
-            <Form>
-              <div className="row">
-                <div className="col">
-
-                  <Form.Control placeholder='Song Name' onChange={e => setSongName(e.target.value)} />
-                </div>
-                <div className="col">
-
-                  <Form.Control placeholder='Song URL' onChange={e => setSongURL(e.target.value)} />
-                </div>
-                <div className="col">
-                  <Button onClick={() => addSong()}>
-                    Add Song
-                  </Button>
-                </div>
-              </div>
-            </Form>
-
-          </div>
-
-          {selectedSongsID.length !== 0 && <div className="">
-            Add songs to which section?
-            <Form>
-              {renderSections()}
-            </Form>
-            <Button onClick={addSongsToSection} variant='secondary'>
-              Add to section
-            </Button>
-          </div>}
-
+          <Form>
+            {renderSongs()}
+          </Form>
         </div>
       </div>
-
-      <div className="row mb-2">
-        <Form>
-          {renderSongs()}
-        </Form>
-      </div>
-
-      <Button onClick={() => console.log(selectedSection)}>Debug No Selection</Button>
 
     </React.Fragment >
   )
