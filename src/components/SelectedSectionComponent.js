@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Button, Form } from 'react-bootstrap';
+import { Button, Card, Figure, Form, Image } from 'react-bootstrap';
 import { useSections, useSongs } from './api/APIAxios'
 import { v4 as uuid } from 'uuid'
 import { useGlobalInstances } from './context/CustomGlobalInstances';
@@ -14,7 +14,7 @@ function SelectedSectionComponent(props) {
 
   }, [globalContext])
 
-  //const [selectedSection, setSelectedSelection] = useState([])
+  const [selectedSection, setSelectedSelection] = useState([])
   const [sectionSongs, setSectionSongs] = useState([])
   const [songName, setSongName] = useState('')
   const [songURL, setSongURL] = useState('')
@@ -26,7 +26,7 @@ function SelectedSectionComponent(props) {
       .then((res) => {
         console.log(res.data)
         //console.log(res.data.songs_set)
-        //setSelectedSelection(res.data)
+        setSelectedSelection(res.data)
         setSectionSongs(res.data.songs_set)
       })
       .catch(err => console.log(err))
@@ -38,7 +38,7 @@ function SelectedSectionComponent(props) {
       .then((res) => {
         console.log(res.data)
         //console.log(res.data.songs_set)
-        //setSelectedSelection(res.data)
+        setSelectedSelection(res.data)
         setSectionSongs(res.data.songs_set)
       })
       .catch(err => console.log(err))
@@ -117,7 +117,6 @@ function SelectedSectionComponent(props) {
               <Form>
                 <div className="row">
                   <div className="col">
-
                     <Form.Control placeholder='Song Name' onChange={e => setSongName(e.target.value)} />
                   </div>
                   <div className="col">
@@ -126,7 +125,7 @@ function SelectedSectionComponent(props) {
                   </div>
                   <div className="col">
                     <Button onClick={() => addSong()}>
-                      Add Song
+                      Add Song to All
                     </Button>
                   </div>
                 </div>
@@ -137,7 +136,25 @@ function SelectedSectionComponent(props) {
         </div>
 
         <div className="row mb-2">
-          {renderSongs()}
+
+          <div className="col-md-7">
+            <Card className="bg-dark text-white">
+              <Card.Img
+                src={selectedSection.sectionPhotoURL}
+                alt="Card image"
+                height={300}
+              />
+              <Card.ImgOverlay>
+                <Card.Title>{selectedSection.sectionName}</Card.Title>
+                <Card.Text>
+                  {selectedSection.sectionDescription}
+                </Card.Text>
+              </Card.ImgOverlay>
+            </Card>
+          </div>
+          <div className="col">
+            {renderSongs()}
+          </div>
         </div>
       </div>
 

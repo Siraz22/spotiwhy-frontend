@@ -64,6 +64,7 @@ function AvailableSectionComponent(props) {
       sectionID: uuid(),
       sectionPhotoURL: '',
       sectionName: sectionName,
+      sectionDescription: "No description",
       sectionOwnerId: "siraz",
       songs_set: []
     }
