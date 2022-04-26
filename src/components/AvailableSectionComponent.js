@@ -57,18 +57,6 @@ function AvailableSectionComponent(props) {
       return (
         <React.Fragment key={section.sectionID}>
 
-
-          {/* <div className="row m-2 ">
-            <div className="col-8 row">
-              <Link to={`/section/${section.sectionName}`}>
-                <Button onClick={() => props.setSelectedSection({ sectionName: section.sectionName, sectionID: section.sectionID })} variant='outline-success' >{section.sectionName}</Button>
-              </Link>
-            </div>
-            <div className="col">
-              <Button onClick={() => deleteSection(section.sectionID)}>Delete section</Button>
-            </div>
-          </div> */}
-
           <Link to={`/section/${section.sectionName}`} style={{ textDecoration: 'none' }}>
             <Card
               onClick={() => props.setSelectedSection({ sectionName: section.sectionName, sectionID: section.sectionID })}
@@ -121,10 +109,13 @@ function AvailableSectionComponent(props) {
 
   return (
     <React.Fragment>
-      <div style={{
-        border: '2px solid',
-      }}>
-        <h2>Available Sections Component</h2>
+      <div
+        className="customClass"
+        style={{
+          border: '0px solid',
+        }}>
+
+        {/* <h2>Available Sections Component</h2>
 
         <Form className='mb-2'>
           <div className="row">
@@ -137,30 +128,48 @@ function AvailableSectionComponent(props) {
               </Button>
             </div>
           </div>
-        </Form>
+        </Form> */}
 
-        <Link to={`/`} style={{ textDecoration: 'none' }}>
+        {/* <Link to={`/`} style={{ textDecoration: 'none' }}>
           <Button onClick={() => props.setSelectedSection({ sectionName: 'default', sectionID: '' })} variant='info'>All Songs</Button>
-        </Link>
+        </Link> */}
+        <div className="container">
+          <Link to={`/`} style={{ textDecoration: 'none' }}>
+            <Card
+              onClick={() => props.setSelectedSection({ sectionName: 'default', sectionID: '' })}
+              className="bg-dark text-white customClass">
+              <Card.Img
+                src="/allSongs.png"
+                alt="Card image"
+                height={100}
+              />
+              <Card.ImgOverlay>
+                <Card.Title style={{ fontSize: "70px" }}>All songs</Card.Title>
+                <Card.Text className="muted">
+                  Explore your library
+                </Card.Text>
+              </Card.ImgOverlay>
+            </Card>
+          </Link>
 
-        <Carousel
-          swipeable={true}
-          //arrows={false}
-          draggable={true}
-          //showDots={false}
-          responsive={responsive}
-          infinite={true}
-          autoPlay={true}
-          autoPlaySpeed={3000}
-          transitionDuration={500}
-          removeArrowOnDeviceType={["tablet", "mobile"]}
-          itemClass="carousel-item-padding-40-px"
-        >
+          <Carousel
+            swipeable={true}
+            //arrows={false}
+            draggable={true}
+            //showDots={false}
+            responsive={responsive}
+            infinite={true}
+            autoPlay={true}
+            autoPlaySpeed={3000}
+            transitionDuration={500}
+            removeArrowOnDeviceType={["tablet", "mobile"]}
+            itemClass="carousel-item-padding-40-px"
+          >
 
-          {renderSections()}
+            {renderSections()}
 
-        </Carousel>
-
+          </Carousel>
+        </div>
       </div>
 
     </React.Fragment >

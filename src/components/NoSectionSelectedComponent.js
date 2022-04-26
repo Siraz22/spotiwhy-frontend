@@ -136,22 +136,20 @@ function NoSectionSelectedComponent() {
   return (
     <React.Fragment>
 
-      <div style={{
-        border: '2px solid'
-      }}>
+      <div
+        className="customClass"
+        style={{
+          border: '0px solid'
+        }}
+      >
 
-        <div className="container m-2">
+        <div className="row">
 
-          <div className="row mb-2">
-
-            <div className="col">
+          {/* <div className="col">
               <h2>All Songs Section Component</h2>
             </div>
 
-
-
             <div className="col">
-
               <Form>
                 <div className="row">
                   <div className="col">
@@ -169,20 +167,18 @@ function NoSectionSelectedComponent() {
                   </div>
                 </div>
               </Form>
+            </div> */}
 
-            </div>
+          {selectedSongsID.length !== 0 && <div className="">
+            Add songs to which section?
+            <Form>
+              {renderSections()}
+            </Form>
+            <Button onClick={addSongsToSection} variant='secondary'>
+              Add to section
+            </Button>
+          </div>}
 
-            {selectedSongsID.length !== 0 && <div className="">
-              Add songs to which section?
-              <Form>
-                {renderSections()}
-              </Form>
-              <Button onClick={addSongsToSection} variant='secondary'>
-                Add to section
-              </Button>
-            </div>}
-
-          </div>
         </div>
 
         <div className="row mb-2">
@@ -190,6 +186,7 @@ function NoSectionSelectedComponent() {
             {renderSongs()}
           </Form>
         </div>
+
       </div>
 
     </React.Fragment >

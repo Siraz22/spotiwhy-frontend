@@ -5,6 +5,8 @@ import { v4 as uuid } from 'uuid'
 import { useGlobalInstances } from './context/CustomGlobalInstances';
 import { FcMusic } from "react-icons/fc";
 import { ytthumbnail } from './api/youtubeThumbnail';
+import { ytinfo } from './api/youtubeInfo';
+import axios from 'axios';
 
 function SelectedSectionComponent(props) {
 
@@ -59,24 +61,16 @@ function SelectedSectionComponent(props) {
       return (
         <React.Fragment key={song.songID}>
 
-          {/* <div className="row m-2 ">
-            <div className="col-10 row">
-              <Button onClick={() => playSong(index)} variant='outline-success' >{song.songName}</Button>
-            </div>
-            <div className="col">
-              <Button onClick={() => deleteSong(song.songID)}>Delete Song</Button>
-            </div>
-          </div> */}
-
           <div style={{
             margin: '0px 20px 0px 20px',
             padding: '5px 0px 5px 0px',
             // border: '10px 0px 10px 0px',
           }}>
-            <Row style={{
-              backgroundColor: 'rgb(26, 26, 26, 0.7)',
-              borderRadius: '10px'
-            }}>
+            <Row onClick={() => playSong(index)}
+              style={{
+                backgroundColor: 'rgb(26, 26, 26, 0.7)',
+                borderRadius: '10px'
+              }}>
               <Col xs={1} className="d-flex align-items-center justify-content-center">
                 {/* <FcMusic fontSize={30} /> */}
                 {renderThumbnail(song.songURL)}
@@ -140,9 +134,11 @@ function SelectedSectionComponent(props) {
   return (
     <React.Fragment>
 
-      <div style={{
-        border: '2px solid'
-      }}>
+      <div
+        className="customClass"
+        style={{
+          border: '0px solid'
+        }}>
 
         {/* <div className="container">
           <div className="row">
@@ -170,25 +166,30 @@ function SelectedSectionComponent(props) {
             </div>
           </div>
         </div> */}
+        <div className='container'>
+          <div className="row">
+            <div className="col-md-7">
+              <Card
+                className="bg-dark text-white">
+                <Card.Img
+                  style={{ borderRadius: '30px' }}
+                  src={selectedSection.sectionPhotoURL}
+                  alt="Card image"
+                  height={380}
 
-        <div className="row">
-          <div className="col-md-7">
-            <Card className="bg-dark text-white">
-              <Card.Img
-                src={selectedSection.sectionPhotoURL}
-                alt="Card image"
-                height={380}
-              />
-              <Card.ImgOverlay>
-                <Card.Title style={{ fontSize: "70px" }}>{selectedSection.sectionName}</Card.Title>
-                <Card.Text className="muted">
-                  {selectedSection.sectionDescription}
-                </Card.Text>
-              </Card.ImgOverlay>
-            </Card>
-          </div>
-          <div className="col mt-2">
-            {renderSongs()}
+                />
+                <Card.ImgOverlay>
+                  <Card.Title style={{ fontSize: "70px" }}>{selectedSection.sectionName}</Card.Title>
+                  <Card.Text className="muted">
+                    {selectedSection.sectionDescription}
+                  </Card.Text>
+                </Card.ImgOverlay>
+              </Card>
+            </div>
+            <div className="col mt-2">
+              {renderSongs()}
+            </div>
+
           </div>
         </div>
       </div>

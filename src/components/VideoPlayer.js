@@ -61,14 +61,16 @@ function VideoPlayer() {
 
       {/* <span>Window size: {windowWidth} x {windowHeight}</span>; */}
 
-      <div style={{
-        border: '2px solid'
-      }}>
+      <div
+        className='customClass'
+        style={{
+          border: '0px solid'
+        }}>
 
-        <div className='container m-2'>
-          <h2>Player Component</h2>
+        <div className='container'>
+
           <div className="row">
-            <div className='col mb-5'>
+            <div className='col'>
               {/* <p>Debug : currSongIndex = {currSongIndex}</p> */}
               {/* <p>Debug name for index 0 = {playerRef.current.getInternalPlayer().getVideoData().title}</p> */}
 
@@ -78,8 +80,8 @@ function VideoPlayer() {
                 //onPlay={customAutoplay}
                 volume={vol}
 
-                height={(windowWidth > 800) ? 360 : 9 * multiplier}
-                width={(windowWidth > 800) ? 640 : 16 * multiplier}
+                height={(windowWidth > 800) ? 360 / 1.2 : 9 * multiplier}
+                width={(windowWidth > 800) ? 640 / 1.2 : 16 * multiplier}
 
                 controls={true}
                 //url={songs[currSongIndex]}
