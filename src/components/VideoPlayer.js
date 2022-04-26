@@ -1,17 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import ReactPlayer from 'react-player'
-import { FaPlay } from "react-icons/fa";
+import { FaPlay, FaPause } from "react-icons/fa";
 import { useGlobalInstances } from './context/CustomGlobalInstances';
+
+function useWindowSize() {
+  const [size, setSize] = useState([0, 0]);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+  return size;
+}
 
 function VideoPlayer() {
 
   const globalContext = useGlobalInstances();
+  const multiplier = 14
 
   const [songs, setSongs] = useState([])
   const [vol, setVolume] = useState(1)
   const [mute, setMute] = useState(true)
   const [playpause, setPlayPause] = useState(true)
+
+  const [windowWidth, windowHeight] = useWindowSize();
 
   const playerRef = useRef()
 
@@ -43,36 +59,41 @@ function VideoPlayer() {
   return (
     < React.Fragment>
 
+      {/* <span>Window size: {windowWidth} x {windowHeight}</span>; */}
+
       <div style={{
         border: '2px solid'
       }}>
 
         <div className='container m-2'>
-          <h3>Player Component</h3>
+          <h2>Player Component</h2>
           <div className="row">
             <div className='col mb-5'>
               {/* <p>Debug : currSongIndex = {currSongIndex}</p> */}
               {/* <p>Debug name for index 0 = {playerRef.current.getInternalPlayer().getVideoData().title}</p> */}
+
               <ReactPlayer ref={playerRef} playing={playpause} muted={mute}
                 onReady={() => console.log('onReady')}
                 onStart={customAutoplay}
                 //onPlay={customAutoplay}
                 volume={vol}
-                height={200}
-                width={300}
+
+                height={(windowWidth > 800) ? 360 : 9 * multiplier}
+                width={(windowWidth > 800) ? 640 : 16 * multiplier}
+
                 controls={true}
                 //url={songs[currSongIndex]}
                 url={songs}
               />
+
             </div>
 
-            <h3>Custom Controls</h3>
             <div className="row text-center ">
               <div className="col ">
                 <Button onClick={() => prevSong()}>  Prev </Button>
               </div>
               <div className='col'>
-                <Button onClick={() => onPausePlay()}> {<FaPlay />} Play/Pause </Button>
+                <Button onClick={() => onPausePlay()}> {<FaPlay />}/{<FaPause />}  </Button>
               </div>
               <div className="col">
                 <Button onClick={() => nextSong()}>Next </Button>

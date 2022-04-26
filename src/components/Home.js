@@ -22,9 +22,11 @@ function Home() {
   return (
     <React.Fragment>
 
-      <div className="container">
+      <div
+        style={{ padding: '1rem 1rem' }}
+      >
 
-        <Row>
+        <Row >
 
           <div className="col-sm-12 col-md-6 order-md-1">
             <AvailableSectionComponent setSelectedSection={setSelectedSection} />
@@ -36,10 +38,6 @@ function Home() {
 
               {/* <Route path="/" exact>
                 <Redirect to="/default" />
-              </Route> */}
-
-              {/* <Route path="/" exact>
-                <NoSectionSelectedComponent />
               </Route> */}
 
               <Route path="/" exact render={

@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Button, Card, Figure, Form, Image } from 'react-bootstrap';
+import { Button, Card, Col, Figure, Form, Image, Row } from 'react-bootstrap';
 import { useSections, useSongs } from './api/APIAxios'
 import { v4 as uuid } from 'uuid'
 import { useGlobalInstances } from './context/CustomGlobalInstances';
+import { FcMusic } from "react-icons/fc";
+import { ytthumbnail } from './api/youtubeThumbnail';
 
 function SelectedSectionComponent(props) {
 
@@ -44,18 +46,53 @@ function SelectedSectionComponent(props) {
       .catch(err => console.log(err))
   }
 
+  function renderThumbnail(url) {
+    ytthumbnail.set(url)
+    let imgUrl = ytthumbnail.thumb()
+    return (
+      <img src={imgUrl}></ img>
+    )
+  }
+
   function renderSongs() {
     const songsRendered = sectionSongs.map((song, index) => {
       return (
         <React.Fragment key={song.songID}>
-          <div className="row m-2 ">
+
+          {/* <div className="row m-2 ">
             <div className="col-10 row">
               <Button onClick={() => playSong(index)} variant='outline-success' >{song.songName}</Button>
             </div>
             <div className="col">
               <Button onClick={() => deleteSong(song.songID)}>Delete Song</Button>
             </div>
+          </div> */}
+
+          <div style={{
+            margin: '0px 20px 0px 20px',
+            padding: '5px 0px 5px 0px',
+            // border: '10px 0px 10px 0px',
+          }}>
+            <Row style={{
+              backgroundColor: 'rgb(26, 26, 26, 0.7)',
+              borderRadius: '10px'
+            }}>
+              <Col xs={1} className="d-flex align-items-center justify-content-center">
+                {/* <FcMusic fontSize={30} /> */}
+                {renderThumbnail(song.songURL)}
+              </Col>
+              <Col xs={9}>
+                <Row>
+                  <strong>{song.songName}</strong>
+                  <text>{song.songArtist}</text>
+                </Row>
+              </Col>
+              <Col className="d-flex align-items-center justify-content-center">
+                <div className='muted'>5:32</div>
+              </Col>
+            </Row>
           </div>
+
         </React.Fragment>
       )
     })
@@ -102,18 +139,18 @@ function SelectedSectionComponent(props) {
 
   return (
     <React.Fragment>
+
       <div style={{
         border: '2px solid'
       }}>
-        <div className="container m-2">
 
-          <div className="row mb-2">
-
+        {/* <div className="container">
+          <div className="row">
             <div className="col">
               <h2>Selected Section</h2>
             </div>
-            <div className="col">
 
+            <div className="col">
               <Form>
                 <div className="row">
                   <div className="col">
@@ -130,29 +167,27 @@ function SelectedSectionComponent(props) {
                   </div>
                 </div>
               </Form>
-
             </div>
           </div>
-        </div>
+        </div> */}
 
-        <div className="row mb-2">
-
+        <div className="row">
           <div className="col-md-7">
             <Card className="bg-dark text-white">
               <Card.Img
                 src={selectedSection.sectionPhotoURL}
                 alt="Card image"
-                height={300}
+                height={380}
               />
               <Card.ImgOverlay>
-                <Card.Title>{selectedSection.sectionName}</Card.Title>
-                <Card.Text>
+                <Card.Title style={{ fontSize: "70px" }}>{selectedSection.sectionName}</Card.Title>
+                <Card.Text className="muted">
                   {selectedSection.sectionDescription}
                 </Card.Text>
               </Card.ImgOverlay>
             </Card>
           </div>
-          <div className="col">
+          <div className="col mt-2">
             {renderSongs()}
           </div>
         </div>

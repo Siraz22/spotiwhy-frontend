@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Button, ButtonGroup, Form } from 'react-bootstrap';
 import { SectionsContext, useSections, useSongs } from './api/APIAxios'
 import { v4 as uuid } from 'uuid'
+import { ytthumbnail } from './api/youtubeThumbnail';
 
 function NoSectionSelectedComponent() {
 
@@ -146,6 +147,8 @@ function NoSectionSelectedComponent() {
             <div className="col">
               <h2>All Songs Section Component</h2>
             </div>
+
+
 
             <div className="col">
 
