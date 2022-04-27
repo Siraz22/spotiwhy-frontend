@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Button, ButtonGroup, Form } from 'react-bootstrap';
+import { Button, ButtonGroup, Card, Col, Form, Row, Modal } from 'react-bootstrap';
 import { SectionsContext, useSections, useSongs } from './api/APIAxios'
 import { v4 as uuid } from 'uuid'
 import { ytthumbnail } from './api/youtubeThumbnail';
+import { useGlobalInstances } from './context/CustomGlobalInstances';
 
 function NoSectionSelectedComponent() {
 
@@ -14,6 +15,11 @@ function NoSectionSelectedComponent() {
   const [sections, setSections] = useState([])
   const [selectedSongsID, setSelectedSongs] = useState([])
   const [selectedSection, setSelectedSection] = useState('')
+
+  const globalContext = useGlobalInstances();
+  useEffect(() => {
+
+  }, [globalContext])
 
   useEffect(() => {
     songsContext.songAPIcalls.getSongs()
@@ -58,11 +64,28 @@ function NoSectionSelectedComponent() {
     }
   }
 
+  function renderThumbnail(url) {
+    ytthumbnail.set(url)
+    let imgUrl = ytthumbnail.thumb()
+    return (
+      <img src={imgUrl}></ img>
+    )
+  }
+
+  function playSong(index) {
+    //If this song is going to be played, set the songs[] array in VideoPlayer with current section Songs
+    //This is facilitated by global Context which contains currPlayingSongSet
+    globalContext.setCurrPlayingSet(songs.map((entry) => { return entry.songURL }))
+    //console.log(globalContext)
+    //console.log(globalContext.playerRef.current.getInternalPlayer())
+    globalContext.playerRef.current.getInternalPlayer().playVideoAt(index)
+  }
+
   function renderSongs() {
-    const songsRendered = songs.map((song) => {
+    const songsRendered = songs.map((song, index) => {
       return (
         <React.Fragment key={song.songID}>
-          <div className="row m-2 ">
+          {/* <div className="row m-2 ">
             <div className="col">
               <Form.Check type='checkbox' onChange={(event) => checkboxChecked(song.songID, event.target.checked)}></Form.Check>
             </div>
@@ -72,7 +95,43 @@ function NoSectionSelectedComponent() {
             <div className="col">
               <Button onClick={() => deleteSong(song.songID)}>Delete Song</Button>
             </div>
+          </div> */}
+
+          <div style={{
+            margin: '0px 20px 0px 20px',
+            padding: '5px 0px 5px 0px',
+            // border: '10px 0px 10px 0px',
+          }}>
+
+            <Row>
+              <Col xs={1}>
+                <Form.Check type='checkbox' onChange={(event) => checkboxChecked(song.songID, event.target.checked)}></Form.Check>
+              </Col>
+              <Col>
+                <Row onClick={() => playSong(index)}
+                  style={{
+                    backgroundColor: 'rgb(26, 26, 26, 0.7)',
+                    borderRadius: '10px'
+                  }}>
+
+                  <Col xs={1} className="d-flex align-items-center justify-content-center">
+                    {/* <FcMusic fontSize={30} /> */}
+                    {renderThumbnail(song.songURL)}
+                  </Col>
+                  <Col xs={9}>
+                    <Row>
+                      <strong>{song.songName}</strong>
+                      <text>{song.songArtist}</text>
+                    </Row>
+                  </Col>
+                  <Col className="d-flex align-items-center justify-content-center">
+                    <div className='muted'>5:32</div>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
           </div>
+
         </React.Fragment >
       )
     })
@@ -147,27 +206,27 @@ function NoSectionSelectedComponent() {
 
           {/* <div className="col">
               <h2>All Songs Section Component</h2>
-            </div>
-
-            <div className="col">
-              <Form>
-                <div className="row">
-                  <div className="col">
-
-                    <Form.Control placeholder='Song Name' onChange={e => setSongName(e.target.value)} />
-                  </div>
-                  <div className="col">
-
-                    <Form.Control placeholder='Song URL' onChange={e => setSongURL(e.target.value)} />
-                  </div>
-                  <div className="col">
-                    <Button onClick={() => addSong()}>
-                      Add Song
-                    </Button>
-                  </div>
-                </div>
-              </Form>
             </div> */}
+
+          {/* <div className="col">
+            <Form>
+              <div className="row">
+                <div className="col">
+
+                  <Form.Control placeholder='Song Name' onChange={e => setSongName(e.target.value)} />
+                </div>
+                <div className="col">
+
+                  <Form.Control placeholder='Song URL' onChange={e => setSongURL(e.target.value)} />
+                </div>
+                <div className="col">
+                  <Button onClick={() => addSong()}>
+                    Add Song
+                  </Button>
+                </div>
+              </div>
+            </Form>
+          </div> */}
 
           {selectedSongsID.length !== 0 && <div className="">
             Add songs to which section?
@@ -181,10 +240,38 @@ function NoSectionSelectedComponent() {
 
         </div>
 
-        <div className="row mb-2">
-          <Form>
-            {renderSongs()}
-          </Form>
+        <div className="row"
+          style={{ padding: '0px 0px' }}
+        >
+          <div className="col-md-4">
+            <Card
+              className="text-white"
+              style={{
+                border: '0px solid',
+                backgroundColor: 'rgb(1,1,1,0)'
+              }}
+            >
+              <Card.Img
+                style={{ borderRadius: '0px 20px' }}
+                src="/allSongs.png"
+                alt="Card image"
+                height={380}
+
+              />
+              <Card.ImgOverlay>
+                <Card.Title style={{ fontSize: "70px" }}>Explore</Card.Title>
+                <Card.Text className="muted">
+                  Your Library
+                </Card.Text>
+              </Card.ImgOverlay>
+            </Card>
+          </div>
+
+          <div className="col mt-2">
+            <Form>
+              {renderSongs()}
+            </Form>
+          </div>
         </div>
 
       </div>
@@ -192,5 +279,6 @@ function NoSectionSelectedComponent() {
     </React.Fragment >
   )
 }
+
 
 export default NoSectionSelectedComponent

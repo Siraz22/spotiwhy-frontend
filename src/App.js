@@ -9,20 +9,12 @@ function App() {
   return (
     <React.Fragment>
 
-      <div
-      // className="backgroundImage"
-      >
-
-
+      <div>
         <Sidebar />
-
         <div
           className="contentDivision"
         >
-
-          {/* <Youtube /> */}
           <Home />
-
         </div>
       </div>
 

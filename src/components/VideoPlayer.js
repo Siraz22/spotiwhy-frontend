@@ -70,7 +70,7 @@ function VideoPlayer() {
         <div className='container'>
 
           <div className="row">
-            <div className='col'>
+            <div className='col d-flex justify-content-center'>
               {/* <p>Debug : currSongIndex = {currSongIndex}</p> */}
               {/* <p>Debug name for index 0 = {playerRef.current.getInternalPlayer().getVideoData().title}</p> */}
 
@@ -85,7 +85,8 @@ function VideoPlayer() {
 
                 controls={true}
                 //url={songs[currSongIndex]}
-                url={songs}
+                //url={songs}
+                url=""
               />
 
             </div>

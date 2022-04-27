@@ -5,6 +5,7 @@ import VideoPlayer from './VideoPlayer'
 import { Button, Col, Row } from 'react-bootstrap'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import NoSectionSelectedComponent from './NoSectionSelectedComponent'
+import OperationsHeader from './OperationsHeader'
 
 function Home() {
 
@@ -26,9 +27,13 @@ function Home() {
         style={{ padding: '1rem 1rem' }}
       >
 
-        <Row >
+        <Row>
 
-          <div className="col-sm-12 col-md-6 order-md-1">
+          <div className="col-sm-12 col-md-12 order-md-0">
+            <OperationsHeader />
+          </div>
+
+          <div className="col-sm-12 col-md-7 order-md-1">
             <AvailableSectionComponent setSelectedSection={setSelectedSection} />
           </div>
 
@@ -60,7 +65,7 @@ function Home() {
             </Switch>
           </div>
 
-          <div className="col-sm-12 col-md-6 order-md-1">
+          <div className="col-sm-12 col-md order-md-1">
             <VideoPlayer />
           </div>
 

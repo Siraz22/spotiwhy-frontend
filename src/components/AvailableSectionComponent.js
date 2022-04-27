@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Card, Form } from 'react-bootstrap'
+import { Button, Card, Form, Image } from 'react-bootstrap'
 import { useSections } from './api/APIAxios'
 import { v4 as uuid } from 'uuid'
 import { Link } from 'react-router-dom'
@@ -11,19 +11,23 @@ const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 3000 },
-    items: 5
+    paritialVisibilityGutter: 60,
+    items: 6
   },
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 4
+    items: 3,
+    paritialVisibilityGutter: 50
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
-    items: 3
+    items: 2,
+    paritialVisibilityGutter: 50
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
-    items: 1
+    items: 1,
+    paritialVisibilityGutter: 30
   }
 };
 
@@ -61,7 +65,11 @@ function AvailableSectionComponent(props) {
             <Card
               onClick={() => props.setSelectedSection({ sectionName: section.sectionName, sectionID: section.sectionID })}
               //onClick={() => console.log(props)}
-              className="bg-dark text-white" style={{ width: '12rem' }}
+              className="bg-dark text-white"
+              style={{
+                width: '15rem',
+                border: '0px solid',
+              }}
             >
               <Card.Img variant="top" height={130} src={section.sectionPhotoURL} />
               <Card.Body>
@@ -134,14 +142,16 @@ function AvailableSectionComponent(props) {
           <Button onClick={() => props.setSelectedSection({ sectionName: 'default', sectionID: '' })} variant='info'>All Songs</Button>
         </Link> */}
         <div className="container">
+
           <Link to={`/`} style={{ textDecoration: 'none' }}>
             <Card
               onClick={() => props.setSelectedSection({ sectionName: 'default', sectionID: '' })}
-              className="bg-dark text-white customClass">
+              className="bg-dark text-white customClass"
+            >
               <Card.Img
                 src="/allSongs.png"
                 alt="Card image"
-                height={100}
+                height={160}
               />
               <Card.ImgOverlay>
                 <Card.Title style={{ fontSize: "70px" }}>All songs</Card.Title>
@@ -155,15 +165,17 @@ function AvailableSectionComponent(props) {
           <Carousel
             swipeable={true}
             //arrows={false}
-            draggable={true}
+            //draggable={true}
             //showDots={false}
             responsive={responsive}
-            infinite={true}
-            autoPlay={true}
+            //infinite={true}
+            partialVisbile={true}
+            //itemClass="image-item"
+            autoPlay={false}
             autoPlaySpeed={3000}
             transitionDuration={500}
             removeArrowOnDeviceType={["tablet", "mobile"]}
-            itemClass="carousel-item-padding-40-px"
+            itemClass="carousel-item-padding-20-px"
           >
 
             {renderSections()}

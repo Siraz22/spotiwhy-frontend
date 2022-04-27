@@ -115,22 +115,6 @@ function SelectedSectionComponent(props) {
       .catch(err => console.log(err))
   }
 
-  function addSong() {
-    let songObj = {
-      songID: uuid(),
-      songURL: songURL,
-      songName: songName,
-      songArtist: "Unnamed Artist"
-    }
-
-    songsContext.songAPIcalls.addSong(songObj)
-      .then(res => {
-        console.log(res)
-        refreshSongList()
-      })
-      .catch(err => console.log(err))
-  }
-
   return (
     <React.Fragment>
 
@@ -166,13 +150,21 @@ function SelectedSectionComponent(props) {
             </div>
           </div>
         </div> */}
+
         <div className='container'>
-          <div className="row">
+          <div className="row"
+            style={{ padding: '0px 0px' }}
+          >
             <div className="col-md-7">
               <Card
-                className="bg-dark text-white">
+                className="text-white"
+                style={{
+                  border: '0px solid',
+                  backgroundColor: 'rgb(1,1,1,0)'
+                }}
+              >
                 <Card.Img
-                  style={{ borderRadius: '30px' }}
+                  style={{ borderRadius: '0px 20px' }}
                   src={selectedSection.sectionPhotoURL}
                   alt="Card image"
                   height={380}
