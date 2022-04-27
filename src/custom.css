@@ -1,7 +1,3 @@
-.background {
-    backgroundSize: 'cover';
-}
-
 .coverArtistText {
     position: absolute;
     top: 50%;
@@ -92,7 +88,7 @@ aside,
     padding: 5px 15px;
 }
 
-@media (min-width: 1921px) {
+@media (min-width: 1920px) {
     body {
         font-size: 18px;
     }
@@ -103,7 +99,7 @@ aside,
     background-size: cover;
     background-repeat: no-repeat;
     /* position: absolute; */
-    height: 100vh;
+    /* height: 100vh; */
     /* width: 100vw; */
     background-position: center;
     background-attachment: fixed;
@@ -140,4 +136,12 @@ aside,
     border-radius: 15px;
     margin: 10px 10px;
     background-color: rgba(53, 21, 51, 0.6);
+}
+
+.list-group {
+    max-height: 350px;
+    margin-bottom: 10px;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    /* overflow-y: auto */
 }

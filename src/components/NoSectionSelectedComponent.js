@@ -85,6 +85,7 @@ function NoSectionSelectedComponent() {
     const songsRendered = songs.map((song, index) => {
       return (
         <React.Fragment key={song.songID}>
+
           {/* <div className="row m-2 ">
             <div className="col">
               <Form.Check type='checkbox' onChange={(event) => checkboxChecked(song.songID, event.target.checked)}></Form.Check>
@@ -104,9 +105,9 @@ function NoSectionSelectedComponent() {
           }}>
 
             <Row>
-              <Col xs={1}>
+              {/* <Col xs={1}>
                 <Form.Check type='checkbox' onChange={(event) => checkboxChecked(song.songID, event.target.checked)}></Form.Check>
-              </Col>
+              </Col> */}
               <Col>
                 <Row onClick={() => playSong(index)}
                   style={{
@@ -204,34 +205,12 @@ function NoSectionSelectedComponent() {
 
         <div className="row">
 
-          {/* <div className="col">
-              <h2>All Songs Section Component</h2>
-            </div> */}
-
-          {/* <div className="col">
-            <Form>
-              <div className="row">
-                <div className="col">
-
-                  <Form.Control placeholder='Song Name' onChange={e => setSongName(e.target.value)} />
-                </div>
-                <div className="col">
-
-                  <Form.Control placeholder='Song URL' onChange={e => setSongURL(e.target.value)} />
-                </div>
-                <div className="col">
-                  <Button onClick={() => addSong()}>
-                    Add Song
-                  </Button>
-                </div>
-              </div>
-            </Form>
-          </div> */}
-
           {selectedSongsID.length !== 0 && <div className="">
             Add songs to which section?
             <Form>
-              {renderSections()}
+              <div className="scroll">
+                {renderSections()}
+              </div>
             </Form>
             <Button onClick={addSongsToSection} variant='secondary'>
               Add to section
@@ -269,7 +248,9 @@ function NoSectionSelectedComponent() {
 
           <div className="col mt-2">
             <Form>
-              {renderSongs()}
+              <div className="list-group">
+                {renderSongs()}
+              </div>
             </Form>
           </div>
         </div>

@@ -85,8 +85,7 @@ function VideoPlayer() {
 
                 controls={true}
                 //url={songs[currSongIndex]}
-                //url={songs}
-                url=""
+                url={songs}
               />
 
             </div>

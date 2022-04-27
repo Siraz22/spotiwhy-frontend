@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Form, Modal, Button, Row, Col, InputGroup, FormGroup } from 'react-bootstrap'
+import { Form, Modal, Button, Row, Col, InputGroup, FormGroup, Alert } from 'react-bootstrap'
 import { getYTInfoURL, getYTTreatedUrl, ytinfo } from './api/youtubeInfo';
 import { v4 as uuid } from 'uuid'
 import { useSongs } from './api/APIAxios';
@@ -11,8 +11,10 @@ function OperationsHeader() {
 
   const [show, setShow] = useState(false);
 
+  const [loading, setLoading] = useState(false)
+
   const [ytURL, setYtURL] = useState('')
-  const [ytInfoError, setYtInfoError] = useState(true)
+  const [ytInfoError, setYtInfoError] = useState(false)
   const [ytInfo, setYtInfo] = useState('')
 
   const [songName, setSongName] = useState('')
@@ -20,8 +22,11 @@ function OperationsHeader() {
   const [songThumbnailURL, setSongThumbnailURL] = useState('')
 
   function closeModal() {
-    setYtInfoError(true)
+    setYtInfoError(false)
+    setYtInfo('')
     setShow(false)
+    setLoading(false)
+    setAlert(false)
   }
 
   function addSong() {
@@ -45,40 +50,32 @@ function OperationsHeader() {
     return (
       <Modal show={show} onHide={() => setShow(false)}>
         <div className="customdarktheme">
-          <Modal.Header closeVariant='white' closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Header>
+            <Modal.Title>Song Summary</Modal.Title>
           </Modal.Header>
           <Modal.Body  >
             <Form>
 
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Label>Song URL</Form.Label>
-                <InputGroup hasValidation>
-                  <Form.Control
-                    isValid={!ytInfoError}
-                    isInvalid={ytInfoError}
-                    placeholder="Paste the video URL here"
-                    defaultValue={ytURL}
-                    autoFocus
-                  />
-                  <Form.Control.Feedback type="invalid">Incorrect URL. Try a new one</Form.Control.Feedback>
-                </InputGroup>
-              </Form.Group>
+              <img
+                src={ytInfo.thumbnail_url}
+              />
 
-              {console.log(ytInfo)}
-
-              {!ytInfoError && <FormGroup>
-                <Form.Label>Song Name</Form.Label>
-                <InputGroup hasValidation>
-                  <Form.Control
-                    isValid={!ytInfoError}
-                    isInvalid={ytInfoError}
-                    placeholder="Paste the video URL here"
-                    defaultValue={ytInfo.title}
-                    autoFocus
-                  />
+              <FormGroup>
+                <Form.Group>
+                  <Form.Label>Song Name</Form.Label>
+                  <InputGroup hasValidation>
+                    <Form.Control
+                      isValid={!ytInfoError}
+                      isInvalid={ytInfoError}
+                      placeholder="Paste the video URL here"
+                      defaultValue={ytInfo.title}
+                      autoFocus
+                    />
+                  </InputGroup>
                   <Form.Control.Feedback type="invalid">Enter a Song name</Form.Control.Feedback>
+                </Form.Group>
 
+                <Form.Group>
                   <Form.Label>Artist Name</Form.Label>
                   <InputGroup hasValidation>
                     <Form.Control
@@ -88,15 +85,15 @@ function OperationsHeader() {
                       defaultValue={ytInfo.author_name}
                       autoFocus
                     />
-                    <Form.Control.Feedback type="invalid">Enter an artist name</Form.Control.Feedback>
                   </InputGroup>
-                </InputGroup>
-              </FormGroup>}
+                  <Form.Control.Feedback type="invalid">Enter Artist Name</Form.Control.Feedback>
+                </Form.Group>
+              </FormGroup>
 
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShow(false)}>
+            <Button variant="secondary" onClick={closeModal}>
               Close
             </Button>
             <Button variant="primary" onClick={addSong}>
@@ -105,12 +102,32 @@ function OperationsHeader() {
 
           </Modal.Footer>
         </div>
-      </Modal>
+      </Modal >
     )
   }
 
+  // function processSearchQuery() {
+  //   console.log("Processing YT link...")
+  //   setLoading(true)
+  //   const reqURL = getYTInfoURL(ytURL)
+
+  //   axios.get(reqURL)
+  //     .then(res => {
+  //       setYtInfoError(false)
+  //       setYtInfo(res.data)
+  //       console.log("Treated url will be " + getYTTreatedUrl(ytURL))
+  //       setLoading(false)
+  //     })
+  //     .catch(err => {
+  //       setYtInfoError(true)
+  //       setLoading(false)
+  //     }
+  //     )
+  // }
+
   function addSongModal() {
-    setShow(true)
+
+    setLoading(true)
 
     const reqURL = getYTInfoURL(ytURL)
 
@@ -119,9 +136,21 @@ function OperationsHeader() {
         setYtInfoError(false)
         setYtInfo(res.data)
         console.log("Treated url will be " + getYTTreatedUrl(ytURL))
+        setLoading(false)
+        setShow(true)
       })
-      .catch(err => setYtInfoError(true))
+      .catch(err => {
+        setYtInfoError(true)
+        setLoading(false)
+        setAlert(true)
+      }
+      )
+  }
 
+  const [alert, setAlert] = useState(false);
+  function closeAlert() {
+    setAlert(false);
+    setYtInfoError(false)
   }
 
   return (
@@ -137,10 +166,27 @@ function OperationsHeader() {
         <Row>
 
           <Col className="d-flex align-items-center justify-content-center">
+
+
             <Form>
-              <Form.Control onChange={(e) => { setYtURL(e.target.value) }} placeholder='Enter youtube URL'></Form.Control>
+              <InputGroup hasValidation>
+
+                <Form.Control
+                  isInvalid={ytInfoError}
+                  onChange={(e) => { setYtURL(e.target.value) }} placeholder='Enter youtube URL'>
+                </Form.Control>
+              </InputGroup>
             </Form>
+
             {(ytURL === '' ? false : true) && <Button onClick={addSongModal}>Add Song</Button>}
+
+            {alert && <Alert variant="danger" onClose={closeAlert} dismissible>
+              <Alert.Heading>Error! You got an error!</Alert.Heading>
+              <p>
+                Check the URL again or your network connection
+              </p>
+            </Alert>}
+
           </Col>
 
         </Row>

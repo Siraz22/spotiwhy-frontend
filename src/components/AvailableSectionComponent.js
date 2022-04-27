@@ -168,11 +168,11 @@ function AvailableSectionComponent(props) {
             //draggable={true}
             //showDots={false}
             responsive={responsive}
-            //infinite={true}
-            partialVisbile={true}
+            infinite={true}
+            partialVisible={true}
             //itemClass="image-item"
-            autoPlay={false}
-            autoPlaySpeed={3000}
+            autoPlay={true}
+            autoPlaySpeed={10000}
             transitionDuration={500}
             removeArrowOnDeviceType={["tablet", "mobile"]}
             itemClass="carousel-item-padding-20-px"

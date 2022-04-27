@@ -11,9 +11,7 @@ function App() {
 
       <div>
         <Sidebar />
-        <div
-          className="contentDivision"
-        >
+        <div className="contentDivision">
           <Home />
         </div>
       </div>

@@ -7,6 +7,7 @@ import { FcMusic } from "react-icons/fc";
 import { ytthumbnail } from './api/youtubeThumbnail';
 import { ytinfo } from './api/youtubeInfo';
 import axios from 'axios';
+import { HiDotsVertical } from 'react-icons/hi'
 
 function SelectedSectionComponent(props) {
 
@@ -124,32 +125,7 @@ function SelectedSectionComponent(props) {
           border: '0px solid'
         }}>
 
-        {/* <div className="container">
-          <div className="row">
-            <div className="col">
-              <h2>Selected Section</h2>
-            </div>
 
-            <div className="col">
-              <Form>
-                <div className="row">
-                  <div className="col">
-                    <Form.Control placeholder='Song Name' onChange={e => setSongName(e.target.value)} />
-                  </div>
-                  <div className="col">
-
-                    <Form.Control placeholder='Song URL' onChange={e => setSongURL(e.target.value)} />
-                  </div>
-                  <div className="col">
-                    <Button onClick={() => addSong()}>
-                      Add Song to All
-                    </Button>
-                  </div>
-                </div>
-              </Form>
-            </div>
-          </div>
-        </div> */}
 
         <div className='container'>
           <div className="row"
@@ -179,7 +155,9 @@ function SelectedSectionComponent(props) {
               </Card>
             </div>
             <div className="col mt-2">
-              {renderSongs()}
+              <div className="list-group">
+                {renderSongs()}
+              </div>
             </div>
 
           </div>
