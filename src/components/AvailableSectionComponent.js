@@ -147,8 +147,6 @@ function AvailableSectionComponent(props) {
       setAddSectionModal(false)
     }
 
-
-
     return (
       <Modal show={addSectionModal} onHide={() => setAddSectionModal(false)}>
         <div className="customdarktheme">
