@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Button, Dropdown, Card, Col, Form, Image, Row } from 'react-bootstrap'
+import { Button, Modal, Dropdown, Card, Col, Form, Image, Row, InputGroup } from 'react-bootstrap'
 import { useSections } from './api/APIAxios'
 import { v4 as uuid } from 'uuid'
 import { Link } from 'react-router-dom'
@@ -37,10 +37,9 @@ function AvailableSectionComponent(props) {
   const sectionsContext = useSections();
   const [sections, setSections] = useState([])
   const [sectionName, setSectionName] = useState('')
-
+  const [addSectionModal, setAddSectionModal] = useState(false)
 
   useEffect(() => {
-    console.log("Hey I got triggered!")
     refreshSection()
   }, [props.sectionDeletedRefreshTemp])
 
@@ -63,9 +62,6 @@ function AvailableSectionComponent(props) {
   }
 
   function renderSections() {
-
-    console.log("Re-rendering the carousel!")
-    console.log(sections)
 
     const sectionsRendered = sections.map((section) => {
       return (
@@ -115,31 +111,104 @@ function AvailableSectionComponent(props) {
     return sectionsRendered
   }
 
-  function deleteSection(sectionIDtoDelete) {
-    sectionsContext.sectionAPIcalls.deleteSection(sectionIDtoDelete)
-      .then(res => {
-        console.log(res)
-        refreshSection()
-      })
-      .catch(err => console.log(err))
-  }
+  // function deleteSection(sectionIDtoDelete) {
+  //   sectionsContext.sectionAPIcalls.deleteSection(sectionIDtoDelete)
+  //     .then(res => {
+  //       console.log(res)
+  //       refreshSection()
+  //     })
+  //     .catch(err => console.log(err))
+  // }
 
-  function addSection() {
-    let sectionObj = {
-      sectionID: uuid(),
-      sectionPhotoURL: '',
-      sectionName: sectionName,
-      sectionDescription: "No description",
-      sectionOwnerId: "siraz",
-      songs_set: []
+  function AddSectionModal() {
+
+    const [sectionPhotoURL, setSectionPhotoURL] = useState('')
+    const [sectionName, setSectionName] = useState('')
+    const [sectionDescription, setSectionDescription] = useState('')
+
+
+    function addSection() {
+      let sectionObj = {
+        sectionID: uuid(),
+        sectionPhotoURL: sectionPhotoURL,
+        sectionName: sectionName,
+        sectionDescription: sectionDescription,
+        sectionOwnerId: "siraz",
+        songs_set: []
+      }
+
+      sectionsContext.sectionAPIcalls.addSection(sectionObj)
+        .then(res => {
+          console.log(res)
+          refreshSection()
+        })
+        .catch(err => console.log(err))
+
+      setAddSectionModal(false)
     }
 
-    sectionsContext.sectionAPIcalls.addSection(sectionObj)
-      .then(res => {
-        console.log(res)
-        refreshSection()
-      })
-      .catch(err => console.log(err))
+
+
+    return (
+      <Modal show={addSectionModal} onHide={() => setAddSectionModal(false)}>
+        <div className="customdarktheme">
+          <Modal.Header>
+            <Modal.Title>Add Section</Modal.Title>
+          </Modal.Header>
+          <Modal.Body  >
+            <Form>
+
+              <Form.Group>
+                <Form.Label>Section Name</Form.Label>
+                <InputGroup hasValidation>
+
+                  <Form.Control
+                    isInvalid={sectionName === '' ? true : false}
+                    isValid={sectionName === '' ? false : true}
+                    onChange={event => setSectionName(event.target.value)}
+                  />
+                  <Form.Control.Feedback type="invalid">Name can't be null</Form.Control.Feedback>
+                </InputGroup>
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Section Description</Form.Label>
+                <InputGroup hasValidation>
+
+                  <Form.Control
+                    isInvalid={sectionDescription === '' ? true : false}
+                    isValid={sectionDescription === '' ? false : true}
+                    onChange={event => setSectionDescription(event.target.value)}
+                  />
+                  <Form.Control.Feedback type="invalid">Description can't be null</Form.Control.Feedback>
+                </InputGroup>
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>Section Photo URL</Form.Label>
+                <Form.Control
+                  onChange={event => setSectionPhotoURL(event.target.value)}
+                  placeholder="Optional"
+                />
+                {/* <Form.Control.Feedback type="invalid">Name can't be null</Form.Control.Feedback> */}
+              </Form.Group>
+
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setAddSectionModal(false)}>
+              Close
+            </Button>
+            <Button
+              disabled={sectionName === ''}
+              variant="primary" onClick={() => addSection()}>
+              Add Section
+            </Button>
+
+          </Modal.Footer>
+        </div>
+      </Modal >
+    )
   }
 
   return (
@@ -171,24 +240,34 @@ function AvailableSectionComponent(props) {
 
         <div className="container">
 
-          <Link to={`/`} style={{ textDecoration: 'none' }}>
-            <Card
-              onClick={() => props.setSelectedSection({ sectionName: 'default', sectionID: '' })}
-              className="bg-dark text-white customClass"
-            >
-              <Card.Img
-                src="/allSongs.png"
-                alt="Card image"
-                height={160}
-              />
-              <Card.ImgOverlay>
-                <Card.Title style={{ fontSize: "70px" }}>All songs</Card.Title>
-                <Card.Text className="muted">
-                  Explore your library
-                </Card.Text>
-              </Card.ImgOverlay>
-            </Card>
-          </Link>
+          <Row>
+            <Col xs={9}>
+              <Link to={`/`} style={{ textDecoration: 'none' }}>
+                <Card
+                  onClick={() => props.setSelectedSection({ sectionName: 'default', sectionID: '' })}
+                  className="bg-dark text-white customClass"
+                >
+                  <Card.Img
+                    src="/allSongs.png"
+                    alt="Card image"
+                    height={160}
+                  />
+                  <Card.ImgOverlay>
+                    <h1>All songs</h1>
+                    <Card.Text className="muted">
+                      Explore your library
+                    </Card.Text>
+                  </Card.ImgOverlay>
+                </Card>
+              </Link>
+            </Col>
+
+            <Col xs={3}>
+              <Button onClick={() => setAddSectionModal(true)}>Add A Section?</Button>
+            </Col>
+          </Row>
+
+          <AddSectionModal />
 
           <Carousel
             swipeable={true}
