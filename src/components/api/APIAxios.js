@@ -7,31 +7,7 @@ export const SectionsContext = createContext();
 
 function APIAxios({ children }) {
 
-  // const [songsState, songsDispatch] = useReducer(songsReducer, [])
-  // const [sectionState, sectionsDispatch] = useReducer(sectionsReducer, [])
-  //
-  // function songsReducer(songsState, action) {
-  //   switch (action.type) {
-  //     case SONGS_TYPE.GET: console.log("Get songs called");
-  //     case SONGS_TYPE.ADD: console.log("Add songs called");
-  //   }
-  // }
-
-  // function sectionsReducer(sectionsState, action) {
-  //   switch (action.type) {
-  //     case SECTIONS_TYPE.GET: console.log("Get section called");
-  //     case SECTIONS_TYPE.ADD: console.log("Add sections called");
-  //   }
-  // }
-
   const baseURL = "http://localhost:8080"
-  //const [songs, setSongs] = useState([])
-  //const [sections, setSections] = useState([])
-
-  // SONG API
-  // async function getSongs() {
-  //   return await axios.get(baseURL + `/songs`)
-  // }
 
   async function getSongs() {
     return await axios.get(baseURL + `/songs`)
@@ -51,6 +27,10 @@ function APIAxios({ children }) {
 
   async function addSongToSection(songId, sectionId) {
     return await axios.post(baseURL + `/addSongToSection/${songId}/${sectionId}`)
+  }
+
+  async function removeSongFromSection(songId, sectionId) {
+    return await axios.delete(baseURL + `/removeSongFromSection/${songId}/${sectionId}`)
   }
 
   // SECTION API
@@ -78,7 +58,7 @@ function APIAxios({ children }) {
     <SongsContext.Provider
       value={{
         //songs: songs, setSongs: setSongs,
-        songAPIcalls: { getSongs, addSong, updateSong, deleteSong, addSongToSection }
+        songAPIcalls: { getSongs, addSong, updateSong, deleteSong, addSongToSection, removeSongFromSection }
       }}
     >
       <SectionsContext.Provider

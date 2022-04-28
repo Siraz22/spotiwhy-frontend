@@ -88,9 +88,9 @@ aside,
     padding: 5px 15px;
 }
 
-@media (min-width: 1920px) {
+@media (min-width: 425px) {
     body {
-        font-size: 18px;
+        font-size: 12px;
     }
 }
 
@@ -133,15 +133,20 @@ aside,
 }
 
 .customClass {
-    border-radius: 15px;
+    border-radius: 0px;
     margin: 10px 10px;
     background-color: rgba(53, 21, 51, 0.6);
 }
 
 .list-group {
+    height: 350px;
     max-height: 350px;
     margin-bottom: 10px;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     /* overflow-y: auto */
+}
+
+#dropdown-basic::after {
+    display: none;
 }

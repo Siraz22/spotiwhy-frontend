@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Button, ButtonGroup, Card, Col, Form, Row, Modal } from 'react-bootstrap';
+import { Button, ButtonGroup, Card, Col, Form, Row, Modal, InputGroup, DropdownButton, Dropdown, FormControl } from 'react-bootstrap';
 import { SectionsContext, useSections, useSongs } from './api/APIAxios'
 import { v4 as uuid } from 'uuid'
 import { ytthumbnail } from './api/youtubeThumbnail';
 import { useGlobalInstances } from './context/CustomGlobalInstances';
+import { HiDotsVertical } from 'react-icons/hi'
 
 function NoSectionSelectedComponent() {
 
@@ -17,6 +18,7 @@ function NoSectionSelectedComponent() {
   const [selectedSection, setSelectedSection] = useState('')
 
   const globalContext = useGlobalInstances();
+
   useEffect(() => {
 
   }, [globalContext])
@@ -64,14 +66,6 @@ function NoSectionSelectedComponent() {
     }
   }
 
-  function renderThumbnail(url) {
-    ytthumbnail.set(url)
-    let imgUrl = ytthumbnail.thumb()
-    return (
-      <img src={imgUrl}></ img>
-    )
-  }
-
   function playSong(index) {
     //If this song is going to be played, set the songs[] array in VideoPlayer with current section Songs
     //This is facilitated by global Context which contains currPlayingSongSet
@@ -86,18 +80,6 @@ function NoSectionSelectedComponent() {
       return (
         <React.Fragment key={song.songID}>
 
-          {/* <div className="row m-2 ">
-            <div className="col">
-              <Form.Check type='checkbox' onChange={(event) => checkboxChecked(song.songID, event.target.checked)}></Form.Check>
-            </div>
-            <div className="col-10 row">
-              <Button variant='outline-success' >{song.songName}</Button>
-            </div>
-            <div className="col">
-              <Button onClick={() => deleteSong(song.songID)}>Delete Song</Button>
-            </div>
-          </div> */}
-
           <div style={{
             margin: '0px 20px 0px 20px',
             padding: '5px 0px 5px 0px',
@@ -105,28 +87,41 @@ function NoSectionSelectedComponent() {
           }}>
 
             <Row>
-              {/* <Col xs={1}>
-                <Form.Check type='checkbox' onChange={(event) => checkboxChecked(song.songID, event.target.checked)}></Form.Check>
-              </Col> */}
               <Col>
-                <Row onClick={() => playSong(index)}
+                <Row
                   style={{
                     backgroundColor: 'rgb(26, 26, 26, 0.7)',
                     borderRadius: '10px'
                   }}>
 
-                  <Col xs={1} className="d-flex align-items-center justify-content-center">
+                  <Col onClick={() => playSong(index)} xs={2} className="d-flex align-items-center justify-content-center">
                     {/* <FcMusic fontSize={30} /> */}
-                    {renderThumbnail(song.songURL)}
+                    {/* {renderThumbnail(song.songURL)} */}
+                    <img height={35} src={song.songPhotoUrl} />
                   </Col>
-                  <Col xs={9}>
+
+                  <Col onClick={() => playSong(index)} xs={8}>
                     <Row>
                       <strong>{song.songName}</strong>
                       <text>{song.songArtist}</text>
                     </Row>
                   </Col>
-                  <Col className="d-flex align-items-center justify-content-center">
-                    <div className='muted'>5:32</div>
+
+                  <Col xs={2} className="d-flex align-items-center justify-content-center">
+
+                    {/* <HiDotsVertical fontSize={15} /> */}
+
+                    <Dropdown >
+                      <Dropdown.Toggle variant="none" id="dropdown-basic">
+                        <HiDotsVertical color='white' fontSize={15} />
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu variant='dark'>
+                        {/* <Dropdown.Item href="#/action-1">Remove from Section</Dropdown.Item> */}
+                        <Dropdown.Item onClick={() => deleteSong(song.songID)}>Delete Song</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+
                   </Col>
                 </Row>
               </Col>
@@ -230,18 +225,19 @@ function NoSectionSelectedComponent() {
                 backgroundColor: 'rgb(1,1,1,0)'
               }}
             >
+
               <Card.Img
                 style={{ borderRadius: '0px 20px' }}
                 src="/allSongs.png"
                 alt="Card image"
-                height={380}
-
+                height={280}
               />
+
               <Card.ImgOverlay>
-                <Card.Title style={{ fontSize: "70px" }}>Explore</Card.Title>
-                <Card.Text className="muted">
+                <h1>Explore</h1>
+                <p className="muted">
                   Your Library
-                </Card.Text>
+                </p>
               </Card.ImgOverlay>
             </Card>
           </div>

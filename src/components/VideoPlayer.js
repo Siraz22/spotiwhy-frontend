@@ -20,7 +20,7 @@ function useWindowSize() {
 function VideoPlayer() {
 
   const globalContext = useGlobalInstances();
-  const multiplier = 14
+  const multiplier = 22
 
   const [songs, setSongs] = useState([])
   const [vol, setVolume] = useState(1)
@@ -90,7 +90,7 @@ function VideoPlayer() {
 
             </div>
 
-            <div className="row text-center ">
+            <div className="mt-3 row text-center ">
               <div className="col ">
                 <Button onClick={() => prevSong()}>  Prev </Button>
               </div>
