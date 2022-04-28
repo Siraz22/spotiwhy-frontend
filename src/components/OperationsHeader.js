@@ -157,7 +157,7 @@ function OperationsHeader() {
     <React.Fragment>
 
       <div
-        className="customClass"
+        className=""
         style={{
           border: '0px solid'
         }}

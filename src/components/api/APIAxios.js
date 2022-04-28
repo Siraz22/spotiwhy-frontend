@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { createContext, useContext, useState } from 'react'
+
 export const SongsContext = createContext();
 export const SectionsContext = createContext();
 
@@ -74,6 +75,7 @@ function APIAxios({ children }) {
     </SongsContext.Provider>
   )
 }
+
 export const useSongs = () => useContext(SongsContext);
 export const useSections = () => useContext(SectionsContext);
 export default APIAxios

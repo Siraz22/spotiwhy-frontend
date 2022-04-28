@@ -8,6 +8,8 @@ import { ytthumbnail } from './api/youtubeThumbnail';
 import { ytinfo } from './api/youtubeInfo';
 import axios from 'axios';
 import { HiDotsVertical } from 'react-icons/hi'
+import { FaTrash } from 'react-icons/fa'
+import { Link, Redirect } from 'react-router-dom';
 
 function SelectedSectionComponent(props) {
 
@@ -16,11 +18,10 @@ function SelectedSectionComponent(props) {
   const globalContext = useGlobalInstances();
 
   useEffect(() => {
-    console.log("Use effect Section - global")
+
   }, [globalContext])
 
   useEffect(() => {
-    console.log("Use effect Section - prop")
 
     songsContext.songAPIcalls.getSongs()
       .then((res) => {
@@ -42,7 +43,7 @@ function SelectedSectionComponent(props) {
   const [selectedSection, setSelectedSelection] = useState([])
   const [sectionSongs, setSectionSongs] = useState([])
   const [songs, setSongs] = useState([])
-  const [showModal, setShow] = useState(false);
+  const [showAddSongsToSectionModal, setShowAddSongsToSectionModal] = useState(false);
 
   function refreshSongList() {
 
@@ -82,7 +83,7 @@ function SelectedSectionComponent(props) {
                   <Col onClick={() => playSong(index)} xs={8}>
                     <Row>
                       <strong>{song.songName}</strong>
-                      <text>{song.songArtist}</text>
+                      {song.songArtist}
                     </Row>
                   </Col>
 
@@ -142,7 +143,7 @@ function SelectedSectionComponent(props) {
   }
 
   function closeModal() {
-    setShow(false)
+    setShowAddSongsToSectionModal(false)
   }
 
   function AddSongToSectionModal() {
@@ -150,7 +151,7 @@ function SelectedSectionComponent(props) {
     const [selectedSongsID, setSelectedSongsID] = useState([])
 
     function checkboxChecked(songID, checked) {
-      console.log("checkbox clicked")
+
       console.log(checked)
 
       if (checked) {
@@ -162,9 +163,6 @@ function SelectedSectionComponent(props) {
     }
 
     function renderUnaddedSongs() {
-
-
-
 
       const filteredSongs = songs.filter(song => !sectionSongs.map(sectionSong => sectionSong.songID).includes(song.songID))
 
@@ -231,7 +229,7 @@ function SelectedSectionComponent(props) {
     }
 
     return (
-      <Modal show={showModal} onHide={() => setShow(false)}>
+      <Modal show={showAddSongsToSectionModal} onHide={() => setShowAddSongsToSectionModal(false)}>
         <div className="customdarktheme">
           <Modal.Header>
             <Modal.Title>Add Songs to Current Section</Modal.Title>
@@ -255,9 +253,45 @@ function SelectedSectionComponent(props) {
     )
   }
 
+  const [deleteSectionModal, setDeleteSectionModal] = useState(false)
+
+  function DeleteSectionModal() {
+
+    function deleteSection() {
+      sectionsContext.sectionAPIcalls.deleteSection(selectedSection.sectionID)
+        .then(res => {
+          console.log(res.data)
+          props.setSectionDeletedRefreshTemp(prevState => !prevState)
+        })
+        .catch(err => console.log(err))
+    }
+
+    return (
+      <Modal show={deleteSectionModal} onHide={() => setDeleteSectionModal(false)}>
+        <div className="customdarktheme">
+          <Modal.Header>
+            <Modal.Title>Confirm deletion</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setDeleteSectionModal(false)}>
+              Close
+            </Button>
+
+            <Link to="/">
+              <Button variant="primary" onClick={() => deleteSection()}>
+                Delete Section
+              </Button>
+            </Link>
+
+          </Modal.Footer>
+        </div>
+      </Modal >
+    )
+  }
+
   return (
     <React.Fragment>
-      {console.log("Main Selection Function")}
 
       <div
         className="customClass"
@@ -285,15 +319,27 @@ function SelectedSectionComponent(props) {
 
                 />
                 <Card.ImgOverlay>
-                  <Card.Title style={{ fontSize: "70px" }}>{selectedSection.sectionName}</Card.Title>
+                  <Row>
+                    <Col xs={11}>
+                      <Card.Title style={{ fontSize: "70px" }}>{selectedSection.sectionName}</Card.Title>
+                    </Col>
+                    <Col xs={1}>
+
+                      <Button variant='none' onClick={() => setDeleteSectionModal(true)}>
+                        <FaTrash color='red' fontSize={25} />
+                      </Button>
+
+                    </Col>
+                  </Row>
                   <Card.Text className="muted">
                     {selectedSection.sectionDescription}
                   </Card.Text>
-                  <Button onClick={() => setShow(true)}>Add Songs</Button>
+                  <Button onClick={() => setShowAddSongsToSectionModal(true)}>Add Songs</Button>
                 </Card.ImgOverlay>
               </Card>
 
               <AddSongToSectionModal />
+              <DeleteSectionModal />
 
             </div>
             <div className="col mt-2">

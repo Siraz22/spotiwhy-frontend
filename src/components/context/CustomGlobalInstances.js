@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useRef, useState } from 'react'
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react'
 export const CustomGlobalContext = createContext();
 
 function CustomGlobalInstances({ children }) {
@@ -6,6 +6,7 @@ function CustomGlobalInstances({ children }) {
   const [currPlayingSongSet, setCurrPlayingSet] = useState([])
   const [playingSongIndex, setPlayingSongIndex] = useState(0)
   const playerRef = useRef();
+  const [sections, setSections] = useState([])
 
   return (
     <CustomGlobalContext.Provider

@@ -103,7 +103,7 @@ function NoSectionSelectedComponent() {
                   <Col onClick={() => playSong(index)} xs={8}>
                     <Row>
                       <strong>{song.songName}</strong>
-                      <text>{song.songArtist}</text>
+                      {song.songArtist}
                     </Row>
                   </Col>
 
