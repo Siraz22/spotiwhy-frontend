@@ -3,7 +3,6 @@ import { Button, Modal, Dropdown, Card, Col, Form, Image, Row, InputGroup } from
 import { useSections } from './api/APIAxios'
 import { v4 as uuid } from 'uuid'
 import { Link } from 'react-router-dom'
-import { HiDotsVertical } from 'react-icons/hi'
 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -12,23 +11,23 @@ const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 3000 },
-    partialVisibilityGutter: 60,
+    partialVisibilityGutter: 20,
     items: 6
   },
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 3,
-    partialVisibilityGutter: 50
+    items: 5,
+    partialVisibilityGutter: 45
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
-    items: 2,
-    partialVisibilityGutter: 50
+    items: 3,
+    partialVisibilityGutter: 20
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
-    items: 1,
-    partialVisibilityGutter: 30
+    items: 2,
+    partialVisibilityGutter: 20
   }
 };
 
@@ -67,42 +66,32 @@ function AvailableSectionComponent(props) {
       return (
         <React.Fragment key={section.sectionID}>
 
-          <Link to={`/section/${section.sectionName}`} style={{ textDecoration: 'none' }}>
-            <Card
-              onClick={() => props.setSelectedSection({ sectionName: section.sectionName, sectionID: section.sectionID })}
-              //onClick={() => console.log(props)}
-              className="bg-dark text-white"
-              style={{
-                width: '15rem',
-                border: '0px solid',
-              }}
-            >
-              <Card.Img variant="top" height={130} src={section.sectionPhotoURL} />
+          <Link to={`/section/${section.sectionName}`} style={{ textDecoration: 'none', color: 'antiquewhite' }}>
 
-              {/* <Card.ImgOverlay>
+            <Row >
+              <Col xs={12} className="mb-2 d-flex align-items-center justify-content-center">
 
-                <div>
-                  <Dropdown >
-                    <Dropdown.Toggle style={{ marginRight: '-380px' }} variant="none" id="dropdown-basic">
-                      <HiDotsVertical color='white' fontSize={25} />
-                    </Dropdown.Toggle>
+                <img
+                  onClick={() => props.setSelectedSection({ sectionName: section.sectionName, sectionID: section.sectionID })}
+                  src={section.sectionPhotoURL}
+                  className="customBox-left trimmed-cover"
+                  height={150}
+                  width={150}
+                  style={{
+                    // 50% 50% signifies center
+                    objectPosition: `65% 50%`
+                  }}
+                ></img>
 
-                    <Dropdown.Menu variant='dark'>
-                      <Dropdown.Item onClick={() => console.log()}>Delete Section</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </div>
+              </Col>
+              <Col xs={12} className="d-flex align-items-center justify-content-center">
+                <p>{section.sectionName}</p>
+              </Col>
+              <Col xs={12} className="d-flex align-items-center justify-content-center">
+                <p className='text-muted'>{section.songs_set.length} {(section.songs_set.length === 1 ? 'song' : 'songs')}</p>
+              </Col>
+            </Row>
 
-              </Card.ImgOverlay> */}
-
-
-              <Card.Body>
-                <Card.Title>{section.sectionName}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  Section description
-                </Card.Subtitle>
-              </Card.Body>
-            </Card>
           </Link>
         </React.Fragment >
       )
@@ -217,39 +206,29 @@ function AvailableSectionComponent(props) {
           border: '0px solid',
         }}>
 
-        {/* <h2>Available Sections Component</h2>
-
-        <Form className='mb-2'>
-          <div className="row">
-            <div className="col">
-              <Form.Control placeholder='Section Name' onChange={e => setSectionName(e.target.value)} />
-            </div>
-            <div className="col">
-              <Button onClick={() => addSection()}>
-                Add Section
-              </Button>
-            </div>
-          </div>
-        </Form> */}
-
-        {/* <Link to={`/`} style={{ textDecoration: 'none' }}>
-          <Button onClick={() => props.setSelectedSection({ sectionName: 'default', sectionID: '' })} variant='info'>All Songs</Button>
-        </Link> */}
-
         <div className="container">
 
-          <Row>
+          <Row style={{ marginBottom: '20px' }}>
             <Col xs={9}>
               <Link to={`/`} style={{ textDecoration: 'none' }}>
                 <Card
+                  style={{
+                    backgroundColor: '#fff0',
+                    border: '0px'
+                  }}
                   onClick={() => props.setSelectedSection({ sectionName: 'default', sectionID: '' })}
-                  className="bg-dark text-white customClass"
+                  className="text-white"
                 >
-                  <Card.Img
+                  <img
+                    className="trimmed-cover customBox-right"
                     src="/allSongs.png"
                     alt="Card image"
-                    height={160}
+                    height={200}
+                    style={{
+                      objectPosition: `30% 60%`
+                    }}
                   />
+
                   <Card.ImgOverlay>
                     <h1>All songs</h1>
                     <Card.Text className="muted">
@@ -261,7 +240,32 @@ function AvailableSectionComponent(props) {
             </Col>
 
             <Col xs={3}>
-              <Button onClick={() => setAddSectionModal(true)}>Add A Section?</Button>
+
+              <Card
+                style={{
+                  backgroundColor: '#fff0',
+                  border: '0px'
+                }}
+                className="text-white"
+              >
+                <img
+                  className="customBox-left trimmed-cover"
+                  // onClick={() => setAddSectionModal(true)}
+                  // src="https://i.gifer.com/OKEq.gif"
+                  src="https://media.giphy.com/media/3q3SUqPnxZGQpMNcjc/giphy.gif"
+                  height={100}
+                />
+
+                <Card.ImgOverlay
+                  onClick={() => setAddSectionModal(true)}
+                  className='d-flex align-items-center justify-content-center'>
+                  <span>
+                    Add A Section?
+                  </span>
+                </Card.ImgOverlay>
+
+              </Card>
+
             </Col>
           </Row>
 
@@ -276,17 +280,31 @@ function AvailableSectionComponent(props) {
             infinite={true}
             partialVisible={true}
             //itemClass="image-item"
-            //autoPlay={true}
+            autoPlay={false}
             autoPlaySpeed={10000}
             transitionDuration={500}
             removeArrowOnDeviceType={["tablet", "mobile"]}
-            itemClass="carousel-item-padding-20-px"
+            itemClass="carousel-item-padding-10-px"
           >
 
             {renderSections()}
 
           </Carousel>
         </div>
+
+        {/* <div className="">
+
+          <h1>original</h1>
+          <img height="200" src="https://wallpapercave.com/wp/wp4057526.png" alt="Bear" />
+
+          <h1>object-fit: cover</h1>
+          <img className="trimmed-cover customBox-right"
+            src="https://wallpapercave.com/wp/wp4057526.png"
+            alt="Bear"
+          />
+
+        </div> */}
+
       </div>
 
     </React.Fragment >

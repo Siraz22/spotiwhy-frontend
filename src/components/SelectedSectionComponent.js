@@ -4,11 +4,10 @@ import { useSections, useSongs } from './api/APIAxios'
 import { v4 as uuid } from 'uuid'
 import { useGlobalInstances } from './context/CustomGlobalInstances';
 import { FcMusic } from "react-icons/fc";
-import { ytthumbnail } from './api/youtubeThumbnail';
-import { ytinfo } from './api/youtubeInfo';
 import axios from 'axios';
 import { HiDotsVertical } from 'react-icons/hi'
-import { FaTrash } from 'react-icons/fa'
+import { FaTrash, FaPlay } from 'react-icons/fa'
+import { BiShuffle } from 'react-icons/bi'
 import { Link, Redirect } from 'react-router-dom';
 
 function SelectedSectionComponent(props) {
@@ -18,7 +17,6 @@ function SelectedSectionComponent(props) {
   const globalContext = useGlobalInstances();
 
   useEffect(() => {
-
   }, [globalContext])
 
   useEffect(() => {
@@ -46,7 +44,6 @@ function SelectedSectionComponent(props) {
   const [showAddSongsToSectionModal, setShowAddSongsToSectionModal] = useState(false);
 
   function refreshSongList() {
-
     sectionsContext.sectionAPIcalls.getSectionById(props.selectedSection.sectionID)
       .then((res) => {
         setSelectedSelection(res.data)
@@ -60,34 +57,42 @@ function SelectedSectionComponent(props) {
       return (
         <React.Fragment key={song.songID}>
 
-          <div style={{
-            margin: '0px 20px 0px 20px',
-            padding: '5px 0px 5px 0px',
-            // border: '10px 0px 10px 0px',
-          }}>
+          <div
+
+            style={{
+              margin: '0px 20px 0px 0px',
+              padding: '5px 0px 5px 0px',
+              backgroundColor: 'rgb(26, 26, 26, 0.7)',
+              marginTop: '0.3rem',
+              marginBottom: '0.3rem',
+              paddingTop: '0.3rem',
+              paddingBottom: '0.3rem',
+            }}
+            className="customBox-left"
+          >
 
             <Row>
               <Col>
-                <Row
-                  style={{
-                    backgroundColor: 'rgb(26, 26, 26, 0.7)',
-                    borderRadius: '10px'
-                  }}>
+                <Row>
 
                   <Col onClick={() => playSong(index)} xs={2} className="d-flex align-items-center justify-content-center">
                     {/* <FcMusic fontSize={30} /> */}
                     {/* {renderThumbnail(song.songURL)} */}
-                    <img height={35} src={song.songPhotoUrl} />
+                    <img
+                      className="trimmed-cover"
+                      height={35}
+                      src={song.songPhotoUrl}
+                    />
                   </Col>
 
-                  <Col onClick={() => playSong(index)} xs={8}>
+                  <Col onClick={() => playSong(index)} xs={9}>
                     <Row>
-                      <strong>{song.songName}</strong>
+                      <b style={{ padding: '0px' }}>{song.songName}</b>
                       {song.songArtist}
                     </Row>
                   </Col>
 
-                  <Col xs={2} className="d-flex align-items-center justify-content-center">
+                  <Col xs={1} className="d-flex align-items-center justify-content-center">
 
                     {/* <HiDotsVertical fontSize={15} /> */}
 
@@ -107,9 +112,9 @@ function SelectedSectionComponent(props) {
                 </Row>
               </Col>
             </Row>
-          </div>
+          </div >
 
-        </React.Fragment>
+        </React.Fragment >
       )
     })
 
@@ -194,7 +199,11 @@ function SelectedSectionComponent(props) {
                     <Col xs={2} className="d-flex align-items-center justify-content-center">
                       {/* <FcMusic fontSize={30} /> */}
                       {/* {renderThumbnail(song.songURL)} */}
-                      <img height={35} src={song.songPhotoUrl} />
+                      <img
+                        className='trimmed-cover'
+                        height={35}
+                        src={song.songPhotoUrl}
+                      />
                     </Col>
 
                     <Col xs={8}>
@@ -304,37 +313,82 @@ function SelectedSectionComponent(props) {
             style={{ padding: '0px 0px' }}
           >
             <div className="col-md-7">
+
               <Card
                 className="text-white"
                 style={{
-                  border: '0px solid',
-                  backgroundColor: 'rgb(1,1,1,0)'
+                  border: '0px solid'
                 }}
               >
-                <Card.Img
-                  style={{ borderRadius: '0px 20px' }}
+                <img
+                  className="trimmed-cover"
                   src={selectedSection.sectionPhotoURL}
                   alt="Card image"
-                  height={380}
-
+                  height={350}
+                  width='content-max'
+                  style={{
+                    objectPosition: `10% 30%`
+                  }}
                 />
+
                 <Card.ImgOverlay>
+
                   <Row>
                     <Col xs={11}>
-                      <Card.Title style={{ fontSize: "70px" }}>{selectedSection.sectionName}</Card.Title>
+                      <Card.Title style={{ fontSize: "70px", textShadow: `2px 2px #000000` }}>{selectedSection.sectionName}</Card.Title>
                     </Col>
-                    <Col xs={1}>
+                    <Col xs={1} className="text-center">
 
                       <Button variant='none' onClick={() => setDeleteSectionModal(true)}>
-                        <FaTrash color='red' fontSize={25} />
+                        <FaTrash color='antiquewhite' fontSize='1.3rem' />
                       </Button>
 
                     </Col>
                   </Row>
-                  <Card.Text className="muted">
-                    {selectedSection.sectionDescription}
-                  </Card.Text>
-                  <Button onClick={() => setShowAddSongsToSectionModal(true)}>Add Songs</Button>
+
+                  <Row className='mb-4'>
+                    <Card.Text className="muted"
+                      style={{ textShadow: `2px 2px #000000` }}
+                    >
+                      {selectedSection.sectionDescription}
+                    </Card.Text>
+                  </Row>
+
+                  <Row className='mb-2'>
+                    <Col>
+                      <Button className="customBox-left"
+                        style={{
+                          paddingRight: '3px',
+                          paddingTop: '4px',
+                          paddingBottom: '4px',
+                          border: '0px',
+                          backgroundColor: '#ffffff54'
+                        }}
+                      >
+                        <FaPlay /> <span style={{ marginRight: '20px' }}>PLAY ALL</span>
+                        <Button
+                          style={{
+                            border: '0px',
+                            backgroundColor: 'white',
+                            color: 'black'
+                          }}
+                          variant='secondary' className='customBox-left'> <BiShuffle /> MIX</Button>
+                      </Button>
+                    </Col>
+                  </Row>
+
+                  <Row className='mb-2'>
+                    <Col>
+                      <Button
+                        style={{
+                          paddingRight: '6px',
+                          paddingTop: '9px',
+                          paddingBottom: '9px',
+                        }}
+                        variant='secondary' className='customBox-left' onClick={() => setShowAddSongsToSectionModal(true)}>Add Songs</Button>
+                    </Col>
+                  </Row>
+
                 </Card.ImgOverlay>
               </Card>
 
@@ -344,6 +398,7 @@ function SelectedSectionComponent(props) {
             </div>
             <div className="col mt-2">
               <div className="list-group">
+                <span><h5>Songs List</h5></span>
                 {renderSongs()}
               </div>
             </div>

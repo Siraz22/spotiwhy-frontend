@@ -36,9 +36,9 @@ function Home() {
       >
         <Row>
 
-          <div className="col-sm-12 col-md-12 order-md-0">
+          {/* <div className="col-sm-12 col-md-12 order-md-0">
             <OperationsHeader />
-          </div>
+          </div> */}
 
           <div className="col-sm-12 col-md-7 order-md-1">
             <AvailableSectionComponent

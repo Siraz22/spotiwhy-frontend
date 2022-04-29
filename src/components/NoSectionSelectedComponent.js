@@ -5,6 +5,8 @@ import { v4 as uuid } from 'uuid'
 import { ytthumbnail } from './api/youtubeThumbnail';
 import { useGlobalInstances } from './context/CustomGlobalInstances';
 import { HiDotsVertical } from 'react-icons/hi'
+import { FaPlay, FaTrash } from 'react-icons/fa'
+import { BiShuffle } from 'react-icons/bi'
 
 function NoSectionSelectedComponent() {
 
@@ -55,16 +57,16 @@ function NoSectionSelectedComponent() {
       .catch(err => console.log(err))
   }
 
-  function checkboxChecked(songID, checked) {
-    console.log("checkbox clicked")
+  // function checkboxChecked(songID, checked) {
+  //   console.log("checkbox clicked")
 
-    if (checked) {
-      setSelectedSongs([...selectedSongsID, songID])
-    }
-    else if (!checked) {
-      setSelectedSongs(selectedSongsID.filter((entry) => entry !== songID))
-    }
-  }
+  //   if (checked) {
+  //     setSelectedSongs([...selectedSongsID, songID])
+  //   }
+  //   else if (!checked) {
+  //     setSelectedSongs(selectedSongsID.filter((entry) => entry !== songID))
+  //   }
+  // }
 
   function playSong(index) {
     //If this song is going to be played, set the songs[] array in VideoPlayer with current section Songs
@@ -80,34 +82,41 @@ function NoSectionSelectedComponent() {
       return (
         <React.Fragment key={song.songID}>
 
-          <div style={{
-            margin: '0px 20px 0px 20px',
-            padding: '5px 0px 5px 0px',
-            // border: '10px 0px 10px 0px',
-          }}>
+          <div
+            style={{
+              margin: '0px 20px 0px 0px',
+              padding: '5px 0px 5px 0px',
+              backgroundColor: 'rgb(26, 26, 26, 0.7)',
+              marginTop: '0.3rem',
+              marginBottom: '0.3rem',
+              paddingTop: '0.3rem',
+              paddingBottom: '0.3rem',
+            }}
+            className="customBox-left"
+          >
 
             <Row>
               <Col>
-                <Row
-                  style={{
-                    backgroundColor: 'rgb(26, 26, 26, 0.7)',
-                    borderRadius: '10px'
-                  }}>
+                <Row>
 
                   <Col onClick={() => playSong(index)} xs={2} className="d-flex align-items-center justify-content-center">
                     {/* <FcMusic fontSize={30} /> */}
                     {/* {renderThumbnail(song.songURL)} */}
-                    <img height={35} src={song.songPhotoUrl} />
+                    <img
+                      className="trimmed-cover"
+                      height={35}
+                      src={song.songPhotoUrl}
+                    />
                   </Col>
 
-                  <Col onClick={() => playSong(index)} xs={8}>
+                  <Col onClick={() => playSong(index)} xs={9}>
                     <Row>
-                      <strong>{song.songName}</strong>
+                      <b style={{ padding: '0px' }}>{song.songName}</b>
                       {song.songArtist}
                     </Row>
                   </Col>
 
-                  <Col xs={2} className="d-flex align-items-center justify-content-center">
+                  <Col xs={1} className="d-flex align-items-center justify-content-center">
 
                     {/* <HiDotsVertical fontSize={15} /> */}
 
@@ -198,56 +207,87 @@ function NoSectionSelectedComponent() {
         }}
       >
 
-        <div className="row">
+        <div className="container">
+          <div className="row"
+            style={{ padding: '0px 0px' }}
+          >
+            <div className="col-md-7">
 
-          {selectedSongsID.length !== 0 && <div className="">
-            Add songs to which section?
-            <Form>
-              <div className="scroll">
-                {renderSections()}
-              </div>
-            </Form>
-            <Button onClick={addSongsToSection} variant='secondary'>
-              Add to section
-            </Button>
-          </div>}
+              <Card
+                className="text-white"
+                style={{
+                  border: '0px solid'
+                }}
+              >
 
-        </div>
+                <img
+                  className="trimmed-cover"
+                  src='https://wallpapercave.com/wp/wp3409426.jpg'
+                  alt="Card image"
+                  height={360}
+                  width='content-max'
+                  style={{
+                    objectPosition: `10% 30%`
+                  }}
+                />
 
-        <div className="row"
-          style={{ padding: '0px 0px' }}
-        >
-          <div className="col-md-4">
-            <Card
-              className="text-white"
-              style={{
-                border: '0px solid',
-                backgroundColor: 'rgb(1,1,1,0)'
-              }}
-            >
+                <Card.ImgOverlay>
 
-              <Card.Img
-                style={{ borderRadius: '0px 20px' }}
-                src="/allSongs.png"
-                alt="Card image"
-                height={280}
-              />
+                  <Row>
+                    <Col xs={11}>
+                      <Card.Title style={{ fontSize: "70px", textShadow: `2px 2px #000000` }}>ALL SONGS</Card.Title>
+                    </Col>
+                    <Col xs={1} className="text-center">
 
-              <Card.ImgOverlay>
-                <h1>Explore</h1>
-                <p className="muted">
-                  Your Library
-                </p>
-              </Card.ImgOverlay>
-            </Card>
-          </div>
 
-          <div className="col mt-2">
-            <Form>
+                    </Col>
+                  </Row>
+
+                  <Row className='mb-4'>
+                    <Card.Text className="muted"
+                      style={{ textShadow: `2px 2px #000000` }}
+                    >
+                      Explore your Library
+                    </Card.Text>
+                  </Row>
+
+                  <Row className='mb-2'>
+                    <Col>
+                      <Button className="customBox-left"
+                        style={{
+                          paddingRight: '3px',
+                          paddingTop: '4px',
+                          paddingBottom: '4px',
+                          border: '0px',
+                          backgroundColor: '#ffffff54'
+                        }}
+                      >
+                        <FaPlay /> <span style={{ marginRight: '20px' }}>PLAY ALL</span>
+                        <Button
+                          style={{
+                            border: '0px',
+                            backgroundColor: 'white',
+                            color: 'black'
+                          }}
+                          variant='secondary' className='customBox-left'> <BiShuffle /> MIX</Button>
+                      </Button>
+                    </Col>
+                  </Row>
+
+
+
+                </Card.ImgOverlay>
+
+              </Card>
+            </div>
+
+            <div className="col mt-2">
+
               <div className="list-group">
                 {renderSongs()}
               </div>
-            </Form>
+
+            </div>
           </div>
         </div>
 

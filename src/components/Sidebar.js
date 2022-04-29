@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Navbar, Offcanvas, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
+import OperationsHeader from './OperationsHeader'
 
 function Sidebar() {
   return (
@@ -7,6 +8,11 @@ function Sidebar() {
       <Container fluid>
 
         <Navbar.Toggle aria-controls="offcanvasNavbar" />
+
+
+        <div>
+          <OperationsHeader />
+        </div>
         <Navbar.Brand href="#">Spotiwhy <img src="spotiwhy.png" style={{ height: "30px" }} /> </Navbar.Brand>
 
         <Navbar.Offcanvas
