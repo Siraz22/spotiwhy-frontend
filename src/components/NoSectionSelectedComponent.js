@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Button, ButtonGroup, Card, Col, Form, Row, Modal, InputGroup, DropdownButton, Dropdown, FormControl } from 'react-bootstrap';
 import { SectionsContext, useSections, useSongs } from './api/APIAxios'
 import { v4 as uuid } from 'uuid'
-import { ytthumbnail } from './api/youtubeThumbnail';
 import { useGlobalInstances } from './context/CustomGlobalInstances';
 import { HiDotsVertical } from 'react-icons/hi'
 import { FaPlay, FaTrash } from 'react-icons/fa'
