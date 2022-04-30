@@ -283,7 +283,7 @@ function AvailableSectionComponent(props) {
             infinite={true}
             partialVisible={true}
             autoPlay={false}
-            autoPlaySpeed={10000}
+            autoPlaySpeed={4000}
             transitionDuration={500}
             removeArrowOnDeviceType={["tablet", "mobile"]}
             itemClass="image-item"
