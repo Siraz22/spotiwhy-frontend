@@ -211,7 +211,7 @@ function AvailableSectionComponent(props) {
         <div className="container">
 
           <Row style={{ marginBottom: '20px' }}>
-            <Col xs={9}>
+            <Col xs={7}>
               <Link to={`/`} style={{ textDecoration: 'none' }}>
                 <Card
                   style={{
@@ -241,7 +241,7 @@ function AvailableSectionComponent(props) {
               </Link>
             </Col>
 
-            <Col xs={3}>
+            <Col xs={5}>
 
               <Card
                 style={{
@@ -282,8 +282,8 @@ function AvailableSectionComponent(props) {
             responsive={responsive}
             infinite={true}
             partialVisible={true}
-            autoPlay={false}
-            autoPlaySpeed={4000}
+            autoPlay={true}
+            autoPlaySpeed={10000}
             transitionDuration={500}
             removeArrowOnDeviceType={["tablet", "mobile"]}
             itemClass="image-item"
@@ -293,20 +293,6 @@ function AvailableSectionComponent(props) {
 
           </Carousel>
         </div>
-
-        {/* <div className="">
-
-          <h1>original</h1>
-          <img height="200" src="https://wallpapercave.com/wp/wp4057526.png" alt="Bear" />
-
-          <h1>object-fit: cover</h1>
-          <img className="trimmed-cover customBox-right"
-            src="https://wallpapercave.com/wp/wp4057526.png"
-            alt="Bear"
-          />
-
-        </div> */}
-
       </div>
 
     </React.Fragment >

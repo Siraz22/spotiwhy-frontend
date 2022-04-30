@@ -13,7 +13,7 @@ function Sidebar() {
         <div>
           <OperationsHeader />
         </div>
-        <Navbar.Brand href="#">Spotiwhy <img src="spotiwhy.png" style={{ height: "30px" }} /> </Navbar.Brand>
+        <Navbar.Brand href="#">Spotiwhy <img src="https://i.imgur.com/JqwEqTO.png" style={{ height: "30px" }} /> </Navbar.Brand>
 
         <Navbar.Offcanvas
           id="offcanvasNavbar"

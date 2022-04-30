@@ -60,7 +60,7 @@ function SelectedSectionComponent(props) {
           <div
 
             style={{
-              margin: '0px 20px 0px 0px',
+              margin: '5px 5px 5px 5px',
               padding: '5px 0px 5px 0px',
               backgroundColor: 'rgb(26, 26, 26, 0.7)',
               marginTop: '0.3rem',
@@ -85,14 +85,14 @@ function SelectedSectionComponent(props) {
                     />
                   </Col>
 
-                  <Col onClick={() => playSong(index)} xs={9}>
+                  <Col onClick={() => playSong(index)} xs={8}>
                     <Row>
                       <b style={{ padding: '0px' }}>{song.songName}</b>
                       {song.songArtist}
                     </Row>
                   </Col>
 
-                  <Col xs={1} className="d-flex align-items-center justify-content-center">
+                  <Col xs={2} className="d-flex align-items-center justify-content-center">
 
                     {/* <HiDotsVertical fontSize={15} /> */}
 
@@ -327,7 +327,7 @@ function SelectedSectionComponent(props) {
                   height={350}
                   width='content-max'
                   style={{
-                    objectPosition: `10% 30%`
+                    objectPosition: `30% 30%`
                   }}
                 />
 
@@ -335,7 +335,7 @@ function SelectedSectionComponent(props) {
 
                   <Row>
                     <Col xs={11}>
-                      <Card.Title style={{ fontSize: "70px", textShadow: `2px 2px #000000` }}>{selectedSection.sectionName}</Card.Title>
+                      <Card.Title style={{ fontSize: "3rem", textShadow: `2px 2px #000000` }}>{selectedSection.sectionName}</Card.Title>
                     </Col>
                     <Col xs={1} className="text-center">
 
@@ -396,7 +396,7 @@ function SelectedSectionComponent(props) {
               <DeleteSectionModal />
 
             </div>
-            <div className="col mt-2">
+            <div className="col mt-3">
               <div className="list-group">
                 <span><h5>Songs List</h5></span>
                 {renderSongs()}

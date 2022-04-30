@@ -96,6 +96,13 @@ aside,
     }
 }
 
+@media (max-width: 425px) {
+    body {
+        font-size: 12px;
+    }
+}
+
+
 .backgroundImage {
     background-image: url('/src/img/gif3.gif');
     background-size: cover;
@@ -149,9 +156,9 @@ aside,
     height: 350px;
     max-height: 350px;
     margin-bottom: 10px;
-    overflow-y: scroll;
+    overflow-y: visible;
     -webkit-overflow-scrolling: touch;
-    /* overflow-y: auto */
+    overflow-x: hidden
 }
 
 #dropdown-basic::after {
