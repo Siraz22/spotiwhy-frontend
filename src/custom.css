@@ -134,6 +134,11 @@ aside,
     border-color: rgb(60, 65, 68);
 }
 
+/* for each carousel item */
+.image-item {
+    padding: 0px 10px 0px 0px;
+}
+
 .customClass {
     border-radius: 0px;
     margin: 0px 0px;

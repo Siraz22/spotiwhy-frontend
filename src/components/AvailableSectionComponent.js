@@ -27,7 +27,7 @@ const responsive = {
   mobile: {
     breakpoint: { max: 464, min: 0 },
     items: 2,
-    partialVisibilityGutter: 20
+    partialVisibilityGutter: 10
   }
 };
 
@@ -68,29 +68,31 @@ function AvailableSectionComponent(props) {
 
           <Link to={`/section/${section.sectionName}`} style={{ textDecoration: 'none', color: 'antiquewhite' }}>
 
-            <Row >
-              <Col xs={12} className="mb-2 d-flex align-items-center justify-content-center">
+            <div
+              id="parent"
+              xs={12} className="mb-2"
+            >
+              <img
+                onClick={() => props.setSelectedSection({ sectionName: section.sectionName, sectionID: section.sectionID })}
+                src={section.sectionPhotoURL}
+                className="customBox-left trimmed-cover"
+                style={{
+                  // 50% 50% signifies center
+                  objectPosition: `65% 50%`,
+                  aspectRatio: '1',
+                  marginBottom: '15px'
+                }}
+                width='100%'
+              />
 
-                <img
-                  onClick={() => props.setSelectedSection({ sectionName: section.sectionName, sectionID: section.sectionID })}
-                  src={section.sectionPhotoURL}
-                  className="customBox-left trimmed-cover"
-                  height={150}
-                  width={150}
-                  style={{
-                    // 50% 50% signifies center
-                    objectPosition: `65% 50%`
-                  }}
-                ></img>
+              <span xs={12} className="d-flex align-items-center justify-content-center">
+                {section.sectionName}
+              </span>
+              <span xs={12} className="text-muted d-flex align-items-center justify-content-center">
+                {section.songs_set.length} {(section.songs_set.length === 1 ? 'song' : 'songs')}
+              </span>
 
-              </Col>
-              <Col xs={12} className="d-flex align-items-center justify-content-center">
-                <p>{section.sectionName}</p>
-              </Col>
-              <Col xs={12} className="d-flex align-items-center justify-content-center">
-                <p className='text-muted'>{section.songs_set.length} {(section.songs_set.length === 1 ? 'song' : 'songs')}</p>
-              </Col>
-            </Row>
+            </div>
 
           </Link>
         </React.Fragment >
@@ -272,19 +274,19 @@ function AvailableSectionComponent(props) {
           <AddSectionModal />
 
           <Carousel
+
             swipeable={true}
             //arrows={false}
             //draggable={true}
-            //showDots={false}
+            //showDots={true}
             responsive={responsive}
             infinite={true}
             partialVisible={true}
-            //itemClass="image-item"
             autoPlay={false}
             autoPlaySpeed={10000}
             transitionDuration={500}
             removeArrowOnDeviceType={["tablet", "mobile"]}
-            itemClass="carousel-item-padding-10-px"
+            itemClass="image-item"
           >
 
             {renderSections()}
