@@ -1,5 +1,5 @@
 export const getYTInfoURL = (url) => {
-  return "http://www.youtube.com/oembed?url=" + url + "&format=json";
+  return "https://www.youtube.com/oembed?url=" + url + "&format=json";
 }
 
 export const getYTTreatedUrl = (url) => {
