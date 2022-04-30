@@ -146,12 +146,6 @@ aside,
     padding: 0px 10px 0px 0px;
 }
 
-.customClass {
-    border-radius: 0px;
-    margin: 0px 0px;
-    /* background-color: rgba(44, 19, 46, 0.6); */
-}
-
 .list-group {
     height: 350px;
     max-height: 350px;
@@ -182,10 +176,6 @@ aside,
     /* set this from react itself. Should be custom for all images being cropped*/
     /* object-position: 70% 50%; */
 }
-
-/* .fade {
-    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 1)), to(rgba(0, 0, 0, 0)));
-} */
 
 .fade {
     background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0))

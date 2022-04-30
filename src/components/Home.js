@@ -31,58 +31,56 @@ function Home() {
   return (
     <React.Fragment>
 
-      <div
-        style={{ padding: '1rem 1rem' }}
+      <Row
+        style={{
+          margin: '0px'
+        }}
       >
-        <Row>
 
-          {/* <div className="col-sm-12 col-md-12 order-md-0">
+        {/* <div className="col-sm-12 col-md-12 order-md-0">
             <OperationsHeader />
           </div> */}
 
-          <div className="col-sm-12 col-md-7 order-md-1">
-            <AvailableSectionComponent
-              setSelectedSection={setSelectedSection}
-              sectionDeletedRefreshTemp={sectionDeletedRefreshTemp}
-            />
-          </div>
+        <div className="col-sm-12 col-md-7 order-md-1">
+          <AvailableSectionComponent
+            setSelectedSection={setSelectedSection}
+            sectionDeletedRefreshTemp={sectionDeletedRefreshTemp}
+          />
+        </div>
 
-          <div className="col-sm-12 col-md-12 order-md-0">
+        <div className="col-sm-12 col-md-12 order-md-0">
 
-            <Switch>
+          <Switch>
 
-              {/* <Route path="/" exact>
+            {/* <Route path="/" exact>
                 <Redirect to="/default" />
               </Route> */}
+            <Route path="/" exact render={
+              (props) => (
+                <NoSectionSelectedComponent
+                  {...props}
+                />
+              )
+            } />
 
-              <Route path="/" exact render={
-                (props) => (
-                  <NoSectionSelectedComponent
-                    {...props}
-                  />
-                )
-              } />
+            <Route path="/section/:selectedSection" render={
+              (props) => (
+                <SelectedSectionComponent
+                  {...props}
+                  selectedSection={selectedSection}
+                  setSectionDeletedRefreshTemp={setSectionDeletedRefreshTemp}
+                />
+              )
+            } />
 
-              <Route path="/section/:selectedSection" render={
-                (props) => (
-                  <SelectedSectionComponent
-                    {...props}
-                    selectedSection={selectedSection}
-                    setSectionDeletedRefreshTemp={setSectionDeletedRefreshTemp}
-                  />
-                )
-              } />
+          </Switch>
+        </div>
 
-            </Switch>
-          </div>
+        <div className="col-sm-12 col-md-5 order-md-1">
+          <VideoPlayer />
+        </div>
 
-          <div className="col-sm-12 col-md-5 order-md-1">
-            <VideoPlayer />
-          </div>
-
-        </Row>
-
-      </div>
+      </Row>
 
       {/* <Button onClick={debug}>Debug</Button> */}
 
