@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Form, Modal, Button, Row, Col, InputGroup, FormGroup, Alert } from 'react-bootstrap'
+import { Form, Modal, Button, Row, Col, InputGroup, FormGroup, Alert, OverlayTrigger } from 'react-bootstrap'
 import { getYTInfoURL, getYTTreatedUrl, ytinfo } from './api/youtubeInfo';
 import { v4 as uuid } from 'uuid'
 import { useSongs } from './api/APIAxios';
+import { SiYoutubemusic } from 'react-icons/si'
 
 function OperationsHeader(props) {
 
@@ -148,6 +149,14 @@ function OperationsHeader(props) {
     setYtInfoError(false)
   }
 
+  function urlChanged(value) {
+    //this function is required as tooltip doesn't have a close button like alert did
+    //we call the close button equivalent (in alert) here in tooltip by setting alert => false
+    //when user changes the url value
+    setYtURL(value)
+    closeAlert()
+  }
+
   return (
     <React.Fragment>
 
@@ -162,25 +171,38 @@ function OperationsHeader(props) {
 
           <Col className="d-flex align-items-center justify-content-center">
 
-
-            <Form>
+            <Form
+              style={{ marginRight: '10px' }}
+            >
               <InputGroup hasValidation>
 
                 <Form.Control
                   isInvalid={ytInfoError}
-                  onChange={(e) => { setYtURL(e.target.value) }} placeholder='Enter youtube URL'>
+                  onChange={event => urlChanged(event.target.value)}
+                  placeholder='Enter youtube URL'
+                >
                 </Form.Control>
+
+                {alert &&
+                  <Form.Control.Feedback type="invalid" tooltip>
+                    Check URL or Network Connection
+                  </Form.Control.Feedback>
+                }
+
               </InputGroup>
             </Form>
 
-            {(ytURL === '' ? false : true) && <Button onClick={addSongModal}>Add Song</Button>}
 
-            {alert && <Alert variant="danger" onClose={closeAlert} dismissible>
-              <Alert.Heading>Error! You got an error!</Alert.Heading>
-              <p>
-                Check the URL again or your network connection
-              </p>
-            </Alert>}
+            {(ytURL === '' ? false : true) && < Button onClick={addSongModal}>Add <SiYoutubemusic /></Button>}
+
+            {/* {alert &&
+              <Alert variant="danger" onClose={closeAlert} dismissible>
+                <Alert.Heading>Error! You got an error!</Alert.Heading>
+                <p>
+                  Check the URL again or your network connection
+                </p>
+              </Alert>
+            } */}
 
           </Col>
 

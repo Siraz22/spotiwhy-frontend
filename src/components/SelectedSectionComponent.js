@@ -335,10 +335,10 @@ function SelectedSectionComponent(props) {
                 <Card.ImgOverlay>
 
                   <Row>
-                    <Col xs={11}>
+                    <Col s={12} md={10} lg={11}>
                       <Card.Title style={{ fontSize: "3rem", textShadow: `2px 2px #000000` }}>{selectedSection.sectionName}</Card.Title>
                     </Col>
-                    <Col xs={1} className="text-center">
+                    <Col s={2} md={2} lg={1} className="">
 
                       <Button variant='none' onClick={() => setDeleteSectionModal(true)}>
                         <FaTrash color='antiquewhite' fontSize='1.3rem' />
