@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 import ReactPlayer from 'react-player'
 import { FaPlay, FaPause } from "react-icons/fa";
 import { useGlobalInstances } from './context/CustomGlobalInstances';
@@ -25,19 +25,50 @@ function VideoPlayer() {
   const [songs, setSongs] = useState([])
   const [vol, setVolume] = useState(1)
   const [mute, setMute] = useState(true)
-  const [playpause, setPlayPause] = useState(true)
-
   const [windowWidth, windowHeight] = useWindowSize();
 
   const playerRef = useRef()
 
+  // Hardcoding for background play starts
+  const [bgPlay, setBgPlay] = useState(false)
+
   useEffect(() => {
     globalContext.playerRef = playerRef
 
-    //console.log(globalContext.currPlayingSongSet)
-
     setSongs(globalContext.currPlayingSongSet)
   }, [globalContext.currPlayingSongSet])
+
+
+  //PHONE AUTO BACKGROUND PLAY CODING TRAIL SECTION
+
+  const [playing, setPlaying] = useState(true)
+
+  function handlePlayPause() {
+    setPlaying(prevState => !prevState)
+  }
+
+  function handlePlay() {
+    console.log("play clicked")
+    setPlaying(true)
+  }
+
+  function handlePause() {
+    console.log("pause clicked")
+    setPlaying(false)
+    if (bgPlay) {
+      playerRef.current.getInternalPlayer().playVideo()
+    }
+  }
+
+  // 
+
+
+
+
+
+
+
+
 
   function customAutoplay() {
     console.log("AutoPlay getting triggered")
@@ -57,15 +88,6 @@ function VideoPlayer() {
     console.log("next")
     playerRef.current.getInternalPlayer().nextVideo();
   }
-
-  function onPausePlay() {
-    setPlayPause(prevState => !prevState)
-  }
-
-  // function apiPause() {
-  //   console.log("onPause called")
-  //   setPlayPause(true)
-  // }
 
   return (
     < React.Fragment>
@@ -87,13 +109,12 @@ function VideoPlayer() {
 
               <ReactPlayer
                 ref={playerRef}
-                playing={playpause}
-                //muted={false}
-                //onReady={() => console.log('onReady')}
+                playing={true}
+
                 onStart={customAutoplay}
-                //onPlay={customAutoplay}
-                //volume={vol}
-                //onPause={() => apiPause()}
+
+                onPlay={handlePlay}
+                onPause={handlePause}
 
                 height={(windowWidth > 800) ? 360 / 1.2 : 9 * multiplier}
                 width={(windowWidth > 800) ? 640 / 1.2 : 16 * multiplier}
@@ -110,7 +131,7 @@ function VideoPlayer() {
                 <Button onClick={() => prevSong()}>  Prev </Button>
               </div>
               <div className='col'>
-                <Button onClick={() => onPausePlay()}> {<FaPlay />}/{<FaPause />}  </Button>
+                <Button onClick={handlePlayPause}> {playing ? <FaPause /> : <FaPlay />}  </Button>
               </div>
               <div className="col">
                 <Button onClick={() => nextSong()}>Next </Button>
@@ -122,7 +143,15 @@ function VideoPlayer() {
       </div>
       {/* <Button onClick={() => console.log(songs)}>Debug Player</Button> */}
 
+      <Form>
+        <Form.Check label="BG Play"
+          onChange={(e) => (setBgPlay(e.target.checked))}
+        />
+      </Form>
       <Button onClick={debug}>Debug Video Player</Button>
+
+      <span>States</span>
+      <p>Playing state is = {playing ? 'true' : 'false'}</p>
 
     </React.Fragment >
   )
@@ -134,9 +163,10 @@ function VideoPlayer() {
     //   "https://www.youtube.com/watch?v=sFWP-GQ0UcU",
     //   "https://www.youtube.com/watch?v=UceaB4D0jpo"
     // ])
-    console.log(playerRef.current)
+    // console.log(playerRef.current)
     console.log(playerRef.current.getInternalPlayer())
-    console.log(playerRef.current.getInternalPlayer().getPlayerState())
+    console.log(playerRef.current.getInternalPlayer().playVideo())
+    //console.log(bgPlay)
   }
 }
 
