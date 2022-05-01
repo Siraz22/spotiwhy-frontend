@@ -46,7 +46,7 @@ function VideoPlayer() {
     setSongs(globalContext.currPlayingSongSet)
   }, [globalContext.currPlayingSongSet])
 
-  const [temp, setTemp] = useState(0)
+  //const [temp, setTemp] = useState(0)
 
 
 
@@ -79,6 +79,7 @@ function VideoPlayer() {
     }
   }
 
+
   // function handleBufffer() {
   //   console.log("buffering")
 
@@ -98,9 +99,6 @@ function VideoPlayer() {
   //   }
 
   // }
-
-
-
 
 
 
@@ -132,8 +130,7 @@ function VideoPlayer() {
 
 
 
-  const [play, { stop }] = useSound(boopSfx);
-
+  // const [play, { stop }] = useSound(boopSfx);
 
 
 
@@ -144,31 +141,18 @@ function VideoPlayer() {
     console.log('Logs every minute');
 
     const interval = setInterval(() => {
-      setTemp(prevState => prevState + 1)
       console.log(bgPlay)
       //playerRef.current.getInternalPlayer().playVideo()
       //console.log('Logs every minute');
       if (bgPlay === true) {
         playerRef.current.getInternalPlayer().playVideo()
-        play()
+        //play()
       }
     }, [MINUTE_MS]);
 
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
 
   }, [bgPlay])
-
-
-
-
-  // 
-
-
-
-
-
-
-
 
 
 
@@ -253,8 +237,8 @@ function VideoPlayer() {
           onChange={(e) => (setBgPlay(e.target.checked))}
         />
       </Form>
-      <Button onClick={debug}>Debug Video Player</Button>
-      <span>{temp}</span>
+      {/* <Button onClick={debug}>Debug Video Player</Button>
+      <span>{temp}</span> */}
       {/* <span>States</span>
       <p>Playing state is = {playing ? 'true' : 'false'}</p> */}
       {/* <WindowFocusHandler /> */}
