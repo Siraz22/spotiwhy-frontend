@@ -1,10 +1,11 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Button, Col, Form, Row } from 'react-bootstrap'
 import ReactPlayer from 'react-player'
 import { FaPlay, FaPause } from "react-icons/fa";
 import { useGlobalInstances } from './context/CustomGlobalInstances';
 import useSound from 'use-sound';
 import boopSfx from '../img/quack.mp3'
+import { IoMdSkipBackward, IoMdSkipForward } from 'react-icons/io'
 
 
 function useWindowSize() {
@@ -198,65 +199,82 @@ function VideoPlayer() {
 
       {/* <span>Window size: {windowWidth} x {windowHeight}</span>; */}
 
-      <div
-        className='customClass'
-        style={{
-          border: '0px solid'
-        }}>
+      <div>
 
-        <div className='container'>
+        <Row
+          style={{ backgroundColor: 'gray', padding: '10px 0px 20px 0px' }}
+        >
+          <Col
+            id="player-col"
+            s={12}
+            md={12}
+            className="d-flex align-items-center justify-content-center"
+          >
+            <ReactPlayer
+              ref={playerRef}
+              playing={playing}
 
-          <div className="row">
-            <div className='col d-flex justify-content-center'>
-              {/* <p>Debug : currSongIndex = {currSongIndex}</p> */}
-              {/* <p>Debug name for index 0 = {playerRef.current.getInternalPlayer().getVideoData().title}</p> */}
+              //this will be called only once at the start
+              onStart={customAutoplay}
 
-              <ReactPlayer
-                ref={playerRef}
-                playing={playing}
+              onPlay={handlePlay}
+              onPause={handlePause}
 
-                onStart={customAutoplay}
+              height={(windowWidth > 800) ? 360 / 1.2 : 9 * multiplier}
+              width={(windowWidth > 800) ? 640 / 1.2 : 16 * multiplier}
 
-                onPlay={handlePlay}
-                // onBuffer={handleBufffer}
-                // onBufferEnd={handleBufferEnd}
-                onPause={handlePause}
+              controls={true}
+              url={songs}
+            />
+          </Col>
 
+          <Col
+            id="info-col"
+            s={12}
+            style={{
+              paddingTop: '20px'
+            }}
+            className="text-center"
+          >
+            <span style={{ fontSize: '1.3rem', color: 'white' }} >Butterfly Effect</span>
+            <br />
+            <span style={{ fontSize: '1rem' }}>Travis Scotts</span>
+          </Col>
+        </Row>
 
-                height={(windowWidth > 800) ? 360 / 1.2 : 9 * multiplier}
-                width={(windowWidth > 800) ? 640 / 1.2 : 16 * multiplier}
+        <Row
+          style={{ backgroundColor: 'black', padding: '10px 0px 15px 0px' }}
+          className="text-center"
+        >
 
-                controls={true}
-                //url={songs[currSongIndex]}
-                url={songs}
-              />
+          <Col s={4}>
+            <Button variant='none' onClick={() => prevSong()}> <IoMdSkipBackward color='white' /> </Button>
+          </Col>
+          <Col s={4}>
+            <Button
 
-            </div>
+              onClick={handlePlayPause}
+              style={{ borderRadius: '10px', backgroundColor: 'white' }}
+            >
+              {playing ? <FaPause color='black' /> : <FaPlay />}
+            </Button>
+          </Col>
+          <Col s={4}>
+            <Button variant='none' onClick={() => nextSong()}> <IoMdSkipForward color='white' /> </Button>
+          </Col>
 
-            <div className="mt-3 row text-center ">
-              <div className="col ">
-                <Button onClick={() => prevSong()}>  Prev </Button>
-              </div>
-              <div className='col'>
-                <Button onClick={handlePlayPause}> {playing ? <FaPause /> : <FaPlay />}  </Button>
-              </div>
-              <div className="col">
-                <Button onClick={() => nextSong()}>Next </Button>
-              </div>
-            </div>
+        </Row>
 
-          </div>
-        </div >
       </div>
 
-      {/* <Button onClick={() => console.log(songs)}>Debug Player</Button> */}
 
       {/* <Form>
         <Form.Check label="BG Play"
           onChange={(e) => (setBgPlay(e.target.checked))}
         />
       </Form> */}
-      <Button onClick={debug}>Debug Video Player</Button>
+
+      {/* <Button onClick={debug}>Debug Video Player</Button> */}
 
       {/* <span>{temp}</span> */}
       {/* <span>States</span>
