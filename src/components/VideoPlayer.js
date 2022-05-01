@@ -3,6 +3,9 @@ import { Button, Form } from 'react-bootstrap'
 import ReactPlayer from 'react-player'
 import { FaPlay, FaPause } from "react-icons/fa";
 import { useGlobalInstances } from './context/CustomGlobalInstances';
+import useSound from 'use-sound';
+import boopSfx from '../img/quack.mp3'
+
 
 function useWindowSize() {
   const [size, setSize] = useState([0, 0]);
@@ -17,6 +20,10 @@ function useWindowSize() {
   return size;
 }
 
+// const BoopButton = () => {
+//   const [play] = useSound(boopSfx);
+//   return <button onClick={play}>Boop!</button>;
+// };
 
 function VideoPlayer() {
 
@@ -40,10 +47,6 @@ function VideoPlayer() {
   }, [globalContext.currPlayingSongSet])
 
   const [temp, setTemp] = useState(0)
-
-
-
-
 
 
 
@@ -129,19 +132,26 @@ function VideoPlayer() {
 
 
 
+  const [play, { stop }] = useSound(boopSfx);
 
 
-  const MINUTE_MS = 60;
+
+
+  const MINUTE_MS = 200;
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTemp(prevState => prevState + 1)
-      //console.log('Logs every minute');
-      if (bgPlay) {
-        playerRef.current.getInternalPlayer().playVideo()
+      //setTemp(prevState => prevState + 1)
+      //audio.play()
+      //console.log(bgPlay)
+      play()
 
+      //console.log('Logs every minute');
+      if (bgPlay === true) {
+        playerRef.current.getInternalPlayer().playVideo()
+        play()
       }
-    }, MINUTE_MS);
+    }, [MINUTE_MS]);
 
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [])
@@ -240,10 +250,12 @@ function VideoPlayer() {
         />
       </Form>
       <Button onClick={debug}>Debug Video Player</Button>
-      <span>{temp}</span>
+      {/* <span>{temp}</span> */}
       {/* <span>States</span>
       <p>Playing state is = {playing ? 'true' : 'false'}</p> */}
       {/* <WindowFocusHandler /> */}
+
+
     </React.Fragment >
   )
 
@@ -257,8 +269,8 @@ function VideoPlayer() {
     // console.log(playerRef.current)
     // console.log(playerRef.current.getInternalPlayer())
     // console.log(playerRef.current.getInternalPlayer().playVideo())
-    console.log(temp)
-    //console.log(bgPlay)
+    //console.log(temp)
+    console.log(bgPlay)
   }
 }
 
