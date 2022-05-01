@@ -132,7 +132,7 @@ function VideoPlayer() {
 
 
 
-  const MINUTE_MS = 600;
+  const MINUTE_MS = 60;
 
   useEffect(() => {
     const interval = setInterval(() => {
