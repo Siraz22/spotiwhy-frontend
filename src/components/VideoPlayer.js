@@ -30,7 +30,7 @@ function VideoPlayer() {
   const playerRef = useRef()
 
   // Hardcoding for background play starts
-  const [bgPlay, setBgPlay] = useState(false)
+  const [bgPlay, setBgPlay] = useState(true)
 
   useEffect(() => {
     globalContext.playerRef = playerRef
@@ -57,6 +57,7 @@ function VideoPlayer() {
     setPlaying(false)
     if (bgPlay) {
       playerRef.current.getInternalPlayer().playVideo()
+      //setBgPlay(false)
     }
   }
 
@@ -109,7 +110,7 @@ function VideoPlayer() {
 
               <ReactPlayer
                 ref={playerRef}
-                playing={true}
+                playing={playing}
 
                 onStart={customAutoplay}
 
@@ -148,10 +149,10 @@ function VideoPlayer() {
           onChange={(e) => (setBgPlay(e.target.checked))}
         />
       </Form>
-      <Button onClick={debug}>Debug Video Player</Button>
+      {/* <Button onClick={debug}>Debug Video Player</Button> */}
 
-      <span>States</span>
-      <p>Playing state is = {playing ? 'true' : 'false'}</p>
+      {/* <span>States</span>
+      <p>Playing state is = {playing ? 'true' : 'false'}</p> */}
 
     </React.Fragment >
   )
