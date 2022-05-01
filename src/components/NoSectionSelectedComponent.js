@@ -66,10 +66,11 @@ function NoSectionSelectedComponent(props) {
   function playSong(index) {
     //If this song is going to be played, set the songs[] array in VideoPlayer with current section Songs
     //This is facilitated by global Context which contains currPlayingSongSet
+
+    globalContext.setPlayingSongIndex(index)
     globalContext.setCurrPlayingSet(songs.map((entry) => { return entry.songURL }))
-    //console.log(globalContext)
-    //console.log(globalContext.playerRef.current.getInternalPlayer())
     globalContext.playerRef.current.getInternalPlayer().playVideoAt(index)
+
   }
 
   function renderSongs() {
