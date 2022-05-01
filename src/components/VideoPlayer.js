@@ -140,12 +140,13 @@ function VideoPlayer() {
   const MINUTE_MS = 200;
 
   useEffect(() => {
+
+    console.log('Logs every minute');
+
     const interval = setInterval(() => {
-      //setTemp(prevState => prevState + 1)
-      //audio.play()
-      //console.log(bgPlay)
-      //play()
-      playerRef.current.getInternalPlayer().playVideo()
+      setTemp(prevState => prevState + 1)
+      console.log(bgPlay)
+      //playerRef.current.getInternalPlayer().playVideo()
       //console.log('Logs every minute');
       if (bgPlay === true) {
         playerRef.current.getInternalPlayer().playVideo()
@@ -154,7 +155,10 @@ function VideoPlayer() {
     }, [MINUTE_MS]);
 
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-  }, [])
+
+  }, [bgPlay])
+
+
 
 
   // 
@@ -250,7 +254,7 @@ function VideoPlayer() {
         />
       </Form>
       <Button onClick={debug}>Debug Video Player</Button>
-      {/* <span>{temp}</span> */}
+      <span>{temp}</span>
       {/* <span>States</span>
       <p>Playing state is = {playing ? 'true' : 'false'}</p> */}
       {/* <WindowFocusHandler /> */}

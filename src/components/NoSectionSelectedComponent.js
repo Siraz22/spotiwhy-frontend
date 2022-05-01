@@ -295,8 +295,6 @@ function NoSectionSelectedComponent(props) {
 
     </React.Fragment >
   )
-
 }
-
 
 export default NoSectionSelectedComponent
