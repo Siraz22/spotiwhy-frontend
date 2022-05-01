@@ -1,29 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Button, ButtonGroup, Card, Col, Form, Row, Modal, InputGroup, DropdownButton, Dropdown, FormControl } from 'react-bootstrap';
-import { SectionsContext, useSections, useSongs } from './api/APIAxios'
-import { v4 as uuid } from 'uuid'
+import React, { useEffect, useState } from 'react'
+import { Button, Card, Col, Form, Row, Modal, InputGroup, DropdownButton, Dropdown, FormControl } from 'react-bootstrap';
+import { useSongs } from './api/APIAxios'
+
 import { useGlobalInstances } from './context/CustomGlobalInstances';
 import { HiDotsVertical } from 'react-icons/hi'
-import { FaPlay, FaTrash } from 'react-icons/fa'
+import { FaPlay } from 'react-icons/fa'
 import { BiShuffle } from 'react-icons/bi'
-import { globalRefresh } from './AvailableSectionComponent';
 
 function NoSectionSelectedComponent(props) {
 
-  const sectionsContext = useSections();
   const songsContext = useSongs();
   const [songs, setSongs] = useState([])
-  const [songName, setSongName] = useState('')
-  const [songURL, setSongURL] = useState('')
-  const [sections, setSections] = useState([])
-  const [selectedSongsID, setSelectedSongs] = useState([])
-  const [selectedSection, setSelectedSection] = useState('')
-
   const globalContext = useGlobalInstances();
 
   //temp hotfix when user has selected NoSectionsComponent and adds a song
   useEffect(() => {
-    console.log("hey I am getting triggered")
     refreshSongList()
   }, [props.songAddedRefreshTemp])
 
@@ -38,20 +29,7 @@ function NoSectionSelectedComponent(props) {
         setSongs(res.data)
       })
       .catch(err => console.log(err))
-
-    sectionsContext.sectionAPIcalls.getSections()
-      .then((res) => {
-        console.log(res.data)
-        setSections(res.data)
-      })
-      .catch(err => console.log(err))
   }, [])
-
-  useEffect(() => {
-    if (selectedSongsID.length === 0) {
-      setSelectedSection('')
-    }
-  }, [selectedSongsID])
 
   function refreshSongList() {
 
@@ -67,9 +45,31 @@ function NoSectionSelectedComponent(props) {
     //If this song is going to be played, set the songs[] array in VideoPlayer with current section Songs
     //This is facilitated by global Context which contains currPlayingSongSet
 
-    globalContext.setPlayingSongIndex(index)
+    console.log("Play all")
+
+    globalContext.playerRef.current.getInternalPlayer().setShuffle(false)
     globalContext.setCurrPlayingSet(songs.map((entry) => { return entry.songURL }))
     globalContext.playerRef.current.getInternalPlayer().playVideoAt(index)
+
+
+    //this is set to run for the very first time only, when react-player calls onStart
+    globalContext.setPlayingSongIndex(index)
+
+  }
+
+  function shufflePlay(event) {
+
+    event.stopPropagation()
+    console.log("Shuffle play!")
+
+    console.log(globalContext.playerRef)
+
+    globalContext.setCurrPlayingSet(songs.map((entry) => { return entry.songURL }))
+    globalContext.playerRef.current.getInternalPlayer().setShuffle(true)
+    globalContext.playerRef.current.getInternalPlayer().playVideoAt(0)
+
+    //for the first time when globalState is needed
+    globalContext.setShuffle(true)
 
   }
 
@@ -88,7 +88,7 @@ function NoSectionSelectedComponent(props) {
               paddingTop: '0.3rem',
               paddingBottom: '0.3rem',
             }}
-            className="customBox-left"
+            className=""
           >
 
             <Row>
@@ -101,6 +101,7 @@ function NoSectionSelectedComponent(props) {
                     <img
                       className="trimmed-cover"
                       height={35}
+                      width='100px'
                       src={song.songPhotoUrl}
                     />
                   </Col>
@@ -140,55 +141,11 @@ function NoSectionSelectedComponent(props) {
     return songsRendered
   }
 
-  function renderSections() {
-    const sectionsRendered = sections.map((section) => {
-      return (
-        <React.Fragment key={section.sectionID}>
-          <Form.Check
-            type="radio"
-            name="sectionToAddSongs"
-            onChange={() => setSelectedSection(section.sectionID)}
-            label={section.sectionName}
-          />
-        </React.Fragment >
-      )
-    })
-    return sectionsRendered
-  }
-
-  function addSongsToSection() {
-    selectedSongsID.map((songID) => {
-      //console.log(songID)
-
-      songsContext.songAPIcalls.addSongToSection(songID, selectedSection)
-        .then(res => {
-          console.log(res.data)
-        })
-        .catch(err => console.log(err))
-    })
-  }
-
   function deleteSong(songIDtoDelete) {
     songsContext.songAPIcalls.deleteSong(songIDtoDelete)
       .then(res => {
         console.log(res)
         refreshSongList();
-      })
-      .catch(err => console.log(err))
-  }
-
-  function addSong() {
-    let songObj = {
-      songID: uuid(),
-      songURL: songURL,
-      songName: songName,
-      songArtist: "Unnamed Artist"
-    }
-
-    songsContext.songAPIcalls.addSong(songObj)
-      .then(res => {
-        console.log(res)
-        refreshSongList()
       })
       .catch(err => console.log(err))
   }
@@ -257,6 +214,7 @@ function NoSectionSelectedComponent(props) {
                           border: '0px',
                           backgroundColor: '#ffffff54'
                         }}
+                        onClick={() => playSong(0)}
                       >
                         <FaPlay /> <span style={{ marginRight: '20px' }}>PLAY ALL</span>
                         <Button
@@ -265,12 +223,11 @@ function NoSectionSelectedComponent(props) {
                             backgroundColor: 'white',
                             color: 'black'
                           }}
+                          onClick={(event) => shufflePlay(event)}
                           variant='secondary' className='customBox-left'> <BiShuffle /> MIX</Button>
                       </Button>
                     </Col>
                   </Row>
-
-
 
                 </Card.ImgOverlay>
 

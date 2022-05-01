@@ -6,7 +6,8 @@ function CustomGlobalInstances({ children }) {
   const [currPlayingSongSet, setCurrPlayingSet] = useState([])
   const [playingSongIndex, setPlayingSongIndex] = useState(0)
   const playerRef = useRef();
-  const [sections, setSections] = useState([])
+  //const [sections, setSections] = useState([])
+  const [shuffle, setShuffle] = useState(false)
 
   return (
     <CustomGlobalContext.Provider
@@ -15,7 +16,9 @@ function CustomGlobalInstances({ children }) {
         setCurrPlayingSet: setCurrPlayingSet,
         playingSongIndex: playingSongIndex,
         setPlayingSongIndex: setPlayingSongIndex,
-        playerRef: playerRef
+        shuffle: shuffle,
+        setShuffle: setShuffle,
+        playerRef: playerRef,
       }}
     >
 

@@ -42,9 +42,20 @@ function VideoPlayer() {
 
   useEffect(() => {
     globalContext.playerRef = playerRef
-
     setSongs(globalContext.currPlayingSongSet)
   }, [globalContext.currPlayingSongSet])
+
+
+  // useEffect(() => {
+  //   console.log("shuffle")
+  //   if (playerRef.current !== null) {
+  //     console.log(playerRef.current)
+  //     console.log("shuffled!")
+  //     playerRef.current.getInternalPlayer().setShuffle(globalContext.shuffle)
+  //     playerRef.current.getInternalPlayer().playVideoAt(0)
+  //   }
+  // }, [globalContext.shuffle])
+
 
   //const [temp, setTemp] = useState(0)
 
@@ -68,15 +79,15 @@ function VideoPlayer() {
 
   function handlePause() {
     console.log("pause clicked")
+    setPlaying(false)
 
-    if (bgPlay) {
-      setPlaying(true)
-      playerRef.current.getInternalPlayer().playVideo()
-
-    }
-    else {
-      setPlaying(false)
-    }
+    // if (bgPlay) {
+    //   setPlaying(true)
+    //   playerRef.current.getInternalPlayer().playVideo()
+    // }
+    // else {
+    //   setPlaying(false)
+    // }
   }
 
 
@@ -134,25 +145,25 @@ function VideoPlayer() {
 
 
 
-  const MINUTE_MS = 200;
+  // const MINUTE_MS = 200;
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    console.log('Logs every minute');
+  //   console.log('Logs every minute');
 
-    const interval = setInterval(() => {
-      console.log(bgPlay)
-      //playerRef.current.getInternalPlayer().playVideo()
-      //console.log('Logs every minute');
-      if (bgPlay === true) {
-        playerRef.current.getInternalPlayer().playVideo()
-        //play()
-      }
-    }, [MINUTE_MS]);
+  //   const interval = setInterval(() => {
+  //     console.log(bgPlay)
+  //     //playerRef.current.getInternalPlayer().playVideo()
+  //     //console.log('Logs every minute');
+  //     if (bgPlay === true) {
+  //       playerRef.current.getInternalPlayer().playVideo()
+  //       //play()
+  //     }
+  //   }, [MINUTE_MS]);
 
-    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+  //   return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
 
-  }, [bgPlay])
+  // }, [bgPlay])
 
 
 
@@ -163,7 +174,13 @@ function VideoPlayer() {
     //setVolume(0.5)
 
     //possible hotfix
-    playerRef.current.getInternalPlayer().playVideoAt(globalContext.playingSongIndex)
+    if (globalContext.shuffle) {
+      playerRef.current.getInternalPlayer().setShuffle(true)
+      playerRef.current.getInternalPlayer().playVideoAt(0)
+    }
+    else {
+      playerRef.current.getInternalPlayer().playVideoAt(globalContext.playingSongIndex)
+    }
   }
 
   function prevSong() {
@@ -205,6 +222,7 @@ function VideoPlayer() {
                 // onBufferEnd={handleBufferEnd}
                 onPause={handlePause}
 
+
                 height={(windowWidth > 800) ? 360 / 1.2 : 9 * multiplier}
                 width={(windowWidth > 800) ? 640 / 1.2 : 16 * multiplier}
 
@@ -230,15 +248,17 @@ function VideoPlayer() {
           </div>
         </div >
       </div>
+
       {/* <Button onClick={() => console.log(songs)}>Debug Player</Button> */}
 
-      <Form>
+      {/* <Form>
         <Form.Check label="BG Play"
           onChange={(e) => (setBgPlay(e.target.checked))}
         />
-      </Form>
-      {/* <Button onClick={debug}>Debug Video Player</Button>
-      <span>{temp}</span> */}
+      </Form> */}
+      <Button onClick={debug}>Debug Video Player</Button>
+
+      {/* <span>{temp}</span> */}
       {/* <span>States</span>
       <p>Playing state is = {playing ? 'true' : 'false'}</p> */}
       {/* <WindowFocusHandler /> */}
@@ -248,17 +268,13 @@ function VideoPlayer() {
   )
 
   function debug() {
-    //console.log(songs)
-    // setSongs([
-    //   "https://www.youtube.com/watch?v=UhiXEgqhBWs",
-    //   "https://www.youtube.com/watch?v=sFWP-GQ0UcU",
-    //   "https://www.youtube.com/watch?v=UceaB4D0jpo"
-    // ])
-    // console.log(playerRef.current)
-    // console.log(playerRef.current.getInternalPlayer())
+    console.log(playerRef.current.getInternalPlayer())
+    //playerRef.current.getInternalPlayer().setShuffle(true)
     // console.log(playerRef.current.getInternalPlayer().playVideo())
     //console.log(temp)
-    console.log(bgPlay)
+    console.log(songs)
+    console.log(globalContext.shuffle)
+    console.log(playerRef.current.getInternalPlayer().getPlaylist())
   }
 }
 

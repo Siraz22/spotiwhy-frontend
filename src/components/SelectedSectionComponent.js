@@ -1,10 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Card, Col, Dropdown, Figure, Form, Image, Modal, Row } from 'react-bootstrap';
 import { useSections, useSongs } from './api/APIAxios'
-import { v4 as uuid } from 'uuid'
 import { useGlobalInstances } from './context/CustomGlobalInstances';
-import { FcMusic } from "react-icons/fc";
-import axios from 'axios';
 import { HiDotsVertical } from 'react-icons/hi'
 import { FaTrash, FaPlay } from 'react-icons/fa'
 import { BiShuffle } from 'react-icons/bi'
@@ -68,7 +65,7 @@ function SelectedSectionComponent(props) {
               paddingTop: '0.3rem',
               paddingBottom: '0.3rem',
             }}
-            className="customBox-left"
+            className=""
           >
 
             <Row>
@@ -125,9 +122,26 @@ function SelectedSectionComponent(props) {
     //If this song is going to be played, set the songs[] array in VideoPlayer with current section Songs
     //This is facilitated by global Context which contains currPlayingSongSet
 
-    globalContext.setPlayingSongIndex(index)
+    globalContext.playerRef.current.getInternalPlayer().setShuffle(false)
     globalContext.setCurrPlayingSet(sectionSongs.map((entry) => { return entry.songURL }))
     globalContext.playerRef.current.getInternalPlayer().playVideoAt(index)
+
+
+    //this is set to run for the very first time only, when react-player calls onStart
+    globalContext.setPlayingSongIndex(index)
+  }
+
+  function shufflePlay(event) {
+
+    event.stopPropagation()
+
+    //console.log(globalContext.playerRef.current.getInternalPlayer())
+    globalContext.setCurrPlayingSet(sectionSongs.map((entry) => { return entry.songURL }))
+    globalContext.playerRef.current.getInternalPlayer().setShuffle(true)
+    globalContext.playerRef.current.getInternalPlayer().playVideoAt(0)
+
+    //for the first time when globalState is needed
+    globalContext.setShuffle(true)
   }
 
   function deleteSong(songIDtoDelete) {
@@ -365,6 +379,7 @@ function SelectedSectionComponent(props) {
                           border: '0px',
                           backgroundColor: '#ffffff54'
                         }}
+                        onClick={() => playSong(0)}
                       >
                         <FaPlay /> <span style={{ marginRight: '20px' }}>PLAY ALL</span>
                         <Button
@@ -373,6 +388,7 @@ function SelectedSectionComponent(props) {
                             backgroundColor: 'white',
                             color: 'black'
                           }}
+                          onClick={e => shufflePlay(e)}
                           variant='secondary' className='customBox-left'> <BiShuffle /> MIX</Button>
                       </Button>
                     </Col>
