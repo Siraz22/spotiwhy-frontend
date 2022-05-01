@@ -5,7 +5,7 @@ import { getYTInfoURL, getYTTreatedUrl, ytinfo } from './api/youtubeInfo';
 import { v4 as uuid } from 'uuid'
 import { useSongs } from './api/APIAxios';
 
-function OperationsHeader() {
+function OperationsHeader(props) {
 
   const songsContext = useSongs();
 
@@ -30,6 +30,7 @@ function OperationsHeader() {
   }
 
   function addSong() {
+
     let songObj = {
       songID: uuid(),
       songURL: getYTTreatedUrl(ytURL),
@@ -43,6 +44,11 @@ function OperationsHeader() {
         console.log(res)
       })
       .catch(err => console.log(err))
+
+    closeModal()
+    console.log(props)
+    props.setSongAddedRefreshTemp(prevState => prevState)
+
   }
 
   function AddSongModal() {
@@ -70,6 +76,7 @@ function OperationsHeader() {
                       placeholder="Paste the video URL here"
                       defaultValue={ytInfo.title}
                       autoFocus
+                      onChange={(e) => setSongName(e.target.value)}
                     />
                   </InputGroup>
                   <Form.Control.Feedback type="invalid">Enter a Song name</Form.Control.Feedback>
@@ -83,6 +90,7 @@ function OperationsHeader() {
                       isInvalid={ytInfoError}
                       placeholder="Paste the video URL here"
                       defaultValue={ytInfo.author_name}
+                      onChange={(e) => setSongArtist(e.target.value)}
                       autoFocus
                     />
                   </InputGroup>
@@ -106,25 +114,6 @@ function OperationsHeader() {
     )
   }
 
-  // function processSearchQuery() {
-  //   console.log("Processing YT link...")
-  //   setLoading(true)
-  //   const reqURL = getYTInfoURL(ytURL)
-
-  //   axios.get(reqURL)
-  //     .then(res => {
-  //       setYtInfoError(false)
-  //       setYtInfo(res.data)
-  //       console.log("Treated url will be " + getYTTreatedUrl(ytURL))
-  //       setLoading(false)
-  //     })
-  //     .catch(err => {
-  //       setYtInfoError(true)
-  //       setLoading(false)
-  //     }
-  //     )
-  // }
-
   function addSongModal() {
 
     setLoading(true)
@@ -137,6 +126,12 @@ function OperationsHeader() {
         setYtInfo(res.data)
         console.log("Treated url will be " + getYTTreatedUrl(ytURL))
         setLoading(false)
+
+        //we got a success, set initial values
+        setSongName(res.data.title)
+        setSongArtist(res.data.author_name)
+        setSongThumbnailURL(res.data.thumbnail_url)
+
         setShow(true)
       })
       .catch(err => {

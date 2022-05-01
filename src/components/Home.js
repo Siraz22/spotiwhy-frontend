@@ -6,6 +6,7 @@ import { Button, Col, Row } from 'react-bootstrap'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import NoSectionSelectedComponent from './NoSectionSelectedComponent'
 import OperationsHeader from './OperationsHeader'
+import Sidebar from './Sidebar'
 
 function Home() {
 
@@ -23,6 +24,7 @@ function Home() {
   //NOTE : boolean value is chosen as it is easier to oscilate between
   //it has no significance other than to trigger a changed variable
   const [sectionDeletedRefreshTemp, setSectionDeletedRefreshTemp] = useState(false)
+  const [songAddedRefreshTemp, setSongAddedRefreshTemp] = useState(false)
 
   function debug() {
     console.log(selectedSection)
@@ -31,56 +33,59 @@ function Home() {
   return (
     <React.Fragment>
 
-      <Row
-        style={{
-          margin: '0px'
-        }}
-      >
+      <Sidebar
+        setSongAddedRefreshTemp={setSongAddedRefreshTemp}
+      />
 
-        {/* <div className="col-sm-12 col-md-12 order-md-0">
-            <OperationsHeader />
-          </div> */}
+      <div className='contentDivision'>
+        <Row
+          style={{
+            margin: '0px'
+          }}
+        >
 
-        <div className="col-sm-12 col-md-7 order-md-1">
-          <AvailableSectionComponent
-            setSelectedSection={setSelectedSection}
-            sectionDeletedRefreshTemp={sectionDeletedRefreshTemp}
-          />
-        </div>
+          <div className="col-sm-12 col-md-7 order-md-1">
+            <AvailableSectionComponent
+              setSelectedSection={setSelectedSection}
+              sectionDeletedRefreshTemp={sectionDeletedRefreshTemp}
+            />
+          </div>
 
-        <div className="col-sm-12 col-md-12 order-md-0">
+          <div className="col-sm-12 col-md-12 order-md-0">
 
-          <Switch>
+            <Switch>
 
-            {/* <Route path="/" exact>
+              {/* <Route path="/" exact>
                 <Redirect to="/default" />
               </Route> */}
-            <Route path="/" exact render={
-              (props) => (
-                <NoSectionSelectedComponent
-                  {...props}
-                />
-              )
-            } />
+              <Route path="/" exact render={
+                (props) => (
+                  <NoSectionSelectedComponent
+                    songAddedRefreshTemp={songAddedRefreshTemp}
+                    {...props}
+                  />
+                )
+              } />
 
-            <Route path="/section/:selectedSection" render={
-              (props) => (
-                <SelectedSectionComponent
-                  {...props}
-                  selectedSection={selectedSection}
-                  setSectionDeletedRefreshTemp={setSectionDeletedRefreshTemp}
-                />
-              )
-            } />
+              <Route path="/section/:selectedSection" render={
+                (props) => (
+                  <SelectedSectionComponent
+                    {...props}
+                    selectedSection={selectedSection}
+                    setSectionDeletedRefreshTemp={setSectionDeletedRefreshTemp}
+                  />
+                )
+              } />
 
-          </Switch>
-        </div>
+            </Switch>
+          </div>
 
-        <div className="col-sm-12 col-md-5 order-md-1">
-          <VideoPlayer />
-        </div>
+          <div className="col-sm-12 col-md-5 order-md-1">
+            <VideoPlayer />
+          </div>
 
-      </Row>
+        </Row>
+      </div>
 
       {/* <Button onClick={debug}>Debug</Button> */}
 

@@ -102,15 +102,6 @@ function AvailableSectionComponent(props) {
     return sectionsRendered
   }
 
-  // function deleteSection(sectionIDtoDelete) {
-  //   sectionsContext.sectionAPIcalls.deleteSection(sectionIDtoDelete)
-  //     .then(res => {
-  //       console.log(res)
-  //       refreshSection()
-  //     })
-  //     .catch(err => console.log(err))
-  // }
-
   function AddSectionModal() {
 
     const [sectionPhotoURL, setSectionPhotoURL] = useState('')
@@ -242,33 +233,63 @@ function AvailableSectionComponent(props) {
             </Col>
 
             <Col xs={5}>
-
-              <Card
-                style={{
-                  backgroundColor: '#fff0',
-                  border: '0px'
-                }}
-                className="text-white"
+              <div
+                style={{ marginBottom: '20px' }}
               >
-                <img
-                  className="customBox-left trimmed-cover"
-                  // onClick={() => setAddSectionModal(true)}
-                  // src="https://i.gifer.com/OKEq.gif"
-                  src="https://media.giphy.com/media/3q3SUqPnxZGQpMNcjc/giphy.gif"
-                  height={100}
-                />
+                <Card
+                  style={{
+                    backgroundColor: '#fff0',
+                    border: '0px'
+                  }}
+                  className="text-white"
+                >
+                  <img
+                    className="customBox-left trimmed-cover"
+                    // onClick={() => setAddSectionModal(true)}
+                    // src="https://i.gifer.com/OKEq.gif"
+                    src="https://media.giphy.com/media/3q3SUqPnxZGQpMNcjc/giphy.gif"
+                    height={90}
+                  />
 
-                <Card.ImgOverlay
-                  onClick={() => setAddSectionModal(true)}
-                  className='d-flex align-items-center justify-content-center'>
-                  <span>
-                    Add A Section?
-                  </span>
-                </Card.ImgOverlay>
+                  <Card.ImgOverlay
+                    onClick={() => setAddSectionModal(true)}
+                    className='d-flex align-items-center justify-content-center'>
+                    <span>
+                      Add A Section?
+                    </span>
+                  </Card.ImgOverlay>
 
-              </Card>
+                </Card>
+              </div>
 
+              <div>
+                <Card
+                  style={{
+                    backgroundColor: '#fff0',
+                    border: '0px'
+                  }}
+                  className="text-white"
+                >
+                  <img
+                    className="customBox-left trimmed-cover"
+                    // onClick={() => setAddSectionModal(true)}
+                    // src="https://i.gifer.com/OKEq.gif"
+                    src="https://media.giphy.com/media/3q3SUqPnxZGQpMNcjc/giphy.gif"
+                    height={90}
+                  />
+
+                  <Card.ImgOverlay
+                    onClick={() => setAddSectionModal(true)}
+                    className='d-flex align-items-center justify-content-center'>
+                    <span>
+                      Unnamed
+                    </span>
+                  </Card.ImgOverlay>
+
+                </Card>
+              </div>
             </Col>
+
           </Row>
 
           <AddSectionModal />

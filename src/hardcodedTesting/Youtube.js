@@ -13,7 +13,7 @@ function Youtube() {
   const [songs, setSongs] = useState(['https://www.youtube.com/watch?v=A9AzSOJAag8', 'https://www.youtube.com/watch?v=OkHD4OVjS4E', 'https://www.youtube.com/watch?v=KQetemT1sWc'])
   const [vol, setVolume] = useState(1)
   const [mute, setMute] = useState(true)
-  const [playpause, setPlayPause] = useState(true)
+  const [playpause, setPlayPause] = useState(false)
 
   const playerRef = useRef()
 

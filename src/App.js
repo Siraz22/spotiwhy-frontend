@@ -10,10 +10,10 @@ function App() {
     <React.Fragment>
 
       <div>
-        <Sidebar />
-        <div className="contentDivision">
-          <Home />
-        </div>
+
+        {/* <Youtube /> */}
+        <Home />
+
       </div>
 
     </React.Fragment >

@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Navbar, Offcanvas, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
 import OperationsHeader from './OperationsHeader'
 
-function Sidebar() {
+function Sidebar(props) {
   return (
     <Navbar bg="dark" variant="dark" expand={false}>
       <Container fluid>
@@ -11,7 +11,7 @@ function Sidebar() {
 
 
         <div>
-          <OperationsHeader />
+          <OperationsHeader setSongAddedRefreshTemp={props.setSongAddedRefreshTemp} />
         </div>
         <Navbar.Brand href="#">Spotiwhy <img src="https://i.imgur.com/JqwEqTO.png" style={{ height: "30px" }} /> </Navbar.Brand>
 

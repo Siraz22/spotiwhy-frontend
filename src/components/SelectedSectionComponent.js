@@ -124,7 +124,8 @@ function SelectedSectionComponent(props) {
   function playSong(index) {
     //If this song is going to be played, set the songs[] array in VideoPlayer with current section Songs
     //This is facilitated by global Context which contains currPlayingSongSet
-    console.log("Index passed is " + index)
+
+    globalContext.setPlayingSongIndex(index)
     globalContext.setCurrPlayingSet(sectionSongs.map((entry) => { return entry.songURL }))
     globalContext.playerRef.current.getInternalPlayer().playVideoAt(index)
   }

@@ -6,8 +6,9 @@ import { useGlobalInstances } from './context/CustomGlobalInstances';
 import { HiDotsVertical } from 'react-icons/hi'
 import { FaPlay, FaTrash } from 'react-icons/fa'
 import { BiShuffle } from 'react-icons/bi'
+import { globalRefresh } from './AvailableSectionComponent';
 
-function NoSectionSelectedComponent() {
+function NoSectionSelectedComponent(props) {
 
   const sectionsContext = useSections();
   const songsContext = useSongs();
@@ -19,6 +20,12 @@ function NoSectionSelectedComponent() {
   const [selectedSection, setSelectedSection] = useState('')
 
   const globalContext = useGlobalInstances();
+
+  //temp hotfix when user has selected NoSectionsComponent and adds a song
+  useEffect(() => {
+    console.log("hey I am getting triggered")
+    refreshSongList()
+  }, [props.songAddedRefreshTemp])
 
   useEffect(() => {
 
@@ -55,17 +62,6 @@ function NoSectionSelectedComponent() {
       })
       .catch(err => console.log(err))
   }
-
-  // function checkboxChecked(songID, checked) {
-  //   console.log("checkbox clicked")
-
-  //   if (checked) {
-  //     setSelectedSongs([...selectedSongsID, songID])
-  //   }
-  //   else if (!checked) {
-  //     setSelectedSongs(selectedSongsID.filter((entry) => entry !== songID))
-  //   }
-  // }
 
   function playSong(index) {
     //If this song is going to be played, set the songs[] array in VideoPlayer with current section Songs
@@ -292,11 +288,11 @@ function NoSectionSelectedComponent() {
             </div>
           </div>
         </div>
-
       </div>
 
     </React.Fragment >
   )
+
 }
 
 

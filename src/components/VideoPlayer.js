@@ -33,12 +33,19 @@ function VideoPlayer() {
 
   useEffect(() => {
     globalContext.playerRef = playerRef
+
+    console.log(globalContext.currPlayingSongSet)
+
     setSongs(globalContext.currPlayingSongSet)
-  }, [globalContext])
+  }, [globalContext.currPlayingSongSet])
 
   function customAutoplay() {
-    setMute(false)
-    setVolume(0.5)
+    console.log("AutoPlay getting triggered")
+    //setPlayPause(false)
+    //setVolume(0.5)
+
+    //possible hotfix
+    playerRef.current.getInternalPlayer().playVideoAt(globalContext.playingSongIndex)
   }
 
   function prevSong() {
@@ -74,11 +81,14 @@ function VideoPlayer() {
               {/* <p>Debug : currSongIndex = {currSongIndex}</p> */}
               {/* <p>Debug name for index 0 = {playerRef.current.getInternalPlayer().getVideoData().title}</p> */}
 
-              <ReactPlayer ref={playerRef} playing={playpause} muted={mute}
-                onReady={() => console.log('onReady')}
+              <ReactPlayer
+                ref={playerRef}
+                playing={playpause}
+                //muted={false}
+                //onReady={() => console.log('onReady')}
                 onStart={customAutoplay}
                 //onPlay={customAutoplay}
-                volume={vol}
+                //volume={vol}
 
                 height={(windowWidth > 800) ? 360 / 1.2 : 9 * multiplier}
                 width={(windowWidth > 800) ? 640 / 1.2 : 16 * multiplier}
@@ -106,8 +116,21 @@ function VideoPlayer() {
         </div >
       </div>
       {/* <Button onClick={() => console.log(songs)}>Debug Player</Button> */}
+
+      {/* <Button onClick={debug}>Debug Video Player</Button> */}
+
     </React.Fragment >
   )
+
+  // function debug() {
+  //   //console.log(songs)
+  //   // setSongs([
+  //   //   "https://www.youtube.com/watch?v=UhiXEgqhBWs",
+  //   //   "https://www.youtube.com/watch?v=sFWP-GQ0UcU",
+  //   //   "https://www.youtube.com/watch?v=UceaB4D0jpo"
+  //   // ])
+  //   console.log(globalContext.playingSongIndex)
+  // }
 }
 
 export default VideoPlayer
