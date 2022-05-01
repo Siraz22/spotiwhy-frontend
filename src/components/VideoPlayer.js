@@ -65,12 +65,39 @@ function VideoPlayer() {
 
   function handlePause() {
     console.log("pause clicked")
-    setPlaying(false)
+
     if (bgPlay) {
       playerRef.current.getInternalPlayer().playVideo()
-      //setBgPlay(false)
+      setPlaying(true)
+    }
+    else {
+      setPlaying(false)
     }
   }
+
+  function handleBufffer() {
+    console.log("buffering")
+
+    if (bgPlay) {
+      playerRef.current.getInternalPlayer().playVideo()
+      setPlaying(true)
+    }
+
+  }
+
+  function handleBufferEnd() {
+    console.log("buffer ended")
+
+    if (bgPlay) {
+      playerRef.current.getInternalPlayer().playVideo()
+      setPlaying(true)
+    }
+
+  }
+
+
+
+
 
 
   const onFocus = () => {
@@ -155,6 +182,8 @@ function VideoPlayer() {
                 onStart={customAutoplay}
 
                 onPlay={handlePlay}
+                onBuffer={handleBufffer}
+                onBufferEnd={handleBufferEnd}
                 onPause={handlePause}
 
                 height={(windowWidth > 800) ? 360 / 1.2 : 9 * multiplier}
@@ -184,11 +213,11 @@ function VideoPlayer() {
       </div>
       {/* <Button onClick={() => console.log(songs)}>Debug Player</Button> */}
 
-      {/* <Form>
+      <Form>
         <Form.Check label="BG Play"
           onChange={(e) => (setBgPlay(e.target.checked))}
         />
-      </Form> */}
+      </Form>
       {/* <Button onClick={debug}>Debug Video Player</Button> */}
 
       {/* <span>States</span>
