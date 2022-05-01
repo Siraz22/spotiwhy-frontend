@@ -67,64 +67,84 @@ function VideoPlayer() {
     console.log("pause clicked")
 
     if (bgPlay) {
-      playerRef.current.getInternalPlayer().playVideo()
+
       setPlaying(true)
+      playerRef.current.getInternalPlayer().playVideo()
+
     }
     else {
       setPlaying(false)
     }
   }
 
-  function handleBufffer() {
-    console.log("buffering")
+  // function handleBufffer() {
+  //   console.log("buffering")
 
-    if (bgPlay) {
-      playerRef.current.getInternalPlayer().playVideo()
-      setPlaying(true)
-    }
+  //   if (bgPlay) {
+  //     playerRef.current.getInternalPlayer().playVideo()
+  //     setPlaying(true)
+  //   }
 
-  }
+  // }
 
-  function handleBufferEnd() {
-    console.log("buffer ended")
+  // function handleBufferEnd() {
+  //   console.log("buffer ended")
 
-    if (bgPlay) {
-      playerRef.current.getInternalPlayer().playVideo()
-      setPlaying(true)
-    }
+  //   if (bgPlay) {
+  //     playerRef.current.getInternalPlayer().playVideo()
+  //     setPlaying(true)
+  //   }
 
-  }
-
-
+  // }
 
 
 
 
-  const onFocus = () => {
-    console.log("Tab is in focus");
-  };
 
-  // User has switched away from the tab (AKA tab is hidden)
-  const onBlur = () => {
-    console.log("Tab is blurred");
-    playerRef.current.getInternalPlayer().playVideo()
-  };
 
-  const WindowFocusHandler = () => {
-    useEffect(() => {
-      window.addEventListener("focus", onFocus);
-      window.addEventListener("blur", onBlur);
-      // Calls onFocus when the window first loads
-      onFocus();
-      // Specify how to clean up after this effect:
-      return () => {
-        window.removeEventListener("focus", onFocus);
-        window.removeEventListener("blur", onBlur);
-      };
-    }, []);
+  // const onFocus = () => {
+  //   console.log("Tab is in focus");
+  // };
 
-    return <></>;
-  };
+  // // User has switched away from the tab (AKA tab is hidden)
+  // const onBlur = () => {
+  //   console.log("Tab is blurred");
+  //   playerRef.current.getInternalPlayer().playVideo()
+  // };
+
+  // const WindowFocusHandler = () => {
+  //   useEffect(() => {
+  //     window.addEventListener("focus", onFocus);
+  //     window.addEventListener("blur", onBlur);
+  //     // Calls onFocus when the window first loads
+  //     onFocus();
+  //     // Specify how to clean up after this effect:
+  //     return () => {
+  //       window.removeEventListener("focus", onFocus);
+  //       window.removeEventListener("blur", onBlur);
+  //     };
+  //   }, []);
+
+  //   return <></>;
+  // };
+
+
+
+
+
+  const MINUTE_MS = 600;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      //console.log('Logs every minute');
+      if (bgPlay) {
+        playerRef.current.getInternalPlayer().playVideo()
+      }
+    }, MINUTE_MS);
+
+    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+  }, [])
+
 
   // 
 
@@ -182,8 +202,8 @@ function VideoPlayer() {
                 onStart={customAutoplay}
 
                 onPlay={handlePlay}
-                onBuffer={handleBufffer}
-                onBufferEnd={handleBufferEnd}
+                // onBuffer={handleBufffer}
+                // onBufferEnd={handleBufferEnd}
                 onPause={handlePause}
 
                 height={(windowWidth > 800) ? 360 / 1.2 : 9 * multiplier}
@@ -222,7 +242,7 @@ function VideoPlayer() {
 
       {/* <span>States</span>
       <p>Playing state is = {playing ? 'true' : 'false'}</p> */}
-      <WindowFocusHandler />
+      {/* <WindowFocusHandler /> */}
     </React.Fragment >
   )
 
