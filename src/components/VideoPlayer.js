@@ -39,7 +39,7 @@ function VideoPlayer() {
     setSongs(globalContext.currPlayingSongSet)
   }, [globalContext.currPlayingSongSet])
 
-
+  const [temp, setTemp] = useState(0)
 
 
 
@@ -67,7 +67,6 @@ function VideoPlayer() {
     console.log("pause clicked")
 
     if (bgPlay) {
-
       setPlaying(true)
       playerRef.current.getInternalPlayer().playVideo()
 
@@ -136,9 +135,11 @@ function VideoPlayer() {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      setTemp(prevState => prevState + 1)
       //console.log('Logs every minute');
       if (bgPlay) {
         playerRef.current.getInternalPlayer().playVideo()
+
       }
     }, MINUTE_MS);
 
@@ -238,8 +239,8 @@ function VideoPlayer() {
           onChange={(e) => (setBgPlay(e.target.checked))}
         />
       </Form>
-      {/* <Button onClick={debug}>Debug Video Player</Button> */}
-
+      <Button onClick={debug}>Debug Video Player</Button>
+      <span>{temp}</span>
       {/* <span>States</span>
       <p>Playing state is = {playing ? 'true' : 'false'}</p> */}
       {/* <WindowFocusHandler /> */}
@@ -254,8 +255,9 @@ function VideoPlayer() {
     //   "https://www.youtube.com/watch?v=UceaB4D0jpo"
     // ])
     // console.log(playerRef.current)
-    console.log(playerRef.current.getInternalPlayer())
-    console.log(playerRef.current.getInternalPlayer().playVideo())
+    // console.log(playerRef.current.getInternalPlayer())
+    // console.log(playerRef.current.getInternalPlayer().playVideo())
+    console.log(temp)
     //console.log(bgPlay)
   }
 }
