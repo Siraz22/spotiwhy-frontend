@@ -59,13 +59,13 @@ function VideoPlayer() {
   }
 
   function onPausePlay() {
-    console.log(playerRef);
     setPlayPause(prevState => !prevState)
   }
 
-  function apiPause() {
-    console.log("onPause called")
-  }
+  // function apiPause() {
+  //   console.log("onPause called")
+  //   setPlayPause(true)
+  // }
 
   return (
     < React.Fragment>
@@ -93,7 +93,7 @@ function VideoPlayer() {
                 onStart={customAutoplay}
                 //onPlay={customAutoplay}
                 //volume={vol}
-                onPause={() => setPlayPause(true)}
+                //onPause={() => apiPause()}
 
                 height={(windowWidth > 800) ? 360 / 1.2 : 9 * multiplier}
                 width={(windowWidth > 800) ? 640 / 1.2 : 16 * multiplier}
