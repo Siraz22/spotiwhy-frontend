@@ -34,7 +34,7 @@ function VideoPlayer() {
   useEffect(() => {
     globalContext.playerRef = playerRef
 
-    console.log(globalContext.currPlayingSongSet)
+    //console.log(globalContext.currPlayingSongSet)
 
     setSongs(globalContext.currPlayingSongSet)
   }, [globalContext.currPlayingSongSet])
@@ -122,20 +122,22 @@ function VideoPlayer() {
       </div>
       {/* <Button onClick={() => console.log(songs)}>Debug Player</Button> */}
 
-      {/* <Button onClick={debug}>Debug Video Player</Button> */}
+      <Button onClick={debug}>Debug Video Player</Button>
 
     </React.Fragment >
   )
 
-  // function debug() {
-  //   //console.log(songs)
-  //   // setSongs([
-  //   //   "https://www.youtube.com/watch?v=UhiXEgqhBWs",
-  //   //   "https://www.youtube.com/watch?v=sFWP-GQ0UcU",
-  //   //   "https://www.youtube.com/watch?v=UceaB4D0jpo"
-  //   // ])
-  //   console.log(globalContext.playingSongIndex)
-  // }
+  function debug() {
+    //console.log(songs)
+    // setSongs([
+    //   "https://www.youtube.com/watch?v=UhiXEgqhBWs",
+    //   "https://www.youtube.com/watch?v=sFWP-GQ0UcU",
+    //   "https://www.youtube.com/watch?v=UceaB4D0jpo"
+    // ])
+    console.log(playerRef.current)
+    console.log(playerRef.current.getInternalPlayer())
+    console.log(playerRef.current.getInternalPlayer().getPlayerState())
+  }
 }
 
 export default VideoPlayer
