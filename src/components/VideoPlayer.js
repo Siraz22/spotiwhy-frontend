@@ -144,8 +144,8 @@ function VideoPlayer() {
       //setTemp(prevState => prevState + 1)
       //audio.play()
       //console.log(bgPlay)
-      play()
-
+      //play()
+      playerRef.current.getInternalPlayer().playVideo()
       //console.log('Logs every minute');
       if (bgPlay === true) {
         playerRef.current.getInternalPlayer().playVideo()

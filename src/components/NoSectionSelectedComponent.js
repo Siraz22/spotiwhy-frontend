@@ -281,6 +281,8 @@ function NoSectionSelectedComponent(props) {
               style={{ padding: '0' }}
             >
 
+              <Button onClick={playSong}>Temp</Button>
+
               <div className="list-group">
                 <span><h5>Songs List</h5></span>
                 {renderSongs()}
