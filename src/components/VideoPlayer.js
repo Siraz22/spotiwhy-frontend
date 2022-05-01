@@ -17,6 +17,7 @@ function useWindowSize() {
   return size;
 }
 
+
 function VideoPlayer() {
 
   const globalContext = useGlobalInstances();
@@ -30,13 +31,23 @@ function VideoPlayer() {
   const playerRef = useRef()
 
   // Hardcoding for background play starts
-  const [bgPlay, setBgPlay] = useState(true)
+  const [bgPlay, setBgPlay] = useState(false)
 
   useEffect(() => {
     globalContext.playerRef = playerRef
 
     setSongs(globalContext.currPlayingSongSet)
   }, [globalContext.currPlayingSongSet])
+
+
+
+
+
+
+
+
+
+
 
 
   //PHONE AUTO BACKGROUND PLAY CODING TRAIL SECTION
@@ -61,7 +72,36 @@ function VideoPlayer() {
     }
   }
 
+
+  const onFocus = () => {
+    console.log("Tab is in focus");
+  };
+
+  // User has switched away from the tab (AKA tab is hidden)
+  const onBlur = () => {
+    console.log("Tab is blurred");
+    playerRef.current.getInternalPlayer().playVideo()
+  };
+
+  const WindowFocusHandler = () => {
+    useEffect(() => {
+      window.addEventListener("focus", onFocus);
+      window.addEventListener("blur", onBlur);
+      // Calls onFocus when the window first loads
+      onFocus();
+      // Specify how to clean up after this effect:
+      return () => {
+        window.removeEventListener("focus", onFocus);
+        window.removeEventListener("blur", onBlur);
+      };
+    }, []);
+
+    return <></>;
+  };
+
   // 
+
+
 
 
 
@@ -144,16 +184,16 @@ function VideoPlayer() {
       </div>
       {/* <Button onClick={() => console.log(songs)}>Debug Player</Button> */}
 
-      <Form>
+      {/* <Form>
         <Form.Check label="BG Play"
           onChange={(e) => (setBgPlay(e.target.checked))}
         />
-      </Form>
+      </Form> */}
       {/* <Button onClick={debug}>Debug Video Player</Button> */}
 
       {/* <span>States</span>
       <p>Playing state is = {playing ? 'true' : 'false'}</p> */}
-
+      <WindowFocusHandler />
     </React.Fragment >
   )
 
