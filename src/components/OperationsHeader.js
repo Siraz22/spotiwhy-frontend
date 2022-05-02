@@ -167,7 +167,9 @@ function OperationsHeader(props) {
         }}
       >
 
-        <Row>
+        <Row
+          style={{ margin: '0px' }}
+        >
 
           <Col className="d-flex align-items-center justify-content-center">
 

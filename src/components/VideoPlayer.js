@@ -1,11 +1,12 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import { Button, Col, Container, Form, Row, ToggleButton } from 'react-bootstrap'
 import ReactPlayer from 'react-player'
 import { FaPlay, FaPause } from "react-icons/fa";
 import { useGlobalInstances } from './context/CustomGlobalInstances';
 import useSound from 'use-sound';
 import boopSfx from '../img/quack.mp3'
 import { IoMdSkipBackward, IoMdSkipForward } from 'react-icons/io'
+import { ImLoop, ImShuffle } from 'react-icons/im'
 
 
 function useWindowSize() {
@@ -168,7 +169,6 @@ function VideoPlayer() {
 
 
 
-
   function customAutoplay() {
     console.log("AutoPlay getting triggered")
     //setPlayPause(false)
@@ -199,16 +199,18 @@ function VideoPlayer() {
 
       {/* <span>Window size: {windowWidth} x {windowHeight}</span>; */}
 
-      <div
-        style={{ margin: '20px' }}
+      <Container
+        fluid
+        style={{ marginTop: '20px', marginBottom: '20px' }}
       >
         <h5>Video Player</h5>
 
         <Row
           style={{
             // backgroundColor: 'rgb(96 104 108 / 27%)',
-            padding: '10px 0px 10px 0px',
-            borderRadius: '20px 20px 0px 0px'
+            // padding: '10px 0px 10px 0px',
+            borderRadius: '20px 20px 0px 0px',
+            margin: '0px'
           }}
         >
           <Col
@@ -227,15 +229,15 @@ function VideoPlayer() {
               onPlay={handlePlay}
               onPause={handlePause}
 
-              height={(windowWidth > 800) ? 360 / 1.2 : 9 * multiplier}
-              width={(windowWidth > 800) ? 640 / 1.2 : 16 * multiplier}
+              height={(windowWidth > 767) ? 300 : 11 * multiplier}
+              width={(windowWidth > 767) ? 560 : 16 * multiplier}
 
               controls={true}
               url={songs}
             />
           </Col>
 
-          {/* <Col
+          <Col
             id="info-col"
             s={12}
             style={{
@@ -246,7 +248,7 @@ function VideoPlayer() {
             <span style={{ fontSize: '1.3rem', color: 'white' }} >Butterfly Effect</span>
             <br />
             <span style={{ fontSize: '1rem' }}>Travis Scotts</span>
-          </Col> */}
+          </Col>
 
         </Row>
 
@@ -254,32 +256,46 @@ function VideoPlayer() {
           style={{
             // backgroundColor: '#16102d7d', 
             padding: '10px 0px 15px 0px',
-            borderRadius: '0px 0px 20px 20px'
+            borderRadius: '0px 0px 0px 0px',
+            margin: '0px'
           }}
           className="text-center"
         >
 
-          <Col s={4}>
+          {/* <Button
+          style={{ margin: '0px' }}
+          variant='none' >
+          <ImLoop color='white' />
+        </Button> */}
+          <Col>
             <Button variant='none' onClick={() => prevSong()}> <IoMdSkipBackward color='white' /> </Button>
           </Col>
-          <Col s={4}>
+
+          <Col>
             <Button
               onClick={handlePlayPause}
               style={{
                 borderRadius: '10px',
                 backgroundColor: 'gray',
+                border: '0px'
               }}
             >
               {playing ? <FaPause color='white' /> : <FaPlay />}
             </Button>
           </Col>
-          <Col s={4}>
+
+          <Col>
             <Button variant='none' onClick={() => nextSong()}> <IoMdSkipForward color='white' /> </Button>
           </Col>
 
+          {/* <ToggleButton variant='none' >
+          <ImShuffle color='white' />
+        </ToggleButton> */}
+
         </Row>
 
-      </div>
+
+      </Container>
 
 
       {/* <Form>

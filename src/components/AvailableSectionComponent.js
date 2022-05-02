@@ -216,7 +216,7 @@ function AvailableSectionComponent(props) {
                 >
                   <img
                     className="trimmed-cover"
-                    src="/allSongs.png"
+                    src="https://64.media.tumblr.com/e42e88d694200c3ecfd806a9af852e45/tumblr_pk56rtBoPQ1uzwgsuo1_400.gifv"
                     alt="Card image"
                     height={200}
                     style={{
@@ -251,7 +251,7 @@ function AvailableSectionComponent(props) {
                     style={{ borderRadius: '15px' }}
                     // onClick={() => setAddSectionModal(true)}
                     // src="https://i.gifer.com/OKEq.gif"
-                    src="https://media.giphy.com/media/3q3SUqPnxZGQpMNcjc/giphy.gif"
+                    src="https://wallpapercave.com/wp/wp8576811.jpg"
                     height={90}
                   />
 
@@ -279,7 +279,7 @@ function AvailableSectionComponent(props) {
                     style={{ borderRadius: '15px' }}
                     // onClick={() => setAddSectionModal(true)}
                     // src="https://i.gifer.com/OKEq.gif"
-                    src="https://media.giphy.com/media/3q3SUqPnxZGQpMNcjc/giphy.gif"
+                    src="https://wallpaperaccess.com/full/1155021.jpg"
                     height={90}
                   />
 

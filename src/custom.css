@@ -33,7 +33,6 @@ body {
     }
 }
 
-
 .rounded {
     border-radius: 15px;
 }
@@ -123,8 +122,8 @@ aside,
 
 .contentDivision {
     background-color: rgb(26, 26, 26, 0.7);
-    margin: 10px 10px;
-    border-radius: 0px 20px;
+    margin: 0px 0px;
+    border-radius: 0px 0px;
 }
 
 @media (max-width: 825px) {
