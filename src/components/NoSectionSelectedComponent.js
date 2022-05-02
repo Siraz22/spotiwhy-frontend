@@ -104,7 +104,7 @@ function NoSectionSelectedComponent(props) {
                     />
                   </Col>
 
-                  <Col onClick={() => playSong(index)} xs={8}>
+                  <Col className="text-truncate" onClick={() => playSong(index)} xs={8}>
                     <Row>
                       <b style={{ padding: '0px' }}>{song.songName}</b>
                       {song.songArtist}
