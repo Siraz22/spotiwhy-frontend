@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Form, Modal, Button, Row, Col, InputGroup, FormGroup, Alert, OverlayTrigger } from 'react-bootstrap'
 import { getYTInfoURL, getYTTreatedUrl, ytinfo } from './api/youtubeInfo';
 import { v4 as uuid } from 'uuid'
@@ -18,18 +18,18 @@ function OperationsHeader(props) {
   const [ytInfoError, setYtInfoError] = useState(false)
   const [ytInfo, setYtInfo] = useState('')
 
-
   const [songThumbnailURL, setSongThumbnailURL] = useState('')
+
+  const formInputRef = useRef();
 
   function closeModal() {
     setYtInfoError(false)
     setYtInfo('')
+    setYtURL('')
     setShow(false)
     setLoading(false)
     setAlert(false)
   }
-
-
 
   function AddSongModal() {
 
@@ -136,6 +136,8 @@ function OperationsHeader(props) {
         setYtInfo(res.data)
         console.log("Treated url will be " + getYTTreatedUrl(ytURL))
         setLoading(false)
+        console.log(formInputRef.current)
+        formInputRef.current.reset()
 
         //we got a success, set initial values
         //setSongName(res.data.title)
@@ -184,6 +186,7 @@ function OperationsHeader(props) {
 
             <Form
               style={{ marginRight: '10px' }}
+              ref={formInputRef}
             >
               <InputGroup hasValidation>
 
@@ -191,6 +194,7 @@ function OperationsHeader(props) {
                   isInvalid={ytInfoError}
                   onChange={event => urlChanged(event.target.value)}
                   placeholder='Enter youtube URL'
+
                 >
                 </Form.Control>
 
