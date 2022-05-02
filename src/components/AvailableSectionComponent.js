@@ -85,7 +85,7 @@ function AvailableSectionComponent(props) {
                 width='100%'
               />
 
-              <span xs={12} className="d-flex align-items-center justify-content-center">
+              <span xs={12} className="text-truncate d-flex align-items-center justify-content-center">
                 {section.sectionName}
               </span>
               <span xs={12} className="text-muted d-flex align-items-center justify-content-center">
@@ -201,6 +201,8 @@ function AvailableSectionComponent(props) {
 
         <div className="container">
 
+          <span><h5>Sections</h5></span>
+
           <Row style={{ marginBottom: '20px' }}>
             <Col xs={7}>
               <Link to={`/`} style={{ textDecoration: 'none' }}>
@@ -285,7 +287,7 @@ function AvailableSectionComponent(props) {
                     onClick={() => setAddSectionModal(true)}
                     className='d-flex align-items-center justify-content-center'>
                     <span>
-                      Unnamed
+                      Unnamed Feature
                     </span>
                   </Card.ImgOverlay>
 

@@ -57,7 +57,7 @@ function Home() {
           }}
         >
 
-          <div className="col-sm-12 col-md-8 order-md-1">
+          <div className="col-sm-12 col-md-7 order-md-1">
             <AvailableSectionComponent
               setSelectedSection={setSelectedSection}
               sectionDeletedRefreshTemp={sectionDeletedRefreshTemp}
@@ -95,7 +95,7 @@ function Home() {
             </Switch>
           </div>
 
-          <div className="col-sm-12 col-md-4 order-md-1">
+          <div className="col-sm-12 col-md-5 order-md-1">
             <VideoPlayer />
           </div>
 

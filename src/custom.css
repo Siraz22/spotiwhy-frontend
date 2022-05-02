@@ -14,11 +14,25 @@
 body {
     /* font-family: 'Open Sans', sans-serif; */
     font-family: 'Poppins', sans-serif;
+    /* font size decided by @media tag below */
+
     line-height: 1.75em;
-    font-size: 16px;
     background-color: rgb(14, 14, 14);
     color: #aaa;
 }
+
+@media (min-width: 425px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 425px) {
+    body {
+        font-size: 12px;
+    }
+}
+
 
 .rounded {
     border-radius: 15px;
@@ -94,17 +108,6 @@ aside,
     padding: 5px 15px;
 }
 
-@media (min-width: 425px) {
-    body {
-        font-size: 12px;
-    }
-}
-
-@media (max-width: 425px) {
-    body {
-        font-size: 12px;
-    }
-}
 
 
 .backgroundImage {
