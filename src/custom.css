@@ -131,6 +131,18 @@ aside,
     }
 }
 
+@media (max-width : 470px) {
+    .searchBarNav {
+        display: none;
+    }
+}
+
+@media (min-width : 471px) {
+    .searchBarHome {
+        display: none;
+    }
+}
+
 .customdarktheme {
     background-color: rgb(15, 15, 15);
 }

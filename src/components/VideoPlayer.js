@@ -233,7 +233,7 @@ function VideoPlayer() {
             />
           </Col>
 
-          <Col
+          {/* <Col
             id="info-col"
             s={12}
             style={{
@@ -244,7 +244,8 @@ function VideoPlayer() {
             <span style={{ fontSize: '1.3rem', color: 'white' }} >Butterfly Effect</span>
             <br />
             <span style={{ fontSize: '1rem' }}>Travis Scotts</span>
-          </Col>
+          </Col> */}
+
         </Row>
 
         <Row

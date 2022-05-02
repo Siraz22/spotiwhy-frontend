@@ -38,7 +38,19 @@ function Home() {
         setSongAddedRefreshTemp={setSongAddedRefreshTemp}
       />
 
+
+
       <div className='contentDivision'>
+
+        <div
+          style={{
+            paddingTop: '10px'
+          }}
+          className="searchBarHome"
+        >
+          <OperationsHeader />
+        </div>
+
         <Row
           style={{
             margin: '0px'
