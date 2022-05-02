@@ -18,8 +18,7 @@ function OperationsHeader(props) {
   const [ytInfoError, setYtInfoError] = useState(false)
   const [ytInfo, setYtInfo] = useState('')
 
-  const [songName, setSongName] = useState('')
-  const [songArtist, setSongArtist] = useState('')
+
   const [songThumbnailURL, setSongThumbnailURL] = useState('')
 
   function closeModal() {
@@ -30,29 +29,37 @@ function OperationsHeader(props) {
     setAlert(false)
   }
 
-  function addSong() {
 
-    let songObj = {
-      songID: uuid(),
-      songURL: getYTTreatedUrl(ytURL),
-      songName: songName,
-      songArtist: songArtist,
-      songPhotoUrl: songThumbnailURL
-    }
-
-    songsContext.songAPIcalls.addSong(songObj)
-      .then(res => {
-        console.log(res)
-      })
-      .catch(err => console.log(err))
-
-    closeModal()
-    console.log(props)
-    props.setSongAddedRefreshTemp(prevState => prevState)
-
-  }
 
   function AddSongModal() {
+
+    const [songName, setSongName] = useState(ytInfo.title)
+    const [songArtist, setSongArtist] = useState(ytInfo.author_name)
+
+    function addSong() {
+
+      let songObj = {
+        songID: uuid(),
+        songURL: getYTTreatedUrl(ytURL),
+        songName: songName,
+        songArtist: songArtist,
+        songPhotoUrl: songThumbnailURL
+      }
+
+      songsContext.songAPIcalls.addSong(songObj)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => console.log(err))
+
+      closeModal()
+      console.log(props)
+      props.setSongAddedRefreshTemp(prevState => prevState)
+
+
+    }
+
+    console.log(ytInfo)
 
     return (
       <Modal show={show} onHide={() => setShow(false)}>
@@ -74,9 +81,10 @@ function OperationsHeader(props) {
                     <Form.Control
                       isValid={!ytInfoError}
                       isInvalid={ytInfoError}
-                      placeholder="Paste the video URL here"
-                      defaultValue={ytInfo.title}
+                      placeholder="Song Name"
+                      // defaultValue={ytInfo.title}
                       autoFocus
+                      value={songName}
                       onChange={(e) => setSongName(e.target.value)}
                     />
                   </InputGroup>
@@ -89,8 +97,9 @@ function OperationsHeader(props) {
                     <Form.Control
                       isValid={!ytInfoError}
                       isInvalid={ytInfoError}
-                      placeholder="Paste the video URL here"
-                      defaultValue={ytInfo.author_name}
+                      placeholder="Song Artist"
+                      // defaultValue={ytInfo.author_name}
+                      value={songArtist}
                       onChange={(e) => setSongArtist(e.target.value)}
                       autoFocus
                     />
@@ -129,8 +138,8 @@ function OperationsHeader(props) {
         setLoading(false)
 
         //we got a success, set initial values
-        setSongName(res.data.title)
-        setSongArtist(res.data.author_name)
+        //setSongName(res.data.title)
+        //setSongArtist(res.data.author_name)
         setSongThumbnailURL(res.data.thumbnail_url)
 
         setShow(true)
