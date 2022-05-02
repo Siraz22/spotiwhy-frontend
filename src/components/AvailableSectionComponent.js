@@ -66,14 +66,14 @@ function AvailableSectionComponent(props) {
       return (
         <React.Fragment key={section.sectionID}>
 
-          <Link to={`/section/${section.sectionName}`} style={{ textDecoration: 'none', color: 'antiquewhite' }}>
+          <Link to={`/section/${section.sectionID}`} style={{ textDecoration: 'none', color: 'antiquewhite' }}>
 
             <div
               id="parent"
               xs={12} className="mb-2"
             >
               <img
-                onClick={() => props.setSelectedSection({ sectionName: section.sectionName, sectionID: section.sectionID })}
+                onClick={() => props.setSelectedSection({ sectionID: section.sectionID })}
                 src={section.sectionPhotoURL}
                 className="customBox-left trimmed-cover"
                 style={{
@@ -213,11 +213,12 @@ function AvailableSectionComponent(props) {
                   className="text-white"
                 >
                   <img
-                    className="trimmed-cover customBox-right"
+                    className="trimmed-cover"
                     src="/allSongs.png"
                     alt="Card image"
                     height={200}
                     style={{
+                      borderRadius: '15px',
                       objectPosition: `30% 60%`
                     }}
                   />
@@ -244,7 +245,8 @@ function AvailableSectionComponent(props) {
                   className="text-white"
                 >
                   <img
-                    className="customBox-left trimmed-cover"
+                    className="trimmed-cover"
+                    style={{ borderRadius: '15px' }}
                     // onClick={() => setAddSectionModal(true)}
                     // src="https://i.gifer.com/OKEq.gif"
                     src="https://media.giphy.com/media/3q3SUqPnxZGQpMNcjc/giphy.gif"
@@ -271,7 +273,8 @@ function AvailableSectionComponent(props) {
                   className="text-white"
                 >
                   <img
-                    className="customBox-left trimmed-cover"
+                    className="trimmed-cover"
+                    style={{ borderRadius: '15px' }}
                     // onClick={() => setAddSectionModal(true)}
                     // src="https://i.gifer.com/OKEq.gif"
                     src="https://media.giphy.com/media/3q3SUqPnxZGQpMNcjc/giphy.gif"

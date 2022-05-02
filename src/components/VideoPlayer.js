@@ -204,7 +204,7 @@ function VideoPlayer() {
       >
         <Row
           style={{
-            backgroundColor: 'rgb(96 104 108 / 27%)',
+            // backgroundColor: 'rgb(96 104 108 / 27%)',
             padding: '10px 0px 10px 0px',
             borderRadius: '20px 20px 0px 0px'
           }}
@@ -248,7 +248,11 @@ function VideoPlayer() {
         </Row>
 
         <Row
-          style={{ backgroundColor: '#16102d7d', padding: '10px 0px 15px 0px', borderRadius: '0px 0px 20px 20px' }}
+          style={{
+            // backgroundColor: '#16102d7d', 
+            padding: '10px 0px 15px 0px',
+            borderRadius: '0px 0px 20px 20px'
+          }}
           className="text-center"
         >
 
@@ -257,11 +261,13 @@ function VideoPlayer() {
           </Col>
           <Col s={4}>
             <Button
-
               onClick={handlePlayPause}
-              style={{ borderRadius: '10px', backgroundColor: 'gray' }}
+              style={{
+                borderRadius: '10px',
+                backgroundColor: 'gray',
+              }}
             >
-              {playing ? <FaPause color='#16102d7d' /> : <FaPlay />}
+              {playing ? <FaPause color='white' /> : <FaPlay />}
             </Button>
           </Col>
           <Col s={4}>

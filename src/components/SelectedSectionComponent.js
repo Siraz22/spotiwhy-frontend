@@ -25,7 +25,10 @@ function SelectedSectionComponent(props) {
       })
       .catch(err => console.log(err))
 
-    sectionsContext.sectionAPIcalls.getSectionById(props.selectedSection.sectionID)
+    // console.log("Props we got")
+    // console.log(props.match.params.sectionID)
+
+    sectionsContext.sectionAPIcalls.getSectionById(props.match.params.sectionID)
       .then((res) => {
         console.log(res.data)
         //console.log(res.data.songs_set)

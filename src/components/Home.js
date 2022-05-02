@@ -8,6 +8,7 @@ import NoSectionSelectedComponent from './NoSectionSelectedComponent'
 import OperationsHeader from './OperationsHeader'
 import Sidebar from './Sidebar'
 
+
 function Home() {
 
   const [selectedSection, setSelectedSection] = useState(
@@ -67,12 +68,14 @@ function Home() {
                 )
               } />
 
-              <Route path="/section/:selectedSection" render={
+              <Route path="/section/:sectionID" render={
                 (props) => (
                   <SelectedSectionComponent
                     {...props}
+                    // selectedSection={selectedSection}
+                    // setSectionDeletedRefreshTemp={setSectionDeletedRefreshTemp}
                     selectedSection={selectedSection}
-                    setSectionDeletedRefreshTemp={setSectionDeletedRefreshTemp}
+
                   />
                 )
               } />

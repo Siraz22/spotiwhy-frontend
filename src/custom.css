@@ -20,6 +20,10 @@ body {
     color: #aaa;
 }
 
+.rounded {
+    border-radius: 15px;
+}
+
 .container {
     max-width: 1820px;
     /* margin: 20px 20px; */
