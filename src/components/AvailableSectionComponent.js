@@ -104,7 +104,7 @@ function AvailableSectionComponent(props) {
 
   function AddSectionModal() {
 
-    const [sectionPhotoURL, setSectionPhotoURL] = useState('')
+    const [sectionPhotoURL, setSectionPhotoURL] = useState('https://images.rawpixel.com/image_1000/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvdjkzMi1uaW5nLTUyXzEta2xidW45bzYuanBn.jpg')
     const [sectionName, setSectionName] = useState('')
     const [sectionDescription, setSectionDescription] = useState('')
 
@@ -284,7 +284,7 @@ function AvailableSectionComponent(props) {
                   />
 
                   <Card.ImgOverlay
-                    onClick={() => setAddSectionModal(true)}
+                    // onClick={() => setAddSectionModal(true)}
                     className='d-flex align-items-center justify-content-center'>
                     <span>
                       Unnamed Feature

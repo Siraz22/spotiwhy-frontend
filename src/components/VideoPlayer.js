@@ -37,6 +37,9 @@ function VideoPlayer() {
   const [mute, setMute] = useState(true)
   const [windowWidth, windowHeight] = useWindowSize();
 
+  const [currSongTitle, setCurrSongTitle] = useState('')
+  const [currSongArtist, setCurrSongArtist] = useState('')
+
   const playerRef = useRef()
 
   // Hardcoding for background play starts
@@ -46,6 +49,7 @@ function VideoPlayer() {
     globalContext.playerRef = playerRef
     setSongs(globalContext.currPlayingSongSet)
   }, [globalContext.currPlayingSongSet])
+
 
 
   // useEffect(() => {
@@ -76,6 +80,10 @@ function VideoPlayer() {
 
   function handlePlay() {
     console.log("play clicked")
+
+    setCurrSongTitle(playerRef.current.getInternalPlayer().getVideoData().title)
+    setCurrSongArtist(playerRef.current.getInternalPlayer().getVideoData().author)
+
     setPlaying(true)
   }
 
@@ -245,9 +253,17 @@ function VideoPlayer() {
             }}
             className="text-center"
           >
-            <span style={{ fontSize: '1.3rem', color: 'white' }} >Butterfly Effect</span>
+            <span
+              className='d-inline-block text-truncate'
+              style={{
+                maxWidth: '15rem',
+                paddingBottom: '2px',
+                fontSize: '1.2rem',
+                color: 'white',
+
+              }} > {currSongTitle === '' ? 'Standby' : currSongTitle} </span>
             <br />
-            <span style={{ fontSize: '1rem' }}>Travis Scotts</span>
+            <span style={{ fontSize: '1rem' }}> {currSongArtist === '' ? 'Standby' : currSongArtist} </span>
           </Col>
 
         </Row>
@@ -320,9 +336,9 @@ function VideoPlayer() {
     //playerRef.current.getInternalPlayer().setShuffle(true)
     // console.log(playerRef.current.getInternalPlayer().playVideo())
     //console.log(temp)
-    console.log(songs)
-    console.log(globalContext.shuffle)
-    console.log(playerRef.current.getInternalPlayer().getPlaylist())
+    //console.log(songs)
+    //console.log(globalContext.shuffle)
+    console.log(playerRef.current.getInternalPlayer().getVideoData())
   }
 }
 
