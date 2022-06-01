@@ -62,13 +62,10 @@ function SelectedSectionComponent(props) {
           style={{
             height: '350px',
             maxHeight: '350px',
-            margin: '5px 5px 5px 5px',
-            padding: '5px 0px 5px 0px',
+            margin: 'auto',
+            width: '50%',
+            padding: '10px',
             //backgroundColor: 'rgb(26, 26, 26, 0.7)',
-            marginTop: '0.3rem',
-            marginBottom: '0.3rem',
-            paddingTop: '0.3rem',
-            paddingBottom: '0.3rem',
           }}
           className='text-center'
         >
@@ -355,11 +352,19 @@ function SelectedSectionComponent(props) {
           border: '0px solid'
         }}>
 
-        <div className='container'>
+        <div
+          //className='container'
+          style={{
+            padding: '20px',
+          }}
+        >
           <div className="row"
-            style={{ padding: '0px 0px' }}
+            style={{
+              padding: '0px 0px',
+              paddingRight: '30px'
+            }}
           >
-            <div className="col-md-7">
+            <Col sm={7}>
 
               <Card
                 className="text-white"
@@ -443,9 +448,14 @@ function SelectedSectionComponent(props) {
 
               <AddSongToSectionModal />
               <DeleteSectionModal />
-            </div>
+            </Col>
 
-            <div className="col mt-3">
+            <Col sm={5}
+              style={{
+                padding: '0',
+                paddingLeft: '20px'
+              }}
+            >
               {loading ?
                 renderLoading()
                 :
@@ -454,7 +464,7 @@ function SelectedSectionComponent(props) {
                   {renderSongs()}
                 </div>
               }
-            </div>
+            </Col>
 
           </div>
         </div>

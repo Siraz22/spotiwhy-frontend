@@ -3,9 +3,9 @@ import { Button, Modal, Dropdown, Card, Col, Form, Image, Row, InputGroup } from
 import { useSections } from './api/APIAxios'
 import { v4 as uuid } from 'uuid'
 import { Link } from 'react-router-dom'
-
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { ScaleLoader } from 'react-spinners'
 
 const responsive = {
   superLargeDesktop: {
@@ -36,6 +36,7 @@ function AvailableSectionComponent(props) {
   const sectionsContext = useSections();
   const [sections, setSections] = useState([])
   const [sectionName, setSectionName] = useState('')
+  const [loading, setLoading] = useState(false)
   const [addSectionModal, setAddSectionModal] = useState(false)
 
   useEffect(() => {
@@ -43,8 +44,10 @@ function AvailableSectionComponent(props) {
   }, [props.sectionDeletedRefreshTemp])
 
   useEffect(() => {
+    setLoading(true)
     sectionsContext.sectionAPIcalls.getSections()
       .then((res) => {
+        setLoading(false)
         console.log(res.data)
         setSections(res.data)
       })
@@ -58,6 +61,26 @@ function AvailableSectionComponent(props) {
         setSections(res.data)
       })
       .catch(err => console.log(err))
+  }
+
+  function renderLoading() {
+    return (
+      <React.Fragment>
+        <div
+          style={{
+            margin: 'auto',
+            width: '50%',
+            padding: '10px',
+            //backgroundColor: 'rgb(26, 26, 26, 0.7)',
+          }}
+          className='text-center'
+        >
+          <ScaleLoader color={"#E9684D"} loading={true} size={150} />
+          <br />
+          <h5>Loading Sections...</h5>
+        </div>
+      </React.Fragment >
+    )
   }
 
   function renderSections() {
@@ -107,7 +130,6 @@ function AvailableSectionComponent(props) {
     const [sectionPhotoURL, setSectionPhotoURL] = useState('https://images.rawpixel.com/image_1000/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvdjkzMi1uaW5nLTUyXzEta2xidW45bzYuanBn.jpg')
     const [sectionName, setSectionName] = useState('')
     const [sectionDescription, setSectionDescription] = useState('')
-
 
     function addSection() {
       let sectionObj = {
@@ -299,25 +321,26 @@ function AvailableSectionComponent(props) {
 
           <AddSectionModal />
 
-          <Carousel
-
-            swipeable={true}
-            //arrows={false}
-            //draggable={true}
-            //showDots={true}
-            responsive={responsive}
-            infinite={true}
-            partialVisible={true}
-            autoPlay={true}
-            autoPlaySpeed={10000}
-            transitionDuration={500}
-            removeArrowOnDeviceType={["tablet", "mobile"]}
-            itemClass="image-item"
-          >
-
-            {renderSections()}
-
-          </Carousel>
+          {loading ?
+            renderLoading()
+            :
+            <Carousel
+              swipeable={true}
+              //arrows={false}
+              //draggable={true}
+              //showDots={true}
+              responsive={responsive}
+              infinite={true}
+              partialVisible={true}
+              autoPlay={true}
+              autoPlaySpeed={10000}
+              transitionDuration={500}
+              removeArrowOnDeviceType={["tablet", "mobile"]}
+              itemClass="image-item"
+            >
+              {renderSections()}
+            </Carousel>
+          }
         </div>
       </div>
 

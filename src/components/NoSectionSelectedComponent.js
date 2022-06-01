@@ -186,11 +186,20 @@ function NoSectionSelectedComponent(props) {
         }}
       >
 
-        <div className="container">
+        <div
+          // className="container"
+          style={{
+            padding: '20px',
+
+          }}
+        >
           <div className="row"
-            style={{ padding: '0px 0px' }}
+            style={{
+              padding: '0px 0px',
+              paddingRight: '30px'
+            }}
           >
-            <div className="col-md-7">
+            <Col sm={7}>
 
               <Card
                 className="text-white"
@@ -198,7 +207,6 @@ function NoSectionSelectedComponent(props) {
                   border: '0px solid'
                 }}
               >
-
                 <img
                   className="trimmed-cover"
                   src='https://wallpapercave.com/wp/wp3409426.jpg'
@@ -258,10 +266,13 @@ function NoSectionSelectedComponent(props) {
                 </Card.ImgOverlay>
 
               </Card>
-            </div>
+            </Col>
 
-            <div className="col mt-3"
-              style={{ padding: '0' }}
+            <Col sm={5}
+              style={{
+                padding: '0',
+                paddingLeft: '20px'
+              }}
             >
               {loading ?
                 renderLoading()
@@ -271,7 +282,7 @@ function NoSectionSelectedComponent(props) {
                   {renderSongs()}
                 </div>
               }
-            </div>
+            </Col>
 
           </div>
         </div>
