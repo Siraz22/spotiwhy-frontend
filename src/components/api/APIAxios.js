@@ -8,7 +8,7 @@ export const SectionsContext = createContext();
 
 function APIAxios({ children }) {
 
-  // const baseURL = "http://localhost:8080"
+  //const baseURL = "http://localhost:8080"
   const baseURL = "https://use-spotiwhy-backend.herokuapp.com"
 
   async function getSongs() {

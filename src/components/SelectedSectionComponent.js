@@ -1,25 +1,28 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Button, Card, Col, Dropdown, Figure, Form, Image, Modal, Row } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react'
+import { Button, Card, Col, Dropdown, Form, Modal, Row } from 'react-bootstrap';
 import { useSections, useSongs } from './api/APIAxios'
 import { useGlobalInstances } from './context/CustomGlobalInstances';
 import { HiDotsVertical } from 'react-icons/hi'
 import { FaTrash, FaPlay } from 'react-icons/fa'
 import { BiShuffle } from 'react-icons/bi'
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 function SelectedSectionComponent(props) {
 
   const sectionsContext = useSections();
   const songsContext = useSongs();
+  const [loading, setLoading] = useState(false)
   const globalContext = useGlobalInstances();
 
   useEffect(() => {
   }, [globalContext])
 
   useEffect(() => {
-
+    setLoading(true)
     songsContext.songAPIcalls.getSongs()
       .then((res) => {
+        setLoading(false)
         console.log(res.data)
         setSongs(res.data)
       })
@@ -50,6 +53,31 @@ function SelectedSectionComponent(props) {
         setSectionSongs(res.data.songs_set)
       })
       .catch(err => console.log(err))
+  }
+
+  function renderLoading() {
+    return (
+      <React.Fragment>
+        <div
+          style={{
+            height: '350px',
+            maxHeight: '350px',
+            margin: '5px 5px 5px 5px',
+            padding: '5px 0px 5px 0px',
+            //backgroundColor: 'rgb(26, 26, 26, 0.7)',
+            marginTop: '0.3rem',
+            marginBottom: '0.3rem',
+            paddingTop: '0.3rem',
+            paddingBottom: '0.3rem',
+          }}
+          className='text-center'
+        >
+          <ScaleLoader color={"#E9684D"} loading={true} size={150} />
+          <br />
+          <h5>Loading Your Songs...</h5>
+        </div>
+      </React.Fragment >
+    )
   }
 
   function renderSongs() {
@@ -250,6 +278,7 @@ function SelectedSectionComponent(props) {
           .then(res => {
             console.log(res.data)
             refreshSongList()
+            closeModal()
           })
           .catch(err => console.log(err))
       })
@@ -414,13 +443,17 @@ function SelectedSectionComponent(props) {
 
               <AddSongToSectionModal />
               <DeleteSectionModal />
-
             </div>
+
             <div className="col mt-3">
-              <div className="list-group">
-                <span><h5>Songs List</h5></span>
-                {renderSongs()}
-              </div>
+              {loading ?
+                renderLoading()
+                :
+                <div className="list-group">
+                  <span><h5>Songs List</h5></span>
+                  {renderSongs()}
+                </div>
+              }
             </div>
 
           </div>

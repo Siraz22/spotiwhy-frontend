@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Form, Row, Modal, InputGroup, DropdownButton, Dropdown, FormControl } from 'react-bootstrap';
 import { useSongs } from './api/APIAxios'
-
 import { useGlobalInstances } from './context/CustomGlobalInstances';
 import { HiDotsVertical } from 'react-icons/hi'
 import { FaPlay } from 'react-icons/fa'
 import { BiShuffle } from 'react-icons/bi'
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 function NoSectionSelectedComponent(props) {
 
   const songsContext = useSongs();
   const [songs, setSongs] = useState([])
+  const [loading, setLoading] = useState(false)
   const globalContext = useGlobalInstances();
 
   //temp hotfix when user has selected NoSectionsComponent and adds a song
@@ -23,9 +24,11 @@ function NoSectionSelectedComponent(props) {
   }, [globalContext])
 
   useEffect(() => {
+    setLoading(true)
     songsContext.songAPIcalls.getSongs()
       .then((res) => {
         console.log(res.data)
+        setLoading(false)
         setSongs(res.data)
       })
       .catch(err => console.log(err))
@@ -69,6 +72,31 @@ function NoSectionSelectedComponent(props) {
     //for the first time when globalState is needed
     globalContext.setShuffle(true)
 
+  }
+
+  function renderLoading() {
+    return (
+      <React.Fragment>
+        <div
+          style={{
+            height: '350px',
+            maxHeight: '350px',
+            margin: '5px 5px 5px 5px',
+            padding: '5px 0px 5px 0px',
+            //backgroundColor: 'rgb(26, 26, 26, 0.7)',
+            marginTop: '0.3rem',
+            marginBottom: '0.3rem',
+            paddingTop: '0.3rem',
+            paddingBottom: '0.3rem',
+          }}
+          className='text-center'
+        >
+          <ScaleLoader color={"#E9684D"} loading={true} size={150} />
+          <br />
+          <h5>Loading Your Songs...</h5>
+        </div>
+      </React.Fragment >
+    )
   }
 
   function renderSongs() {
@@ -235,13 +263,16 @@ function NoSectionSelectedComponent(props) {
             <div className="col mt-3"
               style={{ padding: '0' }}
             >
-
-              <div className="list-group">
-                <span><h5>Songs List</h5></span>
-                {renderSongs()}
-              </div>
-
+              {loading ?
+                renderLoading()
+                :
+                <div className="list-group">
+                  <span><h5>Songs List</h5></span>
+                  {renderSongs()}
+                </div>
+              }
             </div>
+
           </div>
         </div>
       </div>
